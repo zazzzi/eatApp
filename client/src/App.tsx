@@ -34,6 +34,15 @@ function App() {
     getUsers()
   }, [users])
 
+  useEffect(() => {
+    const sayHello = async () => {
+      const response = await fetch("/api/hello");
+      const body = await response.json();
+      console.log(body);
+    };
+    sayHello();
+}, []);
+
   return (
     <div >
       <input placeholder="Name" onChange={(event) => {

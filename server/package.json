@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc --project .",
+    "build-prod": "cd client && npm install && npm run build && cd .. && npm install && npm run build",
+    "server": "nodemon --verbose --watch \"server\" --ext \"ts,json\" --exec ts-node server/server.ts",
+    "client": "cd client && npm start && cd ..",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
