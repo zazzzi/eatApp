@@ -7,8 +7,6 @@ interface Iprops {
 
 function Login(props: Iprops) {
 
-  console.log("hgui")
-  
   return (
    <Box>
        TEST
