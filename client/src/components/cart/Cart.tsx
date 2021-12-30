@@ -8,30 +8,52 @@ interface Iprops {
 }
 
 function Cart(props: Iprops) {
+  const classes = useStyles();
 
   const orderTotal = () => {
     return food.reduce((total, item) => item.price + total, 0)
   }
 
   return (
-   <Box>
-     <Typography variant="h3" gutterBottom component="div">
+   <Box className={classes.height}>
+     <Typography variant="h4" gutterBottom component="div">
         Cart
       </Typography>
       <MenuItem menuItem = {food}/>
       <Divider />
-      <Typography>
-        Summa
-      </Typography>
-      <Typography>
-        {orderTotal()} kr
-      </Typography>
-      <Button variant="outlined">hello</Button>
+      <Box className={classes.align}>
+        <Box className={classes.priceTotal}>
+          <Typography>
+            Summa
+          </Typography>
+          <Typography>
+            {orderTotal()} kr
+          </Typography>
+        </Box>
+        <Button variant="outlined" className={classes.button}>Bekräfta</Button>
+      </Box>
    </Box>
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({}));
+const useStyles = makeStyles((theme: Theme) => ({
+  height: {
+    height: "100%"
+  },
+  priceTotal: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "1rem 1rem 1rem 1rem"
+  },
+  align: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  button: {
+    margin: "auto",
+    width: "30%"
+  }
+}));
 
 
 export default Cart; 
