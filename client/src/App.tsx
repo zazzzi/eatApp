@@ -1,16 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import {db} from './firebase'
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import Hero from "./components/hero/Hero"
+import Login from "./components/login/Login"
  
 function App() {
-  const [newName, setNewName] = useState<string>("")
+ 
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Hero/>}/>
+        <Route path="/login" element={<Login/>}/>
+      </Routes>
+    </Router>
+    );
+}
+
+export default App;
+
+
+ /* const [newName, setNewName] = useState<string>("")
   const [newNumber, setNewNumber] = useState<any>(0)
   const [users, setUsers] = useState<any>([]);
-  const usersCollectionRef = collection(db, 'users')
+  const usersCollectionRef = collection(db, 'users') */
 
   //adds to database
-  const createUser = async () => {
+ /*  const createUser = async () => {
     await addDoc(usersCollectionRef, {name: newName, phone: Number(newNumber)})
   }
 
@@ -23,8 +43,8 @@ function App() {
   const updateUser = async (id: any, number: any) => {
     const userDoc = doc(db, "users", id)
     const newFields = {phone: number + 1}
-    await updateDoc(userDoc, newFields)
-  }
+    await updateDoc(userDoc, newFields) }*/
+  
 
   // // fetches all database. THIS FUCKS UP THE READCALLS?!?!?!?
   // useEffect(() => {
@@ -44,10 +64,6 @@ function App() {
 //     sayHello();
 // }, []);
 
-  return (
-    <div>
-      <Hero></Hero>
-    </div>
 
     // test code for testing the Firebase setup. 
     // <div >
@@ -69,7 +85,3 @@ function App() {
     //     ) 
     //   }
     // </div>
-    );
-}
-
-export default App;
