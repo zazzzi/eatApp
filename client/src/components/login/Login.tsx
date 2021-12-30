@@ -1,4 +1,4 @@
-import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, Link, makeStyles, Theme, Typography} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import eatAppLogo from "../../assets/logos/eatAppLogo.png"
 import LoginInputForm from "./LoginInputForm";
@@ -23,6 +23,13 @@ const classes = useStyles();
      </Box>
      <Box>
        <LoginInputForm/>
+     </Box>
+     <Box>
+       <Typography>
+         Inget konto?&nbsp;  
+         <Link href="#" underline="always">Skapa ett här!</Link>
+         
+       </Typography>
      </Box>
    </Box>
   );
