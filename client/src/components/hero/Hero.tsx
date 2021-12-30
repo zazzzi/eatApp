@@ -1,4 +1,5 @@
 import { Box, Button, makeStyles, Theme, Typography } from "@material-ui/core";
+import {Link} from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from "../../assets/logos/eatAppLogo.png";
 import qrBtn from "../../assets/img/qrBtn.png";
@@ -22,7 +23,9 @@ function Hero(props: Iprops) {
         </Box>
       </Box>
       <Box>
-        
+        <Link to={"login"}>
+          <Typography variant="body1">Inget konto? Skapa ett här!</Typography>
+        </Link>
       </Box>
     </Box>
   );
