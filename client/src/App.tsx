@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {db} from './firebase'
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import Hero from "./components/hero/Hero"
  
 function App() {
   const [newName, setNewName] = useState<string>("")
@@ -25,45 +26,50 @@ function App() {
     await updateDoc(userDoc, newFields)
   }
 
-  // fetches all database.
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-    }
-    getUsers()
-  }, [users])
+  // // fetches all database. THIS FUCKS UP THE READCALLS?!?!?!?
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const data = await getDocs(usersCollectionRef);
+  //     setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+  //   }
+  //   getUsers()
+  // }, [users])
 
-  useEffect(() => {
-    const sayHello = async () => {
-      const response = await fetch("/api/hello");
-      const body = await response.json();
-      console.log(body);
-    };
-    sayHello();
-}, []);
+//   useEffect(() => {
+//     const sayHello = async () => {
+//       const response = await fetch("/api/hello");
+//       const body = await response.json();
+//       console.log(body);
+//     };
+//     sayHello();
+// }, []);
 
   return (
-    <div >
-      <input placeholder="Name" onChange={(event) => {
-        setNewName(event.target.value)
-      }}/>
-      <input type="number" placeholder="Number" onChange={(event) => {
-        setNewNumber(event.target.value)
-      }}/>
-      <button onClick={createUser}>Create User</button>
-      {
-        users.map((user: any) => 
-          <div>
-            {user.name + " " + user.phone}
-            <button onClick={() => {updateUser(user.id, user.phone)}}>increase number</button>
-            <button onClick={() => {deleteUser(user.id)}}>delete</button>
-          </div>
-          
-        ) 
-      }
+    <div>
+      <Hero></Hero>
     </div>
-  );
+
+    // test code for testing the Firebase setup. 
+    // <div >
+    //   <input placeholder="Name" onChange={(event) => {
+    //     setNewName(event.target.value)
+    //   }}/>
+    //   <input type="number" placeholder="Number" onChange={(event) => {
+    //     setNewNumber(event.target.value)
+    //   }}/>
+    //   <button onClick={createUser}>Create User</button>
+    //   {
+    //     users.map((user: any) => 
+    //       <div>
+    //         {user.name + " " + user.phone}
+    //         <button onClick={() => {updateUser(user.id, user.phone)}}>increase number</button>
+    //         <button onClick={() => {deleteUser(user.id)}}>delete</button>
+    //       </div>
+          
+    //     ) 
+    //   }
+    // </div>
+    );
 }
 
 export default App;
