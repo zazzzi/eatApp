@@ -8,6 +8,7 @@ import {db} from './firebase'
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import Hero from "./components/hero/Hero"
 import Login from "./components/login/Login"
+import RestaurantMenu from "./components/restaurantMenu/Menu"
  
 function App() {
  
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Hero/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/menu" element={<RestaurantMenu/>}/>
       </Routes>
     </Router>
     );
