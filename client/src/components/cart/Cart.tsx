@@ -38,7 +38,7 @@ function Cart(props: Iprops) {
 
 const useStyles = makeStyles((theme: Theme) => ({
   height: {
-    height: "100%"
+    height: "100vh"
   },
   priceTotal: {
     display: "flex",
