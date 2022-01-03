@@ -8,18 +8,9 @@ interface Iprops {
  
 }
 
-const steps: Array<string> = [
-  'menuItems',
-  "paymentMethod", 
-  'cardPayment',
-  'SwishPayment',
-  'OrderConfirmation'
-]
-
 function Cart(props: Iprops) {
   const classes = useStyles();
-  const [currentStep, setCurrentStep] = useState<boolean>(true)
-
+  
   const total = () => {
     return food.reduce((total, item) => item.price + total, 0)
   }

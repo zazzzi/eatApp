@@ -16,8 +16,8 @@ import SwishPayment from "./Swish"
 import OrderConfirmation from "./OrderConfirmation"
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import { Link } from "react-router-dom";
 import food from "../../food"
+import StripeContainer from "../stripeContainer/StripeContainer";
 
 
 interface Iprops {
@@ -53,7 +53,7 @@ function Checkout() {
       //change this depending on payment method chosen
         return(
         <Box>
-          <SwishPayment/>
+          <StripeContainer/>
         </Box>
       )
       case 2: 
@@ -121,7 +121,6 @@ function Checkout() {
               }
             </Box>
         </Box>
-        
       </Box>
     </Box>
   );

@@ -3,26 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-
 const express_1 = __importDefault(require("express"));
-const path_1 = __importDefault(require("path"));
-const PORT = process.env.PORT || 6969;
+require("dotenv").config();
+const bodyParser = require("body-parser");
 const app = (0, express_1.default)();
-
+const router_1 = __importDefault(require("./resources/stripe/router"));
+const PORT = process.env.PORT || 6969;
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express_1.default.json());
-
-// Serve the React static files after build
-app.use(express_1.default.static("../client/build"));
-
+app.use("/api", router_1.default);
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
-});
-
-app.get("/api/hello", (req, res) => {
-    res.send({ message: "Hello" });
-});
-
-// All other unmatched requests will return the React app
-app.get("/", (req, res) => {
-    res.sendFile(path_1.default.resolve(__dirname, "client", "build", "index.html"));
 });
