@@ -26,6 +26,9 @@ function Hero(props: Iprops) {
         <Link to={"login"}>
           <Typography variant="body1">Inget konto? Skapa ett här!</Typography>
         </Link>
+        <Link to={"cart"}>
+          <Typography variant="body1">cart</Typography>
+        </Link>
       </Box>
     </Box>
   );
