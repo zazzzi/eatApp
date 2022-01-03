@@ -7,6 +7,7 @@ import {
   Typography,
   MobileStepper,
   useTheme,
+  Divider,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import PaymentMethod from "./PaymentMethod"
@@ -15,6 +16,8 @@ import SwishPayment from "./Swish"
 import OrderConfirmation from "./OrderConfirmation"
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import { Link } from "react-router-dom";
+import food from "../../food"
 
 
 interface Iprops {
@@ -25,6 +28,10 @@ function Checkout() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const classes = useStyles();
+
+  const total = () => {
+    return food.reduce((total, item) => item.price + total, 0)
+  }
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -71,7 +78,7 @@ function Checkout() {
         className={classes.style}
         nextButton={
           <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
-            Next
+            {activeStep === 0 ? "Payment" : activeStep === 1 ? "Swish" : "Confirm"}
             {theme.direction === 'rtl' ? (
               <KeyboardArrowLeft />
             ) : (
@@ -91,7 +98,30 @@ function Checkout() {
         }
       />
       <Box>
-        {getStepContent(activeStep)}
+        <Box className={classes.height}>
+            <Box>
+              {getStepContent(activeStep)}
+            </Box>
+            <Divider />
+            <Box className={classes.align}>
+              <Box className={classes.priceTotal}>
+                <Typography>
+                  Summa
+                </Typography>
+                <Typography>
+                  {total()} kr
+                </Typography>
+              </Box>
+              { activeStep === 2 ? 
+              <Box className={classes.buttonContainer}>
+                <Button variant="outlined" className={classes.button}>Cancel</Button>
+                <Button variant="outlined" className={classes.button}>Checkout</Button>
+              </Box>
+              : null
+              }
+            </Box>
+        </Box>
+        
       </Box>
     </Box>
   );
@@ -102,6 +132,25 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 400, 
     flexGrow: 1
   }, 
+  height: {
+    height: "100vh"
+  },
+  priceTotal: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "1rem 1rem 1rem 1rem"
+  },
+  align: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  button: {
+    width: "30%"
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-evenly",
+  }
 }));
 
 export default Checkout; 
