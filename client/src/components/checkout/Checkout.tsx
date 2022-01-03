@@ -20,11 +20,12 @@ interface Iprops {
  
 }
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = ['Betala', 'Betalning', 'Klart'];
 
 function Checkout(props: Iprops) {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
+  const classes = useStyles();
 
   const isStepOptional = (step: number) => {
     return step === 1;
@@ -69,7 +70,7 @@ function Checkout(props: Iprops) {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box className={classes.topContainer}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
@@ -93,7 +94,7 @@ function Checkout(props: Iprops) {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
+          <Typography className={classes.stepsCompleted}>
             All steps completed - you&apos;re finished
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
@@ -103,19 +104,19 @@ function Checkout(props: Iprops) {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Typography className={classes.stepsCompleted}>Step {activeStep + 1}</Typography>
+          <Box className={classes.back}>
             <Button
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1 }}
+              className={classes.backButton}
             >
               Back
             </Button>
             <Box sx={{ flex: '1 1 auto' }} />
             {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+              <Button color="inherit" onClick={handleSkip}>
                 Skip
               </Button>
             )}
@@ -135,10 +136,28 @@ function Checkout(props: Iprops) {
       <SwishPayment/>
       <OrderConfirmation/>
    </Box>
-  ); */
-}
+  ); 
+  }*/
 
-const useStyles = makeStyles((theme: Theme) => ({}));
+
+const useStyles = makeStyles((theme: Theme) => ({
+  topContainer: {
+    width: '100%' 
+  }, 
+  stepsCompleted: {
+    mt: 2, 
+    mb: 1
+  }, 
+  back: {
+    display: 'flex', 
+    flexDirection: 'row', 
+    pt: 2 
+  },
+  backButton: {
+    mr: 1 
+  }
+
+}));
 
 
 export default Checkout; 
