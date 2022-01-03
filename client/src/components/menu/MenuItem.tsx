@@ -1,7 +1,7 @@
 import { Box, Container, Divider, makeStyles, Theme, Typography, Button} from "@material-ui/core";
 import { useEffect, useState } from "react";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import {MenuItemType} from "../../types/types"
 
 interface Iprops {
@@ -35,6 +35,13 @@ function MenuItem({menuItem}:Iprops) {
             {itemContents(item.content)}
           </Container>
           <Container className={classes.coloumn}>
+			  <Button>
+			  	<AddIcon/>
+			  </Button>
+			  
+			  <Button>
+				  <RemoveIcon/>
+			  </Button>
             <Typography variant="overline" display="block" gutterBottom>{item.price} kr</Typography>
           </Container>
         </Box>
