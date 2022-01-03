@@ -1,14 +1,17 @@
-import { Box, Container, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, Container, Divider, makeStyles, Theme, Typography, Button} from "@material-ui/core";
 import { useEffect, useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import {MenuItemType} from "../../types/types"
 
 interface Iprops {
   menuItem: Array<MenuItemType>
+  category: string
 }
 
 function MenuItem({menuItem}:Iprops) {
   const classes = useStyles();
-
+  
   const itemContents = (cont: any) => {
     return (
       <Box>
@@ -22,23 +25,21 @@ function MenuItem({menuItem}:Iprops) {
   return (
    <Box>
        {menuItem.map((item: MenuItemType) => 
+	   <Box className={classes.menuitemContainer}>
         <Box className={classes.menuItem}>
-          <Divider/>
           <Container className={classes.coloumn}>
             <img className={classes.image} src={item.img}/>
           </Container>
-          <Divider/>
           <Container className={classes.coloumn}>
             <Typography variant="overline" display="block" gutterBottom >{item.title}</Typography>
             {itemContents(item.content)}
           </Container>
-          <Divider/>
           <Container className={classes.coloumn}>
             <Typography variant="overline" display="block" gutterBottom>{item.price} kr</Typography>
-            <Typography variant="overline" display="block" gutterBottom>{item.price} kr</Typography>
           </Container>
-          <Divider/>
         </Box>
+		<hr />
+	   </Box>
        )}
    </Box>
   );
@@ -48,10 +49,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   menuItem: {
     display: "flex",
     justifyContent: "space-between",
-    padding: "1rem 0rem 1rem 0rem"
+    padding: "1rem 0rem 2rem 0rem",
+	maxHeight: "4rem",
+  },
+  menuitemContainer: {
+	display: "flex",
+	flexDirection: "column"
   },
   image: {
     width: '100%',
+	maxWidth: "5rem",
     borderRadius: "50%"
   },
   coloumn: {

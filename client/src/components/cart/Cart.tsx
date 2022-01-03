@@ -20,7 +20,7 @@ function Cart(props: Iprops) {
      <Typography variant="h4" gutterBottom component="div">
         Cart
       </Typography>
-      <MenuItem menuItem = {food}/>
+      <MenuItem menuItem = {food} category={"all"} />
       <Divider />
       <Box className={classes.align}>
         <Box className={classes.priceTotal}>

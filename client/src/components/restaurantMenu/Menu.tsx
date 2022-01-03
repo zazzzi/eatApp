@@ -1,6 +1,8 @@
 import { Box, makeStyles, Theme, Typography, Tabs, Tab} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import * as React from 'react';
+import food from "../../food"
+import MenuItem from "../menu/MenuItem"
 
 interface Iprops {
  
@@ -8,7 +10,13 @@ interface Iprops {
 
 function RestaurantMenu(props: Iprops) {
 	const classes = useStyles()
-	const [value, setValue] = React.useState("0");
+	const [value, setValue] = useState("0");
+
+
+	useEffect(() => {
+	
+	  }, []);
+	
 
 	const handleChange = (event: any, newValue: any) => {
 		setValue(newValue);
@@ -16,7 +24,7 @@ function RestaurantMenu(props: Iprops) {
   return (
    <Box className={classes.menuPageContainer}>
        <Box className={classes.menuBackground}></Box>
-	   <Box className={classes.restaurantNameContainer}>
+	   <Box id="nameContainer" className={classes.restaurantNameContainer}>
 	   		<Typography className={classes.restaurantName} variant="h2">Brygghuset</Typography>
 			<Box className={classes.menuList}>
 				<Box className={classes.menuTabs}>
@@ -40,7 +48,10 @@ function RestaurantMenu(props: Iprops) {
 				</Box>
 					<hr />
 				<Box className={classes.menuItemContainer}>
-					
+				{value === "0" ? 
+				
+				<MenuItem menuItem = {food} category={"drink"}/>
+			: null}
 				</Box>
 			</Box>
 	   </Box>
@@ -65,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		backgroundImage: `url(${"https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"})`
 	},
 	restaurantNameContainer: {
-		// position: "fixed",
+		position: "absolute",
 		marginTop: "40%",
 		zIndex: 10,
 		height: "100%",
@@ -79,6 +90,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		padding: "2rem",
 	},
 	menuList: {
+		position: "sticky",
 		height: "100%",
 		width: "100%",
 		backgroundColor: "#FEFEFE",
@@ -91,9 +103,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 		padding: "1rem 1rem 0rem 1rem",
 	},
 	menuItemContainer: {
-		display: "flex",
-		flexDirection: "column",
+		overflow: "scroll",
+		// backgroundColor: "blue",
 		height: "100%",
+		width: "100%",
 	}
 }));
 
