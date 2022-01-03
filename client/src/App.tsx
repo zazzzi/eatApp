@@ -9,6 +9,7 @@ import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase
 import Hero from "./components/hero/Hero"
 import Login from "./components/login/Login"
 import Cart from './components/cart/Cart';
+import CreateUser from './components/login/CreateUser';
  
 function App() {
  
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Hero/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/create-user" element={<CreateUser/>}/>
         <Route path="/cart" element={<Cart/>}/>
       </Routes>
     </Router>
