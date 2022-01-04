@@ -13,10 +13,9 @@ interface Iprops {
 function Cart(props: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
-  console.log(cart)
+
   const total = () => {
-    //times the quantity as well as the total of all items
-    return cart.reduce((total, item) => item.price + total, 0)
+    return cart.reduce((total, item) => (item.price * item.quantity) + total, 0)
   }
 
   return (
