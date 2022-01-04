@@ -6,7 +6,7 @@ import {MenuItemType} from "../../types/types"
 
 interface Iprops {
   menuItem: Array<MenuItemType>
-  category: string
+  /* category: string */
 }
 
 function MenuItem({menuItem}:Iprops) {
