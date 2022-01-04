@@ -11,21 +11,22 @@ interface Iprops {
 function CreateUser(props: Iprops) {
 const classes = useStyles();
   return (
-   <Box>
-     <Box>
-       <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png"/>
+   <Box className={classes.registerPageContainer}>
+     <Box mt={2}>
+		 <a href="/">
+       		<img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png"/>
+		 </a>
      </Box>
-     <Box>
-       <Typography variant="h2">
+     <Box mt={2} className={classes.titleContainer}>
+       <Typography variant="h5">
          Skapa nytt konto
        </Typography>
        <Typography variant="body2">
         Fyll i dina uppgifter här.
        </Typography>
-     </Box>
-     <Box>
          <CreateUserForm/>
      </Box>
+    
    
    </Box>
   );
@@ -35,8 +36,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
-    marginTop: "100px",
   },
+  titleContainer: {
+	  display: "flex",
+	  flexDirection: "column",
+	  alignItems: "center",
+	  justifyContent: "center",
+  },
+  registerPageContainer: {
+	  background: "#FEFEFE",
+	  height: "100vh",
+	  display: "flex",
+	  flexDirection: "column",
+	  justifyContent: "space-around",
+	  alignItems: "center",
+  }
   
 }));
 

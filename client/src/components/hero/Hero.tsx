@@ -1,7 +1,7 @@
 import { Box, Button, makeStyles, Theme, Typography } from "@material-ui/core";
 import {Link} from "react-router-dom";
 import { useEffect, useState } from "react";
-import logo from "../../assets/logos/eatAppLogo.png";
+import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import qrBtn from "../../assets/img/qrBtn.png";
 
 interface Iprops {}
@@ -10,8 +10,10 @@ function Hero(props: Iprops) {
   const classes = useStyles();
 
   return (
-    <Box>
-      <img className={classes.logo} src={logo} alt="eatApp.png" />
+    <Box className={classes.heroContainer}>
+      	<a href="/">
+       		<img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png"/>
+		 </a>
       <Box className={classes.qrBtnContainer}>
         <Box>
           <Button>
@@ -22,7 +24,7 @@ function Hero(props: Iprops) {
           <Typography variant="body1">Scanna restaurangens QR-kod för att komma igång.</Typography>
         </Box>
       </Box>
-      <Box>
+      <Box className={classes.signUpContainer}>
         <Link to={"login"}>
           <Typography variant="body1">Inget konto? Skapa ett här!</Typography>
         </Link>
@@ -38,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
-    marginTop: "100px",
   },
   qrBtnContainer: {
     display: "flex",
@@ -52,6 +53,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: "1rem",
     maxWidth: "14rem",
     textAlign: "center"
+  },
+  signUpContainer: {
+	  display: "flex",
+	  flexDirection: "column",
+	  alignItems: "center",
+	  textDecoration: "none",
+  },
+  heroContainer: {
+	  height: "100vh",
+	  display: "flex",
+	  flexDirection: "column",
+	  justifyContent: "space-around",
+	  background: "linear-gradient(to right, #83a4d4, #b6fbff)",
   }
 }));
 

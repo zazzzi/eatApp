@@ -51,7 +51,7 @@ function LoginInputForm(props: Iprops) {
         />
       </Box>
       <Box>
-        <Typography variant="body1">Problem med att logga in?</Typography>
+        <Typography variant="body2">Problem med att logga in?</Typography>
         <Button onClick={sendUser}>Logga in ➡️</Button>
       </Box>
     </Box>

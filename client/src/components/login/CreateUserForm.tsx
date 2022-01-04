@@ -120,8 +120,8 @@ function CreateUserForm(props: Iprops) {
           error={!passwordMatch}
         />
       </Box>
-      <Box>
-        <Button onClick={sendUser}>Skapa användare➡️</Button>
+      <Box className={classes.buttonContainer} mt={2}>
+        <Button onClick={sendUser}>Skapa användare ➡️</Button>
       </Box>
     </Box>
   );
@@ -137,6 +137,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   inputField: {
     width: "15rem",
   },
+  buttonContainer: {
+	  display: "flex",
+	  justifyContent: "center",
+  }
 }));
 
 export default CreateUserForm;
