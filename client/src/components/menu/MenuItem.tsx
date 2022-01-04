@@ -6,8 +6,7 @@ import {MenuItemType} from "../../types/types";
 import Incrementer from '../incrementer/Incrementer'
 
 interface Iprops {
-  menuItem: Array<MenuItemType>
-  /* category: string */
+  menuItem: any
 }
 
 function MenuItem({menuItem}:Iprops) {
@@ -25,7 +24,7 @@ function MenuItem({menuItem}:Iprops) {
 
   return (
    <Box>
-       {menuItem.map((item: MenuItemType) => 
+      {menuItem.map((item: MenuItemType) => 
 	   <Box className={classes.menuitemContainer}>
         <Box className={classes.menuItem}>
           <Container className={classes.imageColumn}>
@@ -37,7 +36,7 @@ function MenuItem({menuItem}:Iprops) {
           </Container>
           <Container className={classes.priceColumn}>
 			  <Box>
-          <Incrementer/>
+          <Incrementer menuItem={menuItem}/>
 			  </Box>
             <Typography variant="overline" display="block" gutterBottom>{item.price} kr</Typography>
           </Container>

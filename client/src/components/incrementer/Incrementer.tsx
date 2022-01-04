@@ -1,21 +1,21 @@
 import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { CartContext, CartItem } from "../../context/CartContext";
+import { CartContext } from "../../context/CartContext";
+import { MenuItemType } from "../../types/types";
 
-/* interface IProps {
-  product: CartItem;
-} */
+interface IProps {
+  menuItem: any;
+}
 
-function GroupedButtons() {
-  const { addToCart, removeProductFromCart } = useContext(CartContext);
+function GroupedButtons({menuItem}:IProps) {
+  const { addToCart, removeProductFromCart, clearCart } = useContext(CartContext);
 
   return (
     <ButtonGroup size="small" aria-label="small outlined button group">
       <Button
         onClick={() => {
-          console.log('test')
-         /*  addToCart(props.product); */
+          removeProductFromCart(menuItem[0]);
         }}
       >
         -
@@ -23,11 +23,17 @@ function GroupedButtons() {
       <Button>0</Button>
       <Button
         onClick={() => {
-          console.log('test')
-          /* removeFromCart(props.product); */
+          addToCart(menuItem[0]);
         }}
       >
         +
+      </Button>
+      <Button
+        onClick={() => {
+          clearCart();
+        }}
+      >
+        clear
       </Button>
     </ButtonGroup>
   );

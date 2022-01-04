@@ -2,16 +2,16 @@ import { createContext, useEffect, useState } from "react";
 import { MenuItemType } from "../types/types";
 
 
-export interface CartItem extends MenuItemType{
+export interface MenuItem extends MenuItemType{
   quantity: number;
 }
 
 interface IState {
-  cart: CartItem[];
+  cart: MenuItem[];
 }
 interface ContextValue extends IState {
   addToCart: (product: MenuItemType) => void;
-  removeProductFromCart: (id: CartItem) => void;
+  removeProductFromCart: (id: MenuItem) => void;
   clearCart: () => void;
 }
 
@@ -27,33 +27,35 @@ interface Props {
 }
 
 function CartProvider(props: Props) {
-  const [cartItems, setCartItems] = useState([] as CartItem[]);
+  const [cartItems, setCartItems] = useState([] as MenuItem[]);
 
-  function addProductToCart(product: MenuItemType) {
-    /* setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.name === product.name);
+ 
+
+  function addProductToCart(menuItem: MenuItemType) {
+    setCartItems((prev) => {
+      const isItemInCart = prev.find((item) => item.title === menuItem.title);
       if (isItemInCart) {
-        return prev.map((item: CartItem) =>
-          item.name === product.name
+        return prev.map((item: MenuItem) =>
+          item.title === menuItem.title
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      return [...prev, { ...product, quantity: 1 }];
-    }); */
+      return [...prev, { ...menuItem, quantity: 1 }];
+    });
   }
 
-  function removeProductFromCart(productName: MenuItemType) {
-    /* setCartItems((prev) =>
+  function removeProductFromCart(menuItem: MenuItemType) {
+    setCartItems((prev) =>
       prev.reduce((ack, item) => {
-        if (item.name === productName.name) {
+        if (item.title === menuItem.title) {
           if (item.quantity === 1) return ack;
           return [...ack, { ...item, quantity: item.quantity - 1 }];
         } else {
           return [...ack, item];
         }
-      }, [] as CartItem[])
-    ); */
+      }, [] as MenuItem[])
+    );
   }
 
   function clearCart() {
