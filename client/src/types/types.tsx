@@ -1,3 +1,4 @@
+import {MenuItem} from "../context/CartContext";
 export interface MenuItemType {
   id: string,
   title: string,
@@ -7,12 +8,10 @@ export interface MenuItemType {
   category: string[],
   img: string
 }
-
 export interface IncomingUser {
   email: string,
   password: string
 }
-
 export interface User {
   firstName: string,
   lastName: string,
@@ -23,4 +22,13 @@ export interface User {
   ID?: string,
   backgroundImg?: string,
   themeColor?: string, 
+}
+export interface Order {
+  id: string,
+  orderDate: Date,
+  cart: MenuItem[],
+  session: string,
+  priceTotal: number,
+  table: string,
+  payment: any
 }

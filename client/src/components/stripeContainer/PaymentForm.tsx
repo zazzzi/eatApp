@@ -10,26 +10,6 @@ import { useEffect, useState } from "react";
 import axios from "axios"
 import StripeInput from "./StripeInput"
 
-const CARD_OPTIONS: any = {
-	iconStyle: "solid",
-	style: {
-		base: {
-			iconColor: "#c4f0ff",
-			color: "#fff",
-			fontWeight: 500,
-			fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-			fontSize: "16px",
-			fontSmoothing: "antialiased",
-			":-webkit-autofill": { color: "#fce883" },
-			"::placeholder": { color: "#87bbfd" }
-		},
-		invalid: {
-			iconColor: "#ffc7ee",
-			color: "#ffc7ee"
-		}
-	}
-}
-
 interface Iprops {
  
 }
@@ -66,7 +46,6 @@ function PaymentForm(props: Iprops) {
         amount: 1000,
         id: id
       })
-  
       if(response.data.success) {
         console.log("Successful payment")
         setSucces(true)

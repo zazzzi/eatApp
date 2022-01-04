@@ -13,26 +13,29 @@ import Cart from './components/cart/Cart';
 import CreateUser from './components/login/CreateUser';
 import Checkout from './components/checkout/Checkout';
 import CartProvider from './context/CartContext';
-import MenuProvider from "./context/MenusContext"
+import MenuProvider from "./context/MenusContext";
+import OrderProvider from "./context/MenusContext";
 
  
 function App() {
  
   return (
-    <CartProvider>
-      <MenuProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Hero/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/create-user" element={<CreateUser/>}/>
-            <Route path="/menu" element={<RestaurantMenu/>}/>
-            <Route path="/cart" element={<Cart/>}/>
-            <Route path="/checkout" element={<Checkout/>}/>
-          </Routes>
-        </Router>
-      </MenuProvider>
-    </CartProvider>
+    <OrderProvider>
+      <CartProvider>
+        <MenuProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Hero/>}/>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/create-user" element={<CreateUser/>}/>
+              <Route path="/menu" element={<RestaurantMenu/>}/>
+              <Route path="/cart" element={<Cart/>}/>
+              <Route path="/checkout" element={<Checkout/>}/>
+            </Routes>
+          </Router>
+        </MenuProvider>
+      </CartProvider>
+    </OrderProvider>
     );
 }
 
