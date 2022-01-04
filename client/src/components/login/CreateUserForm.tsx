@@ -14,7 +14,8 @@ interface Iprops {}
 
 function CreateUserForm(props: Iprops) {
   const classes = useStyles();
-
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [passwordMatch, setPasswordMatch] = useState<boolean>();
   const [userToCreate, setUserToCreate] = useState<User>({
     firstName: "",
     lastName: "",
@@ -23,6 +24,14 @@ function CreateUserForm(props: Iprops) {
     role: "user",
     password: "",
   });
+
+  useEffect(() => {
+    if (userToCreate.password !== confirmPassword) {
+      setPasswordMatch(false);
+    } else {
+      setPasswordMatch(true);
+    }
+  }, [confirmPassword, userToCreate.password]);
 
   function updateUserObject(id: string, value: string) {
     setUserToCreate({
@@ -44,15 +53,10 @@ function CreateUserForm(props: Iprops) {
   function passwordValidation(
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) {
-    let firstPassword: string | null = null;
-    let secondPassword: string | null = null;
-
-    if (event.target.id === "password") {
-      firstPassword = event.target.value;
-
-      if (secondPassword && firstPassword === secondPassword) {
-        updateUserObject("password", firstPassword);
-      }
+    setConfirmPassword(event.target.value);
+    console.log(confirmPassword);
+    if (confirmPassword === userToCreate.password) {
+      console.log("True");
     }
   }
 
@@ -101,17 +105,19 @@ function CreateUserForm(props: Iprops) {
           label="Lösenord"
           type="password"
           autoComplete="current-password"
-          onBlur={passwordValidation}
-          //   onChange={handleChange}
+          // onBlur={passwordValidation}
+          onChange={handleChange}
         />
         <TextField
           className={classes.inputField}
           id="password2"
-          disabled={true}
           label="Lösenord"
           type="password"
           autoComplete="current-password"
-          onChange={handleChange}
+          helperText={!passwordMatch ? "Lösenorden matchar inte" : null}
+          onChange={passwordValidation}
+          onBlur={passwordValidation}
+          error={!passwordMatch}
         />
       </Box>
       <Box>
