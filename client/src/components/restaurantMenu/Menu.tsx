@@ -2,8 +2,9 @@ import { Box, makeStyles, Theme, Typography, Tabs, Tab} from "@material-ui/core"
 import { useEffect, useState, useContext } from "react";
 import * as React from 'react';
 import food from "../../food"
-import MenuItem from "../menu/MenuItem"
+import MenuItems from "../menu/MenuItem"
 import {MenuContext} from '../../context/MenusContext'
+import { MenuItemType } from "../../types/types";
 interface Iprops {
  
 }
@@ -24,13 +25,13 @@ function RestaurantMenu(props: Iprops) {
 		setValue(newValue);
 	};
 
-  const filterMenuItems = (item: any) => {
-    const filtered = item.category.map((i: any) => { 
+  const filterMenuItems = (item: MenuItemType) => {
+    const filtered = item.category.map((i: string) => { 
       if(i === value){return item}})
     const filterUndefined = filtered.filter(function(x: any) {
       return x !== undefined;
     });
-    return <MenuItem menuItem={filterUndefined}/>
+    return <MenuItems menuItems={filterUndefined}/>
   }
 
   return (

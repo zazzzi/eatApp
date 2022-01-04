@@ -3,7 +3,7 @@ import { SsidChartTwoTone } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import food from "../../food"
-import MenuItem from "../menu/MenuItem"
+import MenuItems from "../menu/MenuItem"
 import { CartContext } from "../../context/CartContext";
 
 interface Iprops {
@@ -13,7 +13,7 @@ interface Iprops {
 function Cart(props: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
-
+  console.log(cart)
   const total = () => {
     //times the quantity as well as the total of all items
     return cart.reduce((total, item) => item.price + total, 0)
@@ -29,7 +29,7 @@ function Cart(props: Iprops) {
           Your cart is empty
         </Typography> 
         :
-        <MenuItem menuItem = {cart}/>
+        <MenuItems menuItems = {cart}/>
       }
       <Divider />
       <Box className={classes.align}>
