@@ -35,13 +35,11 @@ function MenuItem({menuItem}:Iprops) {
             {itemContents(item.content)}
           </Container>
           <Container className={classes.coloumn}>
-			  <Button>
+			  <Box className={classes.quantityContainer}>
 			  	<AddIcon/>
-			  </Button>
-			  
-			  <Button>
-				  <RemoveIcon/>
-			  </Button>
+				  <Typography>1</Typography>
+				<RemoveIcon/>
+			  </Box>
             <Typography variant="overline" display="block" gutterBottom>{item.price} kr</Typography>
           </Container>
         </Box>
@@ -76,6 +74,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   font: {
     fontSize: "0.6rem"
+  },
+  quantityContainer: {
+	  display: "flex",
+	  flexDirection: "row-reverse",
+	  width: "2rem",
   }
 }));
 
