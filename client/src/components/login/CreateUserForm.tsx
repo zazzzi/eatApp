@@ -6,7 +6,7 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { FocusEventHandler, useEffect, useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { User } from "../../types/types";
 
@@ -21,33 +21,44 @@ function CreateUserForm(props: Iprops) {
     email: "",
     phoneNumber: 0,
     role: "user",
-    password: "",  
+    password: "",
   });
 
-
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function updateUserObject(id: string, value: string) {
     setUserToCreate({
       ...userToCreate,
-      [event.target.id]: event.target.value,
+      [id]: value,
     });
   }
 
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    updateUserObject(event.target.id, event.target.value);
+  }
+
   function sendUser() {
-    console.log('====================================');
+    console.log("====================================");
     console.log(userToCreate);
-    console.log('====================================');
+    console.log("====================================");
   }
 
-  function passwordValidation(){
-      //123
-  }
+  function passwordValidation(
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
+  ) {
+    let firstPassword: string | null = null;
+    let secondPassword: string | null = null;
 
+    if (event.target.id === "password") {
+      firstPassword = event.target.value;
+
+      if (secondPassword && firstPassword === secondPassword) {
+        updateUserObject("password", firstPassword);
+      }
+    }
+  }
 
   return (
     <Box>
       <Box className={classes.outerContainer}>
-          
         <TextField
           className={classes.inputField}
           id="email"
@@ -90,17 +101,18 @@ function CreateUserForm(props: Iprops) {
           label="Lösenord"
           type="password"
           autoComplete="current-password"
-          onChange={handleChange}
-        /> 
+          onBlur={passwordValidation}
+          //   onChange={handleChange}
+        />
         <TextField
-        className={classes.inputField}
-        id="password2"
-        disabled={true}
-        label="Lösenord"
-        type="password"
-        autoComplete="current-password"
-        onChange={handleChange}
-      />
+          className={classes.inputField}
+          id="password2"
+          disabled={true}
+          label="Lösenord"
+          type="password"
+          autoComplete="current-password"
+          onChange={handleChange}
+        />
       </Box>
       <Box>
         <Button onClick={sendUser}>Skapa användare➡️</Button>
