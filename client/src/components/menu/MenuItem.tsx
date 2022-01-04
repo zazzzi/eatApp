@@ -36,8 +36,7 @@ function MenuItem({menuItem}:Iprops) {
             {itemContents(item.content)}
           </Container>
           <Container className={classes.priceColumn}>
-          
-			  <Box className={classes.quantityContainer}>
+			  <Box>
           <Incrementer/>
 			  </Box>
             <Typography variant="overline" display="block" gutterBottom>{item.price} kr</Typography>

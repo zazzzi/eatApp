@@ -18,16 +18,16 @@ function GroupedButtons() {
          /*  addToCart(props.product); */
         }}
       >
-        +
+        -
       </Button>
-      <Button>1</Button>
+      <Button>0</Button>
       <Button
         onClick={() => {
           console.log('test')
           /* removeFromCart(props.product); */
         }}
       >
-        -
+        +
       </Button>
     </ButtonGroup>
   );
