@@ -5,7 +5,7 @@ const food = [
   price: 69,
   quantity: 1,
   content: ["4,6%"],
-  category: ["drink", "all"],
+  category: ["Dryck", "all"],
   img: "https://produits.bienmanger.com/6105-0w0h0_Maredsous_Tripel_Abbey_Beer_From_Belgium.jpg"
 },
 {
@@ -14,7 +14,7 @@ const food = [
   price: 123,
   quantity: 3,
   content: ["2 cl Gin", "2 cl Martini Rosso", "2 cl Campari Bitter"],
-  category: ["drink", "all"],
+  category: ["Dryck", "all"],
   img: "https://produits.bienmanger.com/6105-0w0h0_Maredsous_Tripel_Abbey_Beer_From_Belgium.jpg"
 },
 {
@@ -23,7 +23,7 @@ const food = [
   price: 123,
   quantity: 1,
   content: ["12,6%"],
-  category: ['food', "all"],
+  category: ['Dryck', "all"],
   img: "https://produits.bienmanger.com/6105-0w0h0_Maredsous_Tripel_Abbey_Beer_From_Belgium.jpg"
 },
 {
@@ -32,7 +32,7 @@ const food = [
   price: 123,
   quantity: 1,
   content: ["12,6%"],
-  category: ['food', "all"],
+  category: ['Cocktails', "all"],
   img: "https://produits.bienmanger.com/6105-0w0h0_Maredsous_Tripel_Abbey_Beer_From_Belgium.jpg"
 },
 {
@@ -41,7 +41,7 @@ const food = [
   price: 123,
   quantity: 1,
   content: ["12,6%"],
-  category: ['food', "all"],
+  category: ['Cocktails', "all"],
   img: "https://produits.bienmanger.com/6105-0w0h0_Maredsous_Tripel_Abbey_Beer_From_Belgium.jpg"
 },
 {
@@ -50,7 +50,7 @@ const food = [
   price: 123,
   quantity: 1,
   content: ["12,6%"],
-  category: ['food', "all"],
+  category: ['Mat', "all"],
   img: "https://produits.bienmanger.com/6105-0w0h0_Maredsous_Tripel_Abbey_Beer_From_Belgium.jpg"
 },
 {
@@ -59,7 +59,7 @@ const food = [
   price: 123,
   quantity: 1,
   content: ["12,6%"],
-  category: ['food', "all"],
+  category: ['Mat', "all"],
   img: "https://produits.bienmanger.com/6105-0w0h0_Maredsous_Tripel_Abbey_Beer_From_Belgium.jpg"
 },
 ]

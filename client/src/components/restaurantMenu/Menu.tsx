@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 import * as React from 'react';
 import food from "../../food"
 import MenuItem from "../menu/MenuItem"
+import { StringLiteralType } from "typescript";
 
 interface Iprops {
  
 }
 
+const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails"]
+
 function RestaurantMenu(props: Iprops) {
 	const classes = useStyles()
-	const [value, setValue] = useState("0");
-
+	const [value, setValue] = useState<string>("Dryck");
 
 	useEffect(() => {
 	
@@ -20,7 +22,17 @@ function RestaurantMenu(props: Iprops) {
 
 	const handleChange = (event: any, newValue: any) => {
 		setValue(newValue);
-	  };
+	};
+
+  const filterMenuItems = (item: any) => {
+    const filtered = item.category.map((i: any) => { 
+      if(i === value){return item}})
+    const filterUndefined = filtered.filter(function(x: any) {
+      return x !== undefined;
+    });
+    return <MenuItem menuItem={filterUndefined}/>
+  }
+
   return (
    <Box className={classes.menuPageContainer}>
        <Box className={classes.menuBackground}></Box>
@@ -35,23 +47,16 @@ function RestaurantMenu(props: Iprops) {
 					indicatorColor="secondary"
         			onChange={handleChange}
 					>
-
-						<Tab label="Dryck" value="0"></Tab>
-						<Tab label="Mat" value="1"></Tab>
-						<Tab label="Snacks" value="2"></Tab>
-						<Tab label="Snacks" value="3"></Tab>
-						<Tab label="Snacks" value="4"></Tab>
-						<Tab label="Snacks" value="5"></Tab>
-						<Tab label="Snacks" value="6"></Tab>
-
+            {
+              tabs.map((t) => 
+                <Tab label={t} value={t}/>
+              )
+            }
 					</Tabs>
 				</Box>
 					<hr />
 				<Box className={classes.menuItemContainer}>
-				{value === "0" ? 
-				
-				<MenuItem menuItem = {food} category={"drink"}/>
-			: null}
+				{food.map((i: any) => filterMenuItems(i))}
 				</Box>
 			</Box>
 	   </Box>
