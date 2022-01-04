@@ -1,12 +1,14 @@
 import { Box, Link, makeStyles, Theme, Typography} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import eatAppLogo from "../../assets/logos/eatAppLogo.png"
+import CreateUserForm from "./CreateUserForm";
 import LoginInputForm from "./LoginInputForm";
+
 interface Iprops {
  
 }
 
-function Login(props: Iprops) {
+function CreateUser(props: Iprops) {
 const classes = useStyles();
   return (
    <Box>
@@ -15,22 +17,16 @@ const classes = useStyles();
      </Box>
      <Box>
        <Typography variant="h2">
-         Välkommen
+         Skapa nytt konto
        </Typography>
        <Typography variant="body2">
-        Logga in på ditt konto här.
+        Fyll i dina uppgifter här.
        </Typography>
      </Box>
      <Box>
-       <LoginInputForm/>
+         <CreateUserForm/>
      </Box>
-     <Box>
-       <Typography>
-         Inget konto?&nbsp;  
-         <Link href="/create-user" underline="always">Skapa ett här!</Link>
-         
-       </Typography>
-     </Box>
+   
    </Box>
   );
 }
@@ -45,4 +41,4 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-export default Login; 
+export default CreateUser; 

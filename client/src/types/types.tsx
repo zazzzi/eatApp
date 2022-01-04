@@ -8,3 +8,19 @@ export interface MenuItemType {
   img: string
 }
 
+export interface IncomingUser {
+  email: string,
+  password: string
+}
+
+export interface User {
+  firstName: string,
+  lastName: string,
+  email: string,
+  phoneNumber: number,
+  role: string,
+  password: string, 
+  ID?: string,
+  backgroundImg?: string,
+  themeColor?: string, 
+}
