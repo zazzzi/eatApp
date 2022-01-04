@@ -8,7 +8,6 @@ interface IProps {
   menuItem: MenuItemType | MenuItem;
 }
 
-
 function GroupedButtons({menuItem}:IProps) {
   const { addToCart, removeProductFromCart, clearCart, cart } = useContext(CartContext);
 
@@ -22,30 +21,12 @@ function GroupedButtons({menuItem}:IProps) {
 
   return (
     <ButtonGroup size="small" aria-label="small outlined button group">
-      <Button
-        onClick={() => {
-          removeProductFromCart(menuItem);
-        }}
-      >
-        -
-      </Button>
+      <Button onClick={() => {removeProductFromCart(menuItem);}}>-</Button>
         <Button>
           {!menuItem.quantity ? cartQuantity(menuItem) : menuItem.quantity}
         </Button>
-      <Button
-        onClick={() => {
-          addToCart(menuItem);
-        }}
-      >
-        +
-      </Button>
-      <Button
-        onClick={() => {
-          clearCart();
-        }}
-      >
-        clear
-      </Button>
+      <Button onClick={() => {addToCart(menuItem);}}>+</Button>
+      <Button onClick={() => {clearCart();}}>clear</Button>
     </ButtonGroup>
   );
 }
