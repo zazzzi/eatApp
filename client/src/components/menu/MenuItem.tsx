@@ -2,14 +2,15 @@ import { Box, Container, Divider, makeStyles, Theme, Typography, Button} from "@
 import { useEffect, useState } from "react";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import {MenuItemType} from "../../types/types"
+import {MenuItemType} from "../../types/types";
+import Incrementer from '../incrementer/Incrementer'
+import { MenuItem } from "../../context/CartContext";
 
 interface Iprops {
-  menuItem: Array<MenuItemType>
-  /* category: string */
+  menuItems: any;
 }
 
-function MenuItem({menuItem}:Iprops) {
+function MenuItems({menuItems}:Iprops) {
   const classes = useStyles();
   
   const itemContents = (cont: any) => {
@@ -24,7 +25,7 @@ function MenuItem({menuItem}:Iprops) {
 
   return (
    <Box>
-       {menuItem.map((item: MenuItemType) => 
+      {menuItems.map((item: MenuItemType | MenuItem) => 
 	   <Box className={classes.menuitemContainer}>
         <Box className={classes.menuItem}>
           <Container className={classes.imageColumn}>
@@ -35,10 +36,8 @@ function MenuItem({menuItem}:Iprops) {
             {itemContents(item.content)}
           </Container>
           <Container className={classes.priceColumn}>
-			  <Box className={classes.quantityContainer}>
-			  	<AddIcon/>
-				  <Typography>1</Typography>
-				<RemoveIcon/>
+			  <Box>
+          <Incrementer menuItem={item}/>
 			  </Box>
             <Typography variant="overline" display="block" gutterBottom>{item.price} kr</Typography>
           </Container>
@@ -104,4 +103,4 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-export default MenuItem; 
+export default MenuItems; 
