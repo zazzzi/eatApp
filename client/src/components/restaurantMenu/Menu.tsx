@@ -52,22 +52,11 @@ function RestaurantMenu(props: Iprops) {
                 <Tab label={t} value={t}/>
               )
             }
-
-						{/* <Tab label="Dryck" value="0"></Tab>
-						<Tab label="Mat" value="1"></Tab>
-						<Tab label="Snacks" value="2"></Tab>
-						<Tab label="Snacks" value="3"></Tab>
-						<Tab label="Snacks" value="4"></Tab>
-						<Tab label="Snacks" value="5"></Tab>
-						<Tab label="Snacks" value="6"></Tab> */}
-
 					</Tabs>
 				</Box>
 					<hr />
 				<Box className={classes.menuItemContainer}>
-				{
-          food.map((i: any) => filterMenuItems(i))
-			  }
+				{food.map((i: any) => filterMenuItems(i))}
 				</Box>
 			</Box>
 	   </Box>
