@@ -9,19 +9,19 @@ interface Iprops {
 function Login(props: Iprops) {
 const classes = useStyles();
   return (
-   <Box>
+   <Box className={classes.pageContainer}>
      <Box>
-       <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png"/>
+		<a href="/">
+			<img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png"/>
+		</a>
      </Box>
-     <Box>
+     <Box className={classes.formContainer}>
        <Typography variant="h2">
          Välkommen
        </Typography>
        <Typography variant="body2">
         Logga in på ditt konto här.
        </Typography>
-     </Box>
-     <Box>
        <LoginInputForm/>
      </Box>
      <Box>
@@ -39,8 +39,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
-    marginTop: "100px",
   },
+  pageContainer: {
+	height: "100vh",
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "space-around",
+	alignItems: "center",
+	background: "#FEFEFE",
+},
+	formContainer: {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center"
+}
   
 }));
 

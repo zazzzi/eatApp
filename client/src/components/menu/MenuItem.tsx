@@ -62,9 +62,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 	flexDirection: "column"
   },
   image: {
-    width: '100%',
-	maxWidth: "5rem",
-    borderRadius: "50%"
+	width: "5rem",
+	height: "5rem",
+    borderRadius: "100%",
+	objectFit: "cover",
   },
   priceColumn: {
     display: "flex",
