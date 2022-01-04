@@ -33,6 +33,8 @@ function MenuProvider(props: Props) {
     getMenu()
   }, [])
 
+  
+
   function populateMenu(product: MenuItemType) {
     /* setCartItems((prev) => {
       const isItemInCart = prev.find((item) => item.name === product.name);
