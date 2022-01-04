@@ -1,18 +1,22 @@
 import { Box, makeStyles, Theme, Button, Typography, Divider} from "@material-ui/core";
 import { SsidChartTwoTone } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import food from "../../food"
 import MenuItem from "../menu/MenuItem"
+import { CartContext } from "../../context/CartContext";
+
 interface Iprops {
  
 }
 
 function Cart(props: Iprops) {
   const classes = useStyles();
-  
+  const { cart } = useContext(CartContext);
+
   const total = () => {
-    return food.reduce((total, item) => item.price + total, 0)
+    //times the quantity as well as the total of all items
+    return cart.reduce((total, item) => item.price + total, 0)
   }
 
   return (
@@ -20,7 +24,13 @@ function Cart(props: Iprops) {
      <Typography variant="h4" gutterBottom component="div">
         Cart
       </Typography>
-      {/* <MenuItem menuItem = {food}/> */}
+      {!cart.length ? 
+        <Typography variant="h4" gutterBottom component="div">
+          Your cart is empty
+        </Typography> 
+        :
+        <MenuItem menuItem = {cart}/>
+      }
       <Divider />
       <Box className={classes.align}>
         <Box className={classes.priceTotal}>
