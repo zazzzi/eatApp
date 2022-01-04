@@ -1,16 +1,17 @@
 import { Box, makeStyles, Theme, Button, Typography, Divider} from "@material-ui/core";
+import { SsidChartTwoTone } from "@mui/icons-material";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import food from "../../food"
 import MenuItem from "../menu/MenuItem"
-
 interface Iprops {
  
 }
 
 function Cart(props: Iprops) {
   const classes = useStyles();
-
-  const orderTotal = () => {
+  
+  const total = () => {
     return food.reduce((total, item) => item.price + total, 0)
   }
 
@@ -19,7 +20,7 @@ function Cart(props: Iprops) {
      <Typography variant="h4" gutterBottom component="div">
         Cart
       </Typography>
-      <MenuItem menuItem = {food}/>
+      <MenuItem menuItem = {food} category={"all"} />
       <Divider />
       <Box className={classes.align}>
         <Box className={classes.priceTotal}>
@@ -27,10 +28,15 @@ function Cart(props: Iprops) {
             Summa
           </Typography>
           <Typography>
-            {orderTotal()} kr
+            {total()} kr
           </Typography>
         </Box>
-        <Button variant="outlined" className={classes.button}>Bekräfta</Button>
+        <Box className={classes.buttonContainer}>
+          <Button variant="outlined" className={classes.button}>Tillbaks</Button>
+          <Link to={"/checkout"}>
+            <Button variant="outlined" className={classes.button}>Checkout</Button>
+          </Link>
+        </Box>
       </Box>
    </Box>
   );
@@ -50,8 +56,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column"
   },
   button: {
-    margin: "auto",
     width: "30%"
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-evenly",
   }
 }));
 

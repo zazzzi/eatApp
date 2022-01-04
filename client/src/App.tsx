@@ -8,8 +8,11 @@ import {db} from './firebase'
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import Hero from "./components/hero/Hero"
 import Login from "./components/login/Login"
+import RestaurantMenu from "./components/restaurantMenu/Menu"
 import Cart from './components/cart/Cart';
 import CreateUser from './components/login/CreateUser';
+import Checkout from './components/checkout/Checkout';
+
  
 function App() {
  
@@ -19,7 +22,9 @@ function App() {
         <Route path="/" element={<Hero/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/create-user" element={<CreateUser/>}/>
+        <Route path="/menu" element={<RestaurantMenu/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/checkout" element={<Checkout/>}/>
       </Routes>
     </Router>
     );
