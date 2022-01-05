@@ -53,6 +53,7 @@ function Login(props: Iprops) {
         <LogOutBtn />
       </Box>
     </Box>
+
   );
 }
 
@@ -60,7 +61,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
-    marginTop: "100px",
   },
 }));
 

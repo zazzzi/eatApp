@@ -58,7 +58,9 @@ function LoginInputForm(props: Iprops) {
         </form>
       </Box>
       <Box>
+
         <Typography variant="body1">Problem med att logga in?</Typography>
+
       </Box>
     </Box>
   );

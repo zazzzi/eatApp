@@ -1,19 +1,20 @@
 import { Box, makeStyles, Theme, Typography, Tabs, Tab} from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import * as React from 'react';
 import food from "../../food"
-import MenuItem from "../menu/MenuItem"
-import { StringLiteralType } from "typescript";
-
+import MenuItems from "../menu/MenuItem"
+import {MenuContext} from '../../context/MenusContext'
+import { MenuItemType } from "../../types/types";
 interface Iprops {
  
 }
 
-const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails"]
+const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"]
 
 function RestaurantMenu(props: Iprops) {
 	const classes = useStyles()
 	const [value, setValue] = useState<string>("Dryck");
+  const {menu} = useContext(MenuContext)
 
 	useEffect(() => {
 	
@@ -24,13 +25,13 @@ function RestaurantMenu(props: Iprops) {
 		setValue(newValue);
 	};
 
-  const filterMenuItems = (item: any) => {
-    const filtered = item.category.map((i: any) => { 
+  const filterMenuItems = (item: MenuItemType) => {
+    const filtered = item.category.map((i: string) => { 
       if(i === value){return item}})
     const filterUndefined = filtered.filter(function(x: any) {
       return x !== undefined;
     });
-    return <MenuItem menuItem={filterUndefined}/>
+    return <MenuItems menuItems={filterUndefined}/>
   }
 
   return (
@@ -56,7 +57,7 @@ function RestaurantMenu(props: Iprops) {
 				</Box>
 					<hr />
 				<Box className={classes.menuItemContainer}>
-				{food.map((i: any) => filterMenuItems(i))}
+				{menu.map((i: any) => filterMenuItems(i))}
 				</Box>
 			</Box>
 	   </Box>

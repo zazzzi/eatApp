@@ -53,6 +53,7 @@ function CreateUser(props: Iprops) {
   })
 
   return (
+
     <Box>
       <Box>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
@@ -68,6 +69,7 @@ function CreateUser(props: Iprops) {
         <LogOutBtn/>
       </Box>
     </Box>
+
   );
 }
 
@@ -75,7 +77,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
-    marginTop: "100px",
   },
 }));
 

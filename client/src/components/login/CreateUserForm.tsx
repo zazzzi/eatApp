@@ -75,6 +75,7 @@ function CreateUserForm(props: Iprops) {
   return (
     <Box>
       <Box className={classes.outerContainer}>
+
         <form onSubmit={handleSubmit}>
           <TextField
             className={classes.inputField}
@@ -136,6 +137,7 @@ function CreateUserForm(props: Iprops) {
             <Button type="submit">Skapa användare➡️</Button>
           </Box>
         </form>
+
       </Box>
     </Box>
   );
@@ -151,6 +153,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   inputField: {
     width: "15rem",
   },
+  buttonContainer: {
+	  display: "flex",
+	  justifyContent: "center",
+  }
 }));
 
 export default CreateUserForm;
