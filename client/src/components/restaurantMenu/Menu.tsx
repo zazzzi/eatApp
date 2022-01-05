@@ -1,10 +1,11 @@
-import { Box, makeStyles, Theme, Typography, Tabs, Tab} from "@material-ui/core";
+import { Box, makeStyles, Theme, Typography, Tabs, Tab, Modal, Button, TextField, Select, MenuItem} from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import * as React from 'react';
 import food from "../../food"
 import MenuItems from "../menu/MenuItem"
 import {MenuContext} from '../../context/MenusContext'
 import { MenuItemType } from "../../types/types";
+import EditMenuModal from "./EditModal"
 interface Iprops {
  
 }
@@ -14,7 +15,10 @@ const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"]
 function RestaurantMenu(props: Iprops) {
 	const classes = useStyles()
 	const [value, setValue] = useState<string>("Dryck");
-  const {menu} = useContext(MenuContext)
+  	const {menu} = useContext(MenuContext)
+	const [open, setOpen] = useState(false);
+	const [fileIsUploaded, setFileIsUploaded] = useState(false);
+	
 
 	useEffect(() => {
 	
@@ -23,6 +27,7 @@ function RestaurantMenu(props: Iprops) {
 
 	const handleChange = (event: any, newValue: any) => {
 		setValue(newValue);
+		
 	};
 
   const filterMenuItems = (item: MenuItemType) => {
@@ -34,10 +39,17 @@ function RestaurantMenu(props: Iprops) {
     return <MenuItems menuItems={filterUndefined}/>
   }
 
+
+
+  
+
   return (
-   <Box className={classes.menuPageContainer}>
+	  <Box className={classes.menuPageContainer}>
        <Box className={classes.menuBackground}></Box>
 	   <Box id="nameContainer" className={classes.restaurantNameContainer}>
+	   <Button onClick={() => {
+              setOpen(true);
+            }}>Open modal</Button>
 	   		<Typography className={classes.restaurantName} variant="h2">Brygghuset</Typography>
 			<Box className={classes.menuList}>
 				<Box className={classes.menuTabs}>
@@ -61,6 +73,12 @@ function RestaurantMenu(props: Iprops) {
 				</Box>
 			</Box>
 	   </Box>
+	   {open ? 
+	   <EditMenuModal
+	   closeModal={() => setOpen(false)}
+	   editOpen={Boolean(open)}
+	   />
+	   : null }
    </Box>
   );
 }
@@ -113,7 +131,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 		// backgroundColor: "blue",
 		height: "100%",
 		width: "100%",
-	}
+	},
+	
 }));
 
 
