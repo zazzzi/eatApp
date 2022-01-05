@@ -24,3 +24,8 @@ export interface User {
   backgroundImg?: string,
   themeColor?: string, 
 }
+
+export interface IncomingUser {
+  email: string,
+  password: string
+}
