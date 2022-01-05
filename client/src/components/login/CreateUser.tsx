@@ -13,7 +13,7 @@ import {
   addDoc,
   updateDoc,
   doc,
-  setDoc, 
+  setDoc,
   deleteDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -21,7 +21,10 @@ import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import { User } from "../../types/types";
 import CreateUserForm from "./CreateUserForm";
 import LoginInputForm from "./LoginInputForm";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import LogOutBtn from "./LogOutBtn";
 interface Iprops {}
 
@@ -36,24 +39,22 @@ function CreateUser(props: Iprops) {
     console.log(user);
     await createUserWithEmailAndPassword(auth, user.email, user.password).then(
       async (cred) => {
-        return await setDoc(doc(db, "users", cred.user.uid), {user})
+        return await setDoc(doc(db, "users", cred.user.uid), { user });
       }
     );
   }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user){
-        console.log(user.email, " Logged in")
+      if (user) {
+        console.log(user.email, " Logged in");
       } else {
         console.log("Logged out");
-        
       }
-    })
-  })
+    });
+  });
 
   return (
-
     <Box>
       <Box>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
@@ -66,10 +67,9 @@ function CreateUser(props: Iprops) {
         <CreateUserForm userDataCallback={userDataCallback} />
       </Box>
       <Box>
-        <LogOutBtn/>
+        <LogOutBtn />
       </Box>
     </Box>
-
   );
 }
 

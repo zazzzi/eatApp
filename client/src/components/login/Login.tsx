@@ -11,20 +11,45 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import LogOutBtn from "./LogOutBtn";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 interface Iprops {}
 
 function Login(props: Iprops) {
   const classes = useStyles();
+  const [loggedInUser, setLoggedInUser] = useState<string>();
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user.email, " Logged in");
+        console.log(user.uid);
+        
+      } else {
+        console.log("Logged out");
+      }
+    });
+  });
+
+  //async funtion to log the user in
   async function loginDataCallback(user: IncomingUser) {
     console.log(user);
+
     await signInWithEmailAndPassword(auth, user.email, user.password).then(
-      (cred) => {
-        console.log(cred, " Logged in");
+      async (cred) => {
+        //gets the db-doc that correlates to the UId of the logged in user
+        const docRef = doc(db, "users", cred.user.uid);
+        const docSnap = await getDoc(docRef);
+
+        //checks if the data exist and then sends it in the log
+        if (docSnap.exists()) {
+          console.log("Data: ", docSnap.data());
+        } else {
+          console.log("ERROR");
+        }
       }
     );
   }
@@ -52,8 +77,10 @@ function Login(props: Iprops) {
       <Box>
         <LogOutBtn />
       </Box>
+      <Box>
+        <Typography>Logged in as: {loggedInUser}</Typography>
+      </Box>
     </Box>
-
   );
 }
 
