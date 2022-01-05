@@ -2,12 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import {db} from '../firebase'
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { Order } from "../types/types";
+import { MenuItem } from "./CartContext";
 
 interface IState {
   order: any
 }
 interface ContextValue extends IState {
-  createOrder: (product: any) => void;
+  createOrder: (response: any, cart: MenuItem[]) => void;
 }
 
 export const OrderContext = createContext<ContextValue>({
@@ -20,7 +21,7 @@ interface Props {
 }
 
 function OrderProvider(props: Props) {
-  const [order, setorder] = useState<any>([]);
+  const [order, setorder] = useState<Order | null>(null);
   const usersCollectionRef = collection(db, 'orders')
 
   /* useEffect(() => {
@@ -33,18 +34,9 @@ function OrderProvider(props: Props) {
 
   
 
-  function createOrder(product: any) {
-    /* setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.name === product.name);
-      if (isItemInCart) {
-        return prev.map((item: CartItem) =>
-          item.name === product.name
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    }); */
+  const createOrder = (response: any, cart: MenuItem[]) => {
+    console.log(response)
+    console.log(cart)
   }
 
 

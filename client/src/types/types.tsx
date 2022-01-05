@@ -24,7 +24,7 @@ export interface User {
   themeColor?: string, 
 }
 export interface Order {
-  id: string,
+  id?: string,
   orderDate: Date,
   cart: MenuItem[],
   session: string,

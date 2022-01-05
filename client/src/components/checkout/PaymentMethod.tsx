@@ -4,28 +4,29 @@ import order from "../../order"
 import mastercard from "../../assets/img/mastercard.png"
 import swish from "../../assets/img/swish.png"
 
-interface Iprops {
- 
+interface IProps {
+  paymentMethod: (method: string) => void;
 }
 
-function PaymentMethod(props: Iprops) {
+function PaymentMethod({paymentMethod}: IProps) {
   const classes = useStyles();
+
   return (
    <Box className={classes.height}>
      <Typography variant="h5" gutterBottom component="div" className={classes.center}>
         Betalsätt
      </Typography>
      <Box className={classes.boxContainer}>
-      <Box className={classes.boxStyle}>
+      <Box 
+        className={classes.boxStyle}
+        onClick={()=>paymentMethod("card")}
+      >
         <img className={classes.img} src={mastercard}/>
       </Box>
-      <Box className={classes.boxStyle}>
-        <img className={classes.img} src={swish}/>
-      </Box>
-      <Box className={classes.boxStyle}>
-        <img className={classes.img} src={mastercard}/>
-      </Box>
-      <Box className={classes.boxStyle}>
+      <Box 
+        className={classes.boxStyle}
+        onClick={()=>paymentMethod("swish")}
+      >
         <img className={classes.img} src={swish}/>
       </Box>
      </Box>

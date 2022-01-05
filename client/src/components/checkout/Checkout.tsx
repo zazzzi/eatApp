@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { 
   Box, 
   makeStyles, 
@@ -11,13 +11,15 @@ import {
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import PaymentMethod from "./PaymentMethod"
-import CardPayment from "./CardPayment"
 import SwishPayment from "./Swish"
 import OrderConfirmation from "./OrderConfirmation"
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import food from "../../food"
 import StripeContainer from "../stripeContainer/StripeContainer";
+import Cart from '../cart/Cart'
+import Swish from "./Swish";
+import { CartContext } from "../../context/CartContext";
+import { OrderContext } from "../../context/OrdersContext";
 
 
 interface Iprops {
@@ -26,11 +28,14 @@ interface Iprops {
 
 function Checkout() {
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
   const classes = useStyles();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
+  const { cart } = useContext(CartContext);
+  const { createOrder } = useContext(OrderContext);
 
   const total = () => {
-    return food.reduce((total, item) => item.price + total, 0)
+    return cart.reduce((total, item) => (item.price * item.quantity) + total, 0)
   }
 
   const handleNext = () => {
@@ -41,22 +46,45 @@ function Checkout() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handlePaymentMethod = (method: string) => {
+    setActiveStep(2)
+    setPaymentMethod(method)
+  }
+
+  const cardResponse = (status: string | undefined, response?: any) => {
+    if(status === "Successful payment"){
+      createOrder(response, cart)
+      setActiveStep(3)
+    }
+  }
+
+  //go to the next page when card payment is completed and order response is sent from the orders context
+
   const getStepContent = (stepIndex: number) => {
     switch(stepIndex){
       case 0:
         return(
           <Box>
-            <PaymentMethod/>
+            <Cart/>
           </Box>
         );
-      case 1: 
-      //change this depending on payment method chosen
+      case 1:
+        return(
+          <Box>
+            <PaymentMethod paymentMethod={handlePaymentMethod}/>
+          </Box>
+        );
+      case 2: 
         return(
         <Box>
-          <StripeContainer/>
+          {
+            paymentMethod === "swish" ? 
+            <Swish/> : 
+            <StripeContainer cardResponse={cardResponse}/>
+          }
         </Box>
       )
-      case 2: 
+      case 3: 
         return (
           <Box>
             <OrderConfirmation/>
@@ -72,13 +100,17 @@ function Checkout() {
     <Box>
       <MobileStepper
         variant="dots"
-        steps={3}
+        steps={4}
         position="static"
         activeStep={activeStep}
         className={classes.style}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
-            {activeStep === 0 ? "Payment" : activeStep === 1 ? "Swish" : "Confirm"}
+          <Button size="small" onClick={handleNext} disabled={
+            activeStep === 3 || 
+            activeStep === 1 && 
+            paymentMethod === null
+          }>
+            {activeStep === 0 ? "Payment" : activeStep === 1 ? "Confirm" : "Finished"}
             {theme.direction === 'rtl' ? (
               <KeyboardArrowLeft />
             ) : (
@@ -98,7 +130,7 @@ function Checkout() {
         }
       />
       <Box>
-        <Box className={classes.height}>
+        <Box>
             <Box>
               {getStepContent(activeStep)}
             </Box>
@@ -112,17 +144,17 @@ function Checkout() {
                   {total()} kr
                 </Typography>
               </Box>
-              { activeStep === 2 ? 
+              {/* { activeStep === 2 ? 
               <Box className={classes.buttonContainer}>
                 <Button variant="outlined" className={classes.button}>Cancel</Button>
                 <Button variant="outlined" className={classes.button}>Checkout</Button>
               </Box>
               : null
-              }
+              } */}
             </Box>
         </Box>
       </Box>
-    </Box>
+    </Box> 
   );
 }
 
@@ -132,7 +164,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1
   }, 
   height: {
-    height: "100vh"
+    height: "80vh"
   },
   priceTotal: {
     display: "flex",

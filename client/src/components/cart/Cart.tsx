@@ -14,10 +14,6 @@ function Cart(props: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
 
-  const total = () => {
-    return cart.reduce((total, item) => (item.price * item.quantity) + total, 0)
-  }
-
   return (
    <Box className={classes.height}>
      <Typography variant="h4" gutterBottom component="div">
@@ -30,23 +26,6 @@ function Cart(props: Iprops) {
         :
         <MenuItems menuItems = {cart}/>
       }
-      <Divider />
-      <Box className={classes.align}>
-        <Box className={classes.priceTotal}>
-          <Typography>
-            Summa
-          </Typography>
-          <Typography>
-            {total()} kr
-          </Typography>
-        </Box>
-        <Box className={classes.buttonContainer}>
-          <Button variant="outlined" className={classes.button}>Tillbaks</Button>
-          <Link to={"/checkout"}>
-            <Button variant="outlined" className={classes.button}>Checkout</Button>
-          </Link>
-        </Box>
-      </Box>
    </Box>
   );
 }
