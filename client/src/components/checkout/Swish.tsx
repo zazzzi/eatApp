@@ -24,8 +24,9 @@ function SwishPayment(props: Iprops) {
       message: "hello",
     }
 
-    fetch("paymentrequests", {  
-			method: 'POST',  
+    fetch("api/paymentrequests", {  
+      method: "POST",
+      credentials: "include",
 			headers: {
 				'Content-Type': 'application/json'
 			},  

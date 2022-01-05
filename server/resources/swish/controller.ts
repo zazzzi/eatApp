@@ -44,6 +44,7 @@ exports.paymentRequests = async(req: Request, res: Response) => {
 		message: req.body.message
 	}
 
+  console.log('hello')
 	const options: any = requestOptions('POST', `${config.host}/api/v1/paymentrequests`, json)
 
 	request(options, (error: any, response: { statusCode: any; headers: any; body?: any; }, body: any) => { 
