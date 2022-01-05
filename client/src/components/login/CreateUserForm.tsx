@@ -33,7 +33,6 @@ function CreateUserForm(props: Iprops) {
     lastName: "",
     email: "",
     phoneNumber: 0,
-    role: "user",
     password: "",
   });
 

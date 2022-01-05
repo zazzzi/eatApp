@@ -30,16 +30,19 @@ interface Iprops {}
 
 function CreateUser(props: Iprops) {
   const classes = useStyles();
-  const [userToCreate, setUserToCreate] = useState<User>();
   const usersCollectionRef = collection(db, "users");
 
   // CREATES NEW USER WITH DATA FROM CHILD
   async function userDataCallback(user: User) {
-    setUserToCreate(user);
-    console.log(user);
     await createUserWithEmailAndPassword(auth, user.email, user.password).then(
       async (cred) => {
-        return await setDoc(doc(db, "users", cred.user.uid), { user });
+        const userInformation = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          phoneNumber: user.phoneNumber
+        }
+        return await setDoc(doc(db, "users", cred.user.uid), { userInformation });
       }
     );
   }

@@ -18,11 +18,7 @@ export interface User {
   lastName: string,
   email: string,
   phoneNumber: number,
-  role: string,
   password: string, 
-  ID?: string,
-  backgroundImg?: string,
-  themeColor?: string, 
 }
 
 export interface IncomingUser {
