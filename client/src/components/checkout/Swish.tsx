@@ -1,7 +1,6 @@
 import { Box, Button, FormControl, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import swish from "../../assets/img/swish.png";
-import { CartContext } from "../../context/CartContext";
 
 interface Iprops {
 
@@ -10,17 +9,45 @@ interface Iprops {
 function SwishPayment(props: Iprops) {
   const classes = useStyles();
   const [number, setNumber] = useState<any>(0);
-  const { cart } = useContext(CartContext);
 
-  const total = () => {
-    return cart.reduce((total, item) => (item.price * item.quantity) + total, 0)
-  }
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNumber(event.target.value)
   }
 
+ 
   const handleSubmit = async (evt: any) => {
+    evt.preventDefault()
+    const payment = {
+      payerAlias: number,
+      amount: 100,
+      message: "hello",
+    }
+
+    fetch("paymentrequests", {  
+			method: 'POST',  
+			headers: {
+				'Content-Type': 'application/json'
+			},  
+			body: JSON.stringify(payment)
+		})
+		.then(function(response) {
+			if (response.status != 201) {
+				console.log("Request failure: " + response.statusText)
+				return
+			}
+			return response.json();
+		})
+		.then(function(json) {
+			if (json) {
+				const identifier = json["id"];
+        console.log("Payment request created with identifier " + identifier + ", open app.")
+			}
+
+		})
+		.catch(function (error) {  
+			console.log("Request failure: ", error);  
+		});
 
   }
 
