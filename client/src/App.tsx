@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { db } from "./firebase";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,12 +17,13 @@ import Checkout from './components/checkout/Checkout';
 import CartProvider from './context/CartContext';
 import MenuProvider from "./context/MenusContext";
 import OrderProvider from "./context/OrdersContext";
+import UserAuthProvider from "./context/UsersContext";
 
- 
+
 function App() {
- 
   return (
-    <OrderProvider>
+   <OrderProvider>
+    <UserAuthProvider>
       <CartProvider>
         <MenuProvider>
           <Router>
@@ -35,20 +38,21 @@ function App() {
           </Router>
         </MenuProvider>
       </CartProvider>
+     </UserAuthProvider>
     </OrderProvider>
-    );
+    );  
+  );
 }
 
 export default App;
 
-
- /* const [newName, setNewName] = useState<string>("")
+/* const [newName, setNewName] = useState<string>("")
   const [newNumber, setNewNumber] = useState<any>(0)
   const [users, setUsers] = useState<any>([]);
   const usersCollectionRef = collection(db, 'users') */
 
-  //adds to database
- /*  const createUser = async () => {
+//adds to database
+/*  const createUser = async () => {
     await addDoc(usersCollectionRef, {name: newName, phone: Number(newNumber)})
   }
 
@@ -62,16 +66,15 @@ export default App;
     const userDoc = doc(db, "users", id)
     const newFields = {phone: number + 1}
     await updateDoc(userDoc, newFields) }*/
-  
 
-  // // fetches all database. THIS FUCKS UP THE READCALLS?!?!?!?
-  // useEffect(() => {
-  //   const getUsers = async () => {
-  //     const data = await getDocs(usersCollectionRef);
-  //     setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-  //   }
-  //   getUsers()
-  // }, [users])
+// // fetches all database. THIS FUCKS UP THE READCALLS?!?!?!?
+// useEffect(() => {
+//   const getUsers = async () => {
+//     const data = await getDocs(usersCollectionRef);
+//     setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+//   }
+//   getUsers()
+// }, [users])
 
 //   useEffect(() => {
 //     const sayHello = async () => {
@@ -82,24 +85,23 @@ export default App;
 //     sayHello();
 // }, []);
 
+// test code for testing the Firebase setup.
+// <div >
+//   <input placeholder="Name" onChange={(event) => {
+//     setNewName(event.target.value)
+//   }}/>
+//   <input type="number" placeholder="Number" onChange={(event) => {
+//     setNewNumber(event.target.value)
+//   }}/>
+//   <button onClick={createUser}>Create User</button>
+//   {
+//     users.map((user: any) =>
+//       <div>
+//         {user.name + " " + user.phone}
+//         <button onClick={() => {updateUser(user.id, user.phone)}}>increase number</button>
+//         <button onClick={() => {deleteUser(user.id)}}>delete</button>
+//       </div>
 
-    // test code for testing the Firebase setup. 
-    // <div >
-    //   <input placeholder="Name" onChange={(event) => {
-    //     setNewName(event.target.value)
-    //   }}/>
-    //   <input type="number" placeholder="Number" onChange={(event) => {
-    //     setNewNumber(event.target.value)
-    //   }}/>
-    //   <button onClick={createUser}>Create User</button>
-    //   {
-    //     users.map((user: any) => 
-    //       <div>
-    //         {user.name + " " + user.phone}
-    //         <button onClick={() => {updateUser(user.id, user.phone)}}>increase number</button>
-    //         <button onClick={() => {deleteUser(user.id)}}>delete</button>
-    //       </div>
-          
-    //     ) 
-    //   }
-    // </div>
+//     )
+//   }
+// </div>

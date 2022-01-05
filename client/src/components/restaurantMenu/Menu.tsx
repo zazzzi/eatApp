@@ -1,68 +1,103 @@
-import { Box, makeStyles, Theme, Typography, Tabs, Tab} from "@material-ui/core";
+import {
+	Box,
+	makeStyles,
+	Theme,
+	Typography,
+	Tabs,
+	Tab,
+	Modal,
+	Button,
+	TextField,
+	Select,
+	MenuItem,
+	Link,
+} from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
-import * as React from 'react';
-import food from "../../food"
-import MenuItems from "../menu/MenuItem"
-import {MenuContext} from '../../context/MenusContext'
+import * as React from "react";
+import food from "../../food";
+import MenuItems from "../menu/MenuItem";
+import { MenuContext } from "../../context/MenusContext";
 import { MenuItemType } from "../../types/types";
-interface Iprops {
- 
-}
+import EditMenuModal from "./EditModal";
+import { UserAuthContext } from "../../context/UsersContext";
 
-const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"]
+interface Iprops {}
+
+const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
 function RestaurantMenu(props: Iprops) {
-	const classes = useStyles()
+	const classes = useStyles();
 	const [value, setValue] = useState<string>("Dryck");
-  const {menu} = useContext(MenuContext)
+	const { menu } = useContext(MenuContext);
+	const [open, setOpen] = useState(false);
+	const [fileIsUploaded, setFileIsUploaded] = useState(false);
+	const { loggedIn, userID } = useContext(UserAuthContext);
 
-	useEffect(() => {
-	
-	  }, []);
-	
+	useEffect(() => {}, []);
 
 	const handleChange = (event: any, newValue: any) => {
 		setValue(newValue);
 	};
 
-  const filterMenuItems = (item: MenuItemType) => {
-    const filtered = item.category.map((i: string) => { 
-      if(i === value){return item}})
-    const filterUndefined = filtered.filter(function(x: any) {
-      return x !== undefined;
-    });
-    return <MenuItems menuItems={filterUndefined}/>
-  }
+	const filterMenuItems = (item: MenuItemType) => {
+		const filtered = item.category.map((i: string) => {
+			if (i === value) {
+				return item;
+			}
+		});
+		const filterUndefined = filtered.filter(function (x: any) {
+			return x !== undefined;
+		});
+		return <MenuItems menuItems={filterUndefined} />;
+	};
 
-  return (
-   <Box className={classes.menuPageContainer}>
-       <Box className={classes.menuBackground}></Box>
-	   <Box id="nameContainer" className={classes.restaurantNameContainer}>
-	   		<Typography className={classes.restaurantName} variant="h2">Brygghuset</Typography>
-			<Box className={classes.menuList}>
-				<Box className={classes.menuTabs}>
-					<Tabs
-					variant="scrollable"
-					aria-label="scrollable prevent tabs example"
-					value={value}
-					indicatorColor="secondary"
-        			onChange={handleChange}
+	return (
+		<Box className={classes.menuPageContainer}>
+			<Box className={classes.menuBackground}></Box>
+			<Box id="nameContainer" className={classes.restaurantNameContainer}>
+				{loggedIn ? (
+					<Button
+						onClick={() => {
+							setOpen(true);
+						}}
 					>
-            {
-              tabs.map((t) => 
-                <Tab label={t} value={t}/>
-              )
-            }
-					</Tabs>
-				</Box>
+						Open modal
+					</Button>
+				) : null}
+				<Typography className={classes.restaurantName} variant="h2">
+					Brygghuset
+				</Typography>
+				<a href="/">
+					<Typography variant="body1">Menu</Typography>
+				</a>
+				<Box className={classes.menuList}>
+					<Box className={classes.menuTabs}>
+						<Tabs
+							variant="scrollable"
+							aria-label="scrollable prevent tabs example"
+							value={value}
+							indicatorColor="secondary"
+							onChange={handleChange}
+						>
+							{tabs.map((t) => (
+								<Tab label={t} value={t} />
+							))}
+						</Tabs>
+					</Box>
 					<hr />
-				<Box className={classes.menuItemContainer}>
-				{menu.map((i: any) => filterMenuItems(i))}
+					<Box className={classes.menuItemContainer}>
+						{menu.map((i: any) => filterMenuItems(i))}
+					</Box>
 				</Box>
 			</Box>
-	   </Box>
-   </Box>
-  );
+			{open ? (
+				<EditMenuModal
+					closeModal={() => setOpen(false)}
+					editOpen={Boolean(open)}
+				/>
+			) : null}
+		</Box>
+	);
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -70,7 +105,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		height: "100vh",
 		display: "flex",
 		flexDirection: "column",
-		backgroundColor: "#FEFEFE"
+		backgroundColor: "#FEFEFE",
 	},
 	menuBackground: {
 		zIndex: 1,
@@ -79,7 +114,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		width: "100%",
 		backgroundSize: "cover",
 		backgroundPosition: "top",
-		backgroundImage: `url(${"https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"})`
+		backgroundImage: `url(${"https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"})`,
 	},
 	restaurantNameContainer: {
 		position: "absolute",
@@ -88,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		height: "100%",
 		width: "100%",
 		borderRadius: "38px 38px 0px 0px",
-		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+		background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
 	},
 	restaurantName: {
 		fontSize: "26px",
@@ -113,8 +148,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		// backgroundColor: "blue",
 		height: "100%",
 		width: "100%",
-	}
+	},
 }));
 
-
-export default RestaurantMenu; 
+export default RestaurantMenu;

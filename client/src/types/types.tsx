@@ -8,6 +8,7 @@ export interface MenuItemType {
   category: string[],
   img: string
 }
+
 export interface IncomingUser {
   email: string,
   password: string
@@ -17,12 +18,12 @@ export interface User {
   lastName: string,
   email: string,
   phoneNumber: number,
-  role: string,
   password: string, 
   ID?: string,
   backgroundImg?: string,
   themeColor?: string, 
 }
+  
 export interface Order {
   id?: string,
   orderDate: Date,
@@ -31,4 +32,9 @@ export interface Order {
   priceTotal: number,
   table: string,
   payment: any
+}
+
+export interface IncomingUser {
+  email: string,
+  password: string
 }
