@@ -12,9 +12,12 @@ interface Iprops {
 
 function StripeContainer({cardResponse}: Iprops) {
   
+  
   return (
    <Elements stripe={stripeTestPromise}>
-       <PaymentForm cardResponse={cardResponse}/>
+       <PaymentForm 
+          cardResponse={cardResponse}
+       />
    </Elements>
   );
 }

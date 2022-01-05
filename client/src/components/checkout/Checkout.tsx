@@ -79,7 +79,8 @@ function Checkout() {
         <Box>
           {
             paymentMethod === "swish" ? 
-            <Swish/> : 
+            <Swish/> 
+            : 
             <StripeContainer cardResponse={cardResponse}/>
           }
         </Box>
