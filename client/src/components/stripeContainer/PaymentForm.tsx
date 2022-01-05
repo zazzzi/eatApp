@@ -1,4 +1,4 @@
-import { Box, makeStyles, TextField, Theme} from "@material-ui/core";
+import { Box, Button, makeStyles, TextField, Theme} from "@material-ui/core";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -10,31 +10,11 @@ import { useEffect, useState } from "react";
 import axios from "axios"
 import StripeInput from "./StripeInput"
 
-const CARD_OPTIONS: any = {
-	iconStyle: "solid",
-	style: {
-		base: {
-			iconColor: "#c4f0ff",
-			color: "#fff",
-			fontWeight: 500,
-			fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-			fontSize: "16px",
-			fontSmoothing: "antialiased",
-			":-webkit-autofill": { color: "#fce883" },
-			"::placeholder": { color: "#87bbfd" }
-		},
-		invalid: {
-			iconColor: "#ffc7ee",
-			color: "#ffc7ee"
-		}
-	}
-}
-
 interface Iprops {
- 
+  cardResponse: (status: string | undefined, response?: any) => void;
 }
 
-function PaymentForm(props: Iprops) {
+function PaymentForm({cardResponse}: Iprops) {
   const [success, setSucces] = useState<boolean>(false)
   const stripe = useStripe()
   const elements = useElements()
@@ -66,20 +46,17 @@ function PaymentForm(props: Iprops) {
         amount: 1000,
         id: id
       })
-  
       if(response.data.success) {
-        console.log("Successful payment")
+        cardResponse("Successful payment", response)
         setSucces(true)
       }
       } catch (error){
         console.log("Error", error)
       }
     } else {
-      console.log(error.message)
+      cardResponse(error.message)
     }
   } 
-
-  
 
   return (
    <Box>
@@ -136,7 +113,7 @@ function PaymentForm(props: Iprops) {
        </form>
        :
        <div>
-         <h2>You just bought something cool</h2>
+         <h2>Payment Succesful!</h2>
        </div>
        }
    </Box>

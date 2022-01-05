@@ -2,41 +2,45 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { db } from "./firebase";
 import {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-import Hero from "./components/hero/Hero";
-import Login from "./components/login/Login";
-import RestaurantMenu from "./components/restaurantMenu/Menu";
-import Cart from "./components/cart/Cart";
-import CreateUser from "./components/login/CreateUser";
-import Checkout from "./components/checkout/Checkout";
-import CartProvider from "./context/CartContext";
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+import {db} from './firebase'
+import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import Hero from "./components/hero/Hero"
+import Login from "./components/login/Login"
+import RestaurantMenu from "./components/restaurantMenu/Menu"
+import Cart from './components/cart/Cart';
+import CreateUser from './components/login/CreateUser';
+import Checkout from './components/checkout/Checkout';
+import CartProvider from './context/CartContext';
 import MenuProvider from "./context/MenusContext";
+import OrderProvider from "./context/OrdersContext";
 import UserAuthProvider from "./context/UsersContext";
+
 
 function App() {
   return (
+   <OrderProvider>
     <UserAuthProvider>
       <CartProvider>
         <MenuProvider>
           <Router>
             <Routes>
-              <Route path="/" element={<Hero />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/create-user" element={<CreateUser />} />
-              <Route path="/menu" element={<RestaurantMenu />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/" element={<Hero/>}/>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/create-user" element={<CreateUser/>}/>
+              <Route path="/menu" element={<RestaurantMenu/>}/>
+              <Route path="/cart" element={<Cart/>}/>
+              <Route path="/checkout" element={<Checkout/>}/>
             </Routes>
           </Router>
         </MenuProvider>
       </CartProvider>
-    </UserAuthProvider>
+     </UserAuthProvider>
+    </OrderProvider>
+    );  
   );
 }
 
