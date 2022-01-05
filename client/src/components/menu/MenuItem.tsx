@@ -1,10 +1,11 @@
 import { Box, Container, Divider, makeStyles, Theme, Typography, Button} from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import {MenuItemType} from "../../types/types";
 import Incrementer from '../incrementer/Incrementer'
 import { MenuItem } from "../../context/CartContext";
+import { UserAuthContext } from "../../context/UsersContext";
 
 interface Iprops {
   menuItems: any;
@@ -12,6 +13,7 @@ interface Iprops {
 
 function MenuItems({menuItems}:Iprops) {
   const classes = useStyles();
+  const {loggedIn, userID} = useContext(UserAuthContext)
   
   const itemContents = (cont: any) => {
     return (
@@ -22,6 +24,10 @@ function MenuItems({menuItems}:Iprops) {
       </Box>
     )
   }
+
+  console.log(loggedIn);
+  console.log(userID);
+  
 
   return (
    <Box>
