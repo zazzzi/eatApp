@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { db } from "./firebase";
 import {
   BrowserRouter as Router,
   Route,
@@ -40,8 +38,7 @@ function App() {
       </CartProvider>
      </UserAuthProvider>
     </OrderProvider>
-    );  
-  );
+  );  
 }
 
 export default App;
