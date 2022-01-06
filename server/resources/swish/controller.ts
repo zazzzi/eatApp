@@ -45,43 +45,30 @@ exports.paymentRequests = async(req: Request, res: Response) => {
 	const options: any = requestOptions('POST', `${config.host}/api/v1/paymentrequests`, json)
 
 	request(options, (error: any, response: { statusCode: any; headers: any; body?: any; }, body: any) => { 
-
 		logResult(error, response)
-
 		if (!response) {
 			res.status(500).send(error)
 			return
 		}
-		
 		res.status(response.statusCode)
 		if (response.statusCode == 201) { 
-
-			// Payment request was successfully created. In order to get the details of the
-			// newly created request, we need to make a GET request to the url in the location header
-
 			const location = response.headers['location']
 			const token = response.headers['paymentrequesttoken']
-
 			const opt: any = requestOptions('GET', location)
-
 			request(opt, (err: any, resp: { body: { [x: string]: any; }; }, bod: any) => {
-
 				logResult(err, resp)
-
 				if (!response) {
 					res.status(500).send(error)
 					return
 				}
-
 				const id = resp.body['id']
-
 				res.json({
 					url: location,
 					token: token,
-					id: id
+					id: id,
+          body: resp.body
 				})
 			})
-
 		} else {
 			res.send(body)
 			return
@@ -105,7 +92,6 @@ exports.paymentRequestsId = async (req: Request, res: Response) => {
 
 		res.status(response.statusCode)
 		if (response.statusCode == 200) {
-
 			res.json({
 				id: response.body['id'],
 				paymentReference: response.body['paymentReference'] || "",

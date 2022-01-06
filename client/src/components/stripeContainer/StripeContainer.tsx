@@ -7,16 +7,16 @@ const PUBLIC_KEY = "pk_test_51KDphzHhpsgf3oRSfVl2tb074LwELGklnsvOPRUqFnONkJGSzMv
 const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
 interface Iprops {
-  cardResponse: (status: string | undefined, response?: any) => void
+  paymentResponse: (status: string | undefined, response?: any) => void
 }
 
-function StripeContainer({cardResponse}: Iprops) {
+function StripeContainer({paymentResponse}: Iprops) {
   
   
   return (
    <Elements stripe={stripeTestPromise}>
        <PaymentForm 
-          cardResponse={cardResponse}
+          paymentResponse={paymentResponse}
        />
    </Elements>
   );

@@ -11,10 +11,10 @@ import axios from "axios"
 import StripeInput from "./StripeInput"
 
 interface Iprops {
-  cardResponse: (status: string | undefined, response?: any) => void;
+  paymentResponse: (status: string | undefined, response?: any) => void;
 }
 
-function PaymentForm({cardResponse}: Iprops) {
+function PaymentForm({paymentResponse}: Iprops) {
   const [success, setSucces] = useState<boolean>(false)
   const stripe = useStripe()
   const elements = useElements()
@@ -47,14 +47,14 @@ function PaymentForm({cardResponse}: Iprops) {
         id: id
       })
       if(response.data.success) {
-        cardResponse("Successful payment", response)
+        paymentResponse("Successful card payment", response)
         setSucces(true)
       }
       } catch (error){
         console.log("Error", error)
       }
     } else {
-      cardResponse(error.message)
+      paymentResponse(error.message)
     }
   } 
 
