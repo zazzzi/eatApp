@@ -38,7 +38,7 @@ function PaymentForm({cardResponse}: Iprops) {
       type: "card",
       card: elements!.getElement(CardNumberElement)!
     })
-
+    //send in cart payment amount 
     if(!error) {
       try {
         const {id} = paymentMethod!

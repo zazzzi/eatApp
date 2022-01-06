@@ -5,13 +5,16 @@ import path from "path";
 import fs from 'fs';
 import request from 'request';
 
+
+const ROOT_DIR = path.resolve(__dirname, '../../../');
+
 const testConfig = {	
 	payeeAlias: "1231181189",
 	host: "https://mss.cpc.getswish.net/swish-cpcapi",
 	qrHost: "https://mpc.getswish.net/qrg-swish",
-	cert: path.resolve(__dirname, 'ssl/Swish_Merchant_TestCertificate_1234679304.pem'),
-	key: path.resolve(__dirname, 'ssl/Swish_Merchant_TestCertificate_1234679304.key'),
-	ca: path.resolve(__dirname, 'ssl/Swish_TLS_RootCA.pem'),
+	cert: path.resolve(ROOT_DIR, 'ssl/Swish_Merchant_TestCertificate_1234679304.pem'),
+	key: path.resolve(ROOT_DIR, 'ssl/Swish_Merchant_TestCertificate_1234679304.key'),
+	ca: path.resolve(ROOT_DIR, 'ssl/Swish_TLS_RootCA.pem'),
 	passphrase: "swish"
 }
 
@@ -28,12 +31,6 @@ const config = testConfig
 
 exports.paymentRequests = async(req: Request, res: Response) => {
 
-	// NOTE: the callbackUrl will be called by the swish system when the status of the 
-	//       payment is changed. This will normally be an endpoint in the merchants system.
-	//       Since this sample is likely run on a local machine, we can't really act on the
-	//       callback. We entered this example here that is using a service that lets you see
-	//       how the callback looks. To see it in action, open https://webhook.site in a browser
-	//       and replace the callbackUrl below with your unique url
 	const json = {
 		payeePaymentReference: "0123456789",
 		callbackUrl: "https://webhook.site/a8f9b5c2-f2da-4bb8-8181-fcb84a6659ea",
@@ -44,7 +41,7 @@ exports.paymentRequests = async(req: Request, res: Response) => {
 		message: req.body.message
 	}
 
-  console.log('hello')
+  
 	const options: any = requestOptions('POST', `${config.host}/api/v1/paymentrequests`, json)
 
 	request(options, (error: any, response: { statusCode: any; headers: any; body?: any; }, body: any) => { 
