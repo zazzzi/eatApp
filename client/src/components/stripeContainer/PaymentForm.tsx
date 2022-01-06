@@ -47,7 +47,7 @@ function PaymentForm({paymentResponse}: Iprops) {
         id: id
       })
       if(response.data.success) {
-        paymentResponse("Successful card payment", response)
+        paymentResponse("Successful card payment", response.data.body)
         setSucces(true)
       }
       } catch (error){

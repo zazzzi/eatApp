@@ -15,7 +15,8 @@ exports.stripePayment = async(req: Request, res: Response) => {
     console.log("Payment", payment)
     res.json({
       message: "Payment successful",
-      success: true
+      success: true,
+      body: payment
     })
   }catch (error) {
     console.log("Error", error)
