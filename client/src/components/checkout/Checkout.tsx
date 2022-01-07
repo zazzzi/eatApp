@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import PaymentMethod from "./PaymentMethod"
-import SwishPayment from "./Swish"
 import OrderConfirmation from "./OrderConfirmation"
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -31,12 +30,13 @@ function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
+  const [totalPrice, setTotalPrice] = useState<number>(0)
   const { cart } = useContext(CartContext);
   const { createOrder } = useContext(OrderContext);
 
-  const total = () => {
-    return cart.reduce((total, item) => (item.price * item.quantity) + total, 0)
-  }
+  useEffect(()=>{
+    setTotalPrice(cart.reduce((total, item) => (item.price * item.quantity) + total, 0))
+  },[cart])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -54,7 +54,7 @@ function Checkout() {
   const paymentResponse = (status: string | undefined, response?: any) => {
     console.log(status)
     if(status === "Successful card payment" || status === "Successful swish payment"){
-      createOrder(response, cart)
+      createOrder(response, cart, totalPrice)
       setActiveStep(3)
     }
   }
@@ -143,7 +143,7 @@ function Checkout() {
                   Summa
                 </Typography>
                 <Typography>
-                  {total()} kr
+                  {totalPrice} kr
                 </Typography>
               </Box>
               {/* { activeStep === 2 ? 

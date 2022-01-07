@@ -29,8 +29,6 @@ interface Props {
 function CartProvider(props: Props) {
   const [cartItems, setCartItems] = useState([] as MenuItem[]);
 
- 
-
   function addProductToCart(menuItem: MenuItemType) {
     setCartItems((prev) => {
       const isItemInCart = prev.find((item) => item.title === menuItem.title);

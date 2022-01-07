@@ -33,7 +33,6 @@ function MenuProvider(props: Props) {
     getMenu()
   }, [])
 
-  
 
   function populateMenu(product: MenuItemType) {
     /* setCartItems((prev) => {
