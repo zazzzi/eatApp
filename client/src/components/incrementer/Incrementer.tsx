@@ -9,7 +9,7 @@ interface IProps {
 }
 
 function GroupedButtons({menuItem}:IProps) {
-  const { addToCart, removeProductFromCart, clearCart, cart } = useContext(CartContext);
+  const { addToCart, removeProductFromCart, cart } = useContext(CartContext);
 
   const cartQuantity = (item: MenuItemType) => {
     const quantityInCart = cart.find((c: MenuItem) => c.title === item.title)
@@ -26,7 +26,6 @@ function GroupedButtons({menuItem}:IProps) {
           {!menuItem.quantity ? cartQuantity(menuItem) : menuItem.quantity}
         </Button>
       <Button onClick={() => {addToCart(menuItem);}}>+</Button>
-      <Button onClick={() => {clearCart();}}>clear</Button>
     </ButtonGroup>
   );
 }

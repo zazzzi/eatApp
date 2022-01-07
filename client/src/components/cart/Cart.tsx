@@ -15,12 +15,16 @@ function Cart(props: Iprops) {
   const { cart } = useContext(CartContext);
 
   return (
-   <Box className={classes.height}>
-     <Typography variant="h4" gutterBottom component="div">
+   <Box>
+     <Typography 
+      className={classes.cartText}
+      variant="h5" 
+      gutterBottom component="div"
+     >
         Cart
       </Typography>
       {!cart.length ? 
-        <Box>
+        <Box className={classes.boxContainer}>
         <Typography variant="h4" gutterBottom component="div">
           Your cart is empty
         </Typography> 
@@ -38,9 +42,6 @@ function Cart(props: Iprops) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  height: {
-    height: "100vh"
-  },
   priceTotal: {
     display: "flex",
     justifyContent: "space-between",
@@ -56,6 +57,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   buttonContainer: {
     display: "flex",
     justifyContent: "space-evenly",
+  },
+  cartText: {
+    padding: "1rem 0rem 0rem 1rem"
+  },
+  boxContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center"
   }
 }));
 

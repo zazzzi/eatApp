@@ -12,7 +12,7 @@ function PaymentMethod({paymentMethod}: IProps) {
   const classes = useStyles();
 
   return (
-   <Box className={classes.height}>
+   <Box>
      <Typography variant="h5" gutterBottom component="div" className={classes.center}>
         Betalsätt
      </Typography>
@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   center: { 
     textAlign: "center",
     paddingTop: "1rem"
-  },
-  height: {
-    height: "85vh"
   },
   img: {
     height: "4rem"

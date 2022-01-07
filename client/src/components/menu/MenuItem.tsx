@@ -56,23 +56,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "space-between",
     padding: "2rem 0rem 2rem 0rem",
-	maxHeight: "4rem",
+	  maxHeight: "4rem",
   },
   menuitemContainer: {
-	display: "flex",
-	flexDirection: "column"
+    display: "flex",
+    flexDirection: "column"
   },
   image: {
-	width: "5rem",
-	height: "5rem",
+    width: "5rem",
+    height: "5rem",
     borderRadius: "100%",
-	objectFit: "cover",
+    objectFit: "cover",
   },
   priceColumn: {
     display: "flex",
     justifyContent: "center",
     alignContent: "space-between",
-	alignItems: "center",
+	  alignItems: "center",
     flexDirection: "column",
   },
   itemColumn: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignContent: "space-between",
-	alignItems: "flex-start",
+	  alignItems: "flex-start",
   },
   imageColumn: {
     display: "flex",
@@ -88,9 +88,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center"
   },
   font: {
-    fontSize: ".7rem",
-	fontFamily: "roboto",
-	color: "#928F8F"
+    fontSize: ".59rem",
+	  fontFamily: "roboto",
+	  color: "#928F8F"
 	
   },
   quantityContainer: {
