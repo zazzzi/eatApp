@@ -5,17 +5,17 @@ import { auth } from "../../firebase";
 interface Iprops {}
 
 function LogOutBtn(props: Iprops) {
-
   async function logOut() {
     await auth.signOut().then(() => {
-        console.log("User logged out");
-        
+      console.log("User logged out");
     });
   }
 
   return (
     <Box>
-      <Button onClick={logOut}>Logga ut</Button>
+      <Button onClick={logOut}>
+        <a href="/login">Logga ut</a>
+      </Button>
     </Box>
   );
 }
