@@ -17,11 +17,11 @@ interface IState {
 }
 
 interface ContextValue extends IState {
-  getUID: () => void;
+  checkForRestaurantAuth: (userID: string) => void;
 }
 
 export const UserAuthContext = createContext<ContextValue>({
-  getUID: () => {},
+  checkForRestaurantAuth: () => {},
   loggedIn: false,
   userID: null,
 });
@@ -39,25 +39,25 @@ function UserAuthProvider(props: Props) {
       if (user) {
         setLoggedIn(true);
         setUserID(user.uid);
-        console.log(userID, " Logged in");
+        console.log("Logged in to: ", user.email);
       } else {
         setUserID(null);
         setLoggedIn(false);
+        console.log("Not logged in.");
       }
     });
   });
 
-  function getUID() {
+  function checkForRestaurantAuth(userID: string) {
     // onAuthStateChanged(auth, (user) => {
     //   if (user) {
-    //     console.log(user.uid);
-        
-    //     return user.uid
-
+    //     if (user.uid === userID) {
+    //       console.log("RESTAURANTEEEE");
+    //     }
     //   } else {
-    //     return null
+    //     return null;
     //   }
-    // })
+    // });
   }
 
   return (
@@ -65,8 +65,7 @@ function UserAuthProvider(props: Props) {
       value={{
         loggedIn: loggedIn,
         userID: userID,
-
-        getUID: getUID,
+        checkForRestaurantAuth: checkForRestaurantAuth,
       }}
     >
       {props.children}

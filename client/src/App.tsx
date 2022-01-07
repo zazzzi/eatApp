@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
+  Navigate 
 } from "react-router-dom";
 import {db} from './firebase'
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
@@ -15,28 +16,40 @@ import Checkout from './components/checkout/Checkout';
 import CartProvider from './context/CartContext';
 import MenuProvider from "./context/MenusContext";
 import OrderProvider from "./context/OrdersContext";
-import UserAuthProvider from "./context/UsersContext";
+import UserAuthProvider, { UserAuthContext } from "./context/UsersContext";
+import UserPage from "./components/users/UserPage";
 
 
 function App() {
-  return (
+  const { loggedIn, userID } = useContext(UserAuthContext);
+
+  
+  
+  useEffect(()=> {
+    console.log(loggedIn);
+    console.log(userID);
+  },[]) 
+
+  
+
+
+ return (
    <OrderProvider>
-    <UserAuthProvider>
       <CartProvider>
         <MenuProvider>
           <Router>
             <Routes>
               <Route path="/" element={<Hero/>}/>
-              <Route path="/login" element={<Login/>}/>
+              <Route path="/login" element={<Login/>} />
               <Route path="/create-user" element={<CreateUser/>}/>
               <Route path="/menu" element={<RestaurantMenu/>}/>
+              <Route path={`/user/${userID}`} element={<UserPage/>}/>
               <Route path="/cart" element={<Cart/>}/>
               <Route path="/checkout" element={<Checkout/>}/>
             </Routes>
           </Router>
         </MenuProvider>
       </CartProvider>
-     </UserAuthProvider>
     </OrderProvider>
   );  
 }
