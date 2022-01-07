@@ -54,6 +54,7 @@ function SwishPayment({paymentResponse, priceTotal}: Iprops) {
   }
 
   return (
+    //if bad response from number make swish box red
    <Box>
       <Box className={classes.padding}>
         <img className={classes.img} src={swish}/>

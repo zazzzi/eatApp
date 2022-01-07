@@ -16,7 +16,6 @@ interface Iprops {
 }
 
 function PaymentForm({paymentResponse, priceTotal}: Iprops) {
-  const [success, setSucces] = useState<boolean>(false)
   const stripe = useStripe()
   const elements = useElements()
 
@@ -49,7 +48,6 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
       })
       if(response.data.success) {
         paymentResponse("Successful card payment", response.data)
-        setSucces(true)
       }
       } catch (error){
         console.log("Error", error)
@@ -61,7 +59,6 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
 
   return (
    <Box>
-       {!success ? 
        <form onSubmit={handleSubmit}>
         <Box>
           <TextField
@@ -114,11 +111,6 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
         >Pay
         </Button>
        </form>
-       :
-       <Box>
-         <Typography>Payment Succesful!</Typography>
-       </Box>
-       }
    </Box>
   );
 }
