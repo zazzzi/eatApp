@@ -32,7 +32,7 @@ export interface UserDb {
 }
 export interface Order {
   id?: string,
-  orderDate: Date,
+  orderDate: string,
   cart: MenuItem[],
   session: UserDb,
   priceTotal: number,

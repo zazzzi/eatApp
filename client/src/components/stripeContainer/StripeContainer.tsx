@@ -8,15 +8,17 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
 interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void
+  priceTotal: number
 }
 
-function StripeContainer({paymentResponse}: Iprops) {
+function StripeContainer({paymentResponse, priceTotal}: Iprops) {
   
   
   return (
    <Elements stripe={stripeTestPromise}>
        <PaymentForm 
           paymentResponse={paymentResponse}
+          priceTotal={priceTotal}
        />
    </Elements>
   );

@@ -42,11 +42,19 @@ function OrderProvider(props: Props) {
   }, [])
 
 
-  const createOrder = (response: any, cart: MenuItem[], total: number) => {
-    console.log(userData)
-    console.log(response)
-    console.log(cart)
-    console.log(total)
+  const createOrder = (paymentData: any, cart: MenuItem[], total: number) => {
+
+    const order: Order = {
+      orderDate: Date(),
+      cart: cart,
+      session: userData!,
+      priceTotal: total,
+      table: "table 1",
+      payment: paymentData.body,
+      paymentType: paymentData.paymentType,
+    }
+
+    return order
   }
 
 
