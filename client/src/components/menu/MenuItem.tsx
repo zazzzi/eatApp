@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   menuitemContainer: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   image: {
     width: "5rem",
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignContent: "space-between",
-	  alignItems: "center",
+    alignItems: "center",
     flexDirection: "column",
   },
   itemColumn: {
@@ -93,7 +93,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
     alignContent: "space-between",
     alignItems: "flex-start",
-
   },
   imageColumn: {
     display: "flex",
@@ -102,11 +101,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   font: {
     fontSize: ".59rem",
-    fontSize: ".7rem",
     fontFamily: "roboto",
     color: "#928F8F",
     margin: "0",
-
   },
   quantityContainer: {
     display: "flex",
