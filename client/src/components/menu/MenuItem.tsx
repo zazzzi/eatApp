@@ -50,14 +50,16 @@ function MenuItems({ menuItems }: Iprops) {
               </Typography>
               {itemContents(item.content)}
             </Container>
+          </Box>
+          <Box className={classes.bottomContainer}>
             <Container className={classes.priceColumn}>
               <Typography variant="overline" display="block" gutterBottom>
                 {item.price} kr
               </Typography>
             </Container>
-          </Box>
-          <Box className={classes.incrementerContainer}>
-            <Incrementer menuItem={item} />
+            <Box className={classes.incrementerContainer}>
+              <Incrementer menuItem={item} />
+            </Box>
           </Box>
           <hr />
         </Box>
@@ -70,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   menuItem: {
     display: "flex",
     justifyContent: "space-between",
-    padding: "2rem 0rem 2rem 0rem",
+    padding: "1rem 0rem 1rem 0rem",
   },
   menuitemContainer: {
     display: "flex",
@@ -105,6 +107,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: ".7rem",
     fontFamily: "roboto",
     color: "#928F8F",
+    margin: "0",
   },
   quantityContainer: {
     display: "flex",
@@ -119,6 +122,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+  },
+  bottomContainer: {
+    width: "80%",
+    margin: "auto",
+    display: "flex",
+    flexDirection: "row-reverse",
+    justifyContent: "space-around",
   },
 }));
 
