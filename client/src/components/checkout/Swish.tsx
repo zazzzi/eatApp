@@ -3,10 +3,10 @@ import { useContext, useEffect, useState } from "react";
 import swish from "../../assets/img/swish.png";
 
 interface Iprops {
-
+  paymentResponse: (status: string | undefined, response?: any) => void
 }
 
-function SwishPayment(props: Iprops) {
+function SwishPayment({paymentResponse}: Iprops) {
   const classes = useStyles();
   const [number, setNumber] = useState<any>(0);
 
@@ -21,7 +21,7 @@ function SwishPayment(props: Iprops) {
     const payment = {
       payerAlias: number,
       amount: 100,
-      message: "hello",
+      message: "put restaurant order and table here??",
     }
 
     fetch("api/paymentrequests", {  
@@ -41,13 +41,13 @@ function SwishPayment(props: Iprops) {
 		})
 		.then(function(json) {
 			if (json) {
-				const identifier = json["id"];
-        console.log("Payment request created with identifier " + identifier + ", open app.")
+        const identifier = json["id"];
+        paymentResponse("Successful swish payment", json);
 			}
 
 		})
 		.catch(function (error) {  
-			console.log("Request failure: ", error);  
+      paymentResponse("Request failure: " + error)
 		});
 
   }

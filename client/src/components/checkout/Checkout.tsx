@@ -51,8 +51,9 @@ function Checkout() {
     setPaymentMethod(method)
   }
 
-  const cardResponse = (status: string | undefined, response?: any) => {
-    if(status === "Successful payment"){
+  const paymentResponse = (status: string | undefined, response?: any) => {
+    console.log(status)
+    if(status === "Successful card payment" || status === "Successful swish payment"){
       createOrder(response, cart)
       setActiveStep(3)
     }
@@ -79,9 +80,9 @@ function Checkout() {
         <Box>
           {
             paymentMethod === "swish" ? 
-            <Swish/> 
+            <Swish paymentResponse={paymentResponse}/> 
             : 
-            <StripeContainer cardResponse={cardResponse}/>
+            <StripeContainer paymentResponse={paymentResponse}/>
           }
         </Box>
       )

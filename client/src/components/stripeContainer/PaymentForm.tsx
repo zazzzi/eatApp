@@ -1,4 +1,4 @@
-import { Box, Button, makeStyles, TextField, Theme} from "@material-ui/core";
+import { Box, Button, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -11,10 +11,10 @@ import axios from "axios"
 import StripeInput from "./StripeInput"
 
 interface Iprops {
-  cardResponse: (status: string | undefined, response?: any) => void;
+  paymentResponse: (status: string | undefined, response?: any) => void;
 }
 
-function PaymentForm({cardResponse}: Iprops) {
+function PaymentForm({paymentResponse}: Iprops) {
   const [success, setSucces] = useState<boolean>(false)
   const stripe = useStripe()
   const elements = useElements()
@@ -38,7 +38,7 @@ function PaymentForm({cardResponse}: Iprops) {
       type: "card",
       card: elements!.getElement(CardNumberElement)!
     })
-
+    //send in cart payment amount 
     if(!error) {
       try {
         const {id} = paymentMethod!
@@ -47,14 +47,14 @@ function PaymentForm({cardResponse}: Iprops) {
         id: id
       })
       if(response.data.success) {
-        cardResponse("Successful payment", response)
+        paymentResponse("Successful card payment", response.data.body)
         setSucces(true)
       }
       } catch (error){
         console.log("Error", error)
       }
     } else {
-      cardResponse(error.message)
+      paymentResponse(error.message)
     }
   } 
 
@@ -62,59 +62,61 @@ function PaymentForm({cardResponse}: Iprops) {
    <Box>
        {!success ? 
        <form onSubmit={handleSubmit}>
-        <fieldset>
-        <TextField
-              label="Credit Card Number"
-              name="ccnumber"
-              variant="outlined"
-              required
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              InputProps={{ 
-                inputComponent: StripeInput,
-                inputProps: {
-                  component: CardNumberElement
-             }, 
-              }}
-          />
+        <Box>
           <TextField
-                label="Expiration Date"
-                name="ccexp"
+                label="Credit Card Number"
+                name="ccnumber"
                 variant="outlined"
                 required
                 fullWidth
                 InputLabelProps={{ shrink: true }}
-                InputProps={{
-                    inputComponent: StripeInput,
-                    inputProps: {
-                        component: CardExpiryElement
-                    },
+                InputProps={{ 
+                  inputComponent: StripeInput,
+                  inputProps: {
+                    component: CardNumberElement
+              }, 
                 }}
             />
             <TextField
-                label="CVC"
-                name="cvc"
-                variant="outlined"
-                required
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                InputProps={{
-                    inputComponent: StripeInput,
-                    inputProps: {
-                        component: CardCvcElement
-                    },
-                }}
-            />
-          <div>
-           {/*  <CardElement options={CARD_OPTIONS}/> */}
-          </div>
-        </fieldset>
-        <button>Pay</button>
+                  label="Expiration Date"
+                  name="ccexp"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                      inputComponent: StripeInput,
+                      inputProps: {
+                          component: CardExpiryElement
+                      },
+                  }}
+              />
+              <TextField
+                  label="CVC"
+                  name="cvc"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                      inputComponent: StripeInput,
+                      inputProps: {
+                          component: CardCvcElement
+                      },
+                  }}
+              />
+        </Box>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+        >Pay
+        </Button>
        </form>
        :
-       <div>
-         <h2>Payment Succesful!</h2>
-       </div>
+       <Box>
+         <Typography>Payment Succesful!</Typography>
+       </Box>
        }
    </Box>
   );
