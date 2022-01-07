@@ -39,7 +39,6 @@ function App() {
               <Route path="/create-user" element={<CreateUser/>}/>
               <Route path="/menu" element={<RestaurantMenu/>}/>
               <Route path={`/user/${userID}`} element={<UserPage/>}/>
-              <Route path="/cart" element={<Cart/>}/>
               <Route path="/checkout" element={<Checkout/>}/>
             </Routes>
           </Router>

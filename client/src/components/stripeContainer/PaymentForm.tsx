@@ -38,12 +38,11 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
       type: "card",
       card: elements!.getElement(CardNumberElement)!
     })
-    //send in cart payment amount 
     if(!error) {
       try {
         const {id} = paymentMethod!
         const response = await axios.post("api/payment", {
-        amount: priceTotal,
+        amount: priceTotal * 1000,
         id: id
       })
       if(response.data.success) {

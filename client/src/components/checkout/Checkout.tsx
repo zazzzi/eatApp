@@ -121,10 +121,10 @@ function Checkout() {
         className={classes.style}
         nextButton={
           <Button size="small" onClick={handleNext} disabled={
+            activeStep ===  0 && !cart.length ||
+            activeStep === 1 && paymentMethod === null ||
             activeStep === 3 || 
-            activeStep === 1 && 
-            paymentMethod === null ||
-            order === null && activeStep === 2
+            order === null && activeStep === 2 
           }>
             {activeStep === 0 ? "Betalsätt" : activeStep === 1 ? "Betala" : ""}
             {activeStep === 3 ? null : (<KeyboardArrowRight />)}

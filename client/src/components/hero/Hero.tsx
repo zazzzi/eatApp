@@ -30,7 +30,7 @@ function Hero(props: Iprops) {
 				<Link to={"login"}>
 					<Typography variant="body1">Inget konto? Skapa ett här!</Typography>
 				</Link>
-				<Link to={"cart"}>
+				<Link to={"checkout"}>
 					<Typography variant="body1">cart</Typography>
 				</Link>
 				<Link to={"menu"}>
