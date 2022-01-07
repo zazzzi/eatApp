@@ -15,21 +15,23 @@ import {
 } from "firebase/firestore";
 import LogOutBtn from "./LogOutBtn";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { Navigate } from "react-router-dom";
+
 
 interface Iprops {}
 
 function Login(props: Iprops) {
   const classes = useStyles();
-  const [loggedInUser, setLoggedInUser] = useState<string>();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const [uid, setUid] = useState<string>();
+
+  console.log(uid, isLoggedIn);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user.email, " Logged in");
-        console.log(user.uid);
-        
-      } else {
-        console.log("Logged out");
+        setUid(user.uid)
+        setIsLoggedIn(true)
       }
     });
   });
@@ -40,15 +42,10 @@ function Login(props: Iprops) {
 
     await signInWithEmailAndPassword(auth, user.email, user.password).then(
       async (cred) => {
-        //gets the db-doc that correlates to the UId of the logged in user
-        const docRef = doc(db, "users", cred.user.uid);
-        const docSnap = await getDoc(docRef);
-
-        //checks if the data exist and then sends it in the log
-        if (docSnap.exists()) {
-          console.log("Data: ", docSnap.data());
+        if (cred){
+          console.log("redirect");
         } else {
-          console.log("ERROR");
+          console.log("dont redirect");
         }
       }
     );
@@ -56,6 +53,7 @@ function Login(props: Iprops) {
 
   return (
     <Box>
+      {isLoggedIn ? <Navigate to={`/user/${uid}`}/> : null }
       <Box>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </Box>
@@ -76,9 +74,6 @@ function Login(props: Iprops) {
       </Box>
       <Box>
         <LogOutBtn />
-      </Box>
-      <Box>
-        <Typography>Logged in as: {loggedInUser}</Typography>
       </Box>
     </Box>
   );
