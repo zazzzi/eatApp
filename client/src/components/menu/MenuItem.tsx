@@ -71,7 +71,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "space-between",
     padding: "2rem 0rem 2rem 0rem",
-    maxHeight: "4rem",
   },
   menuitemContainer: {
     display: "flex",
