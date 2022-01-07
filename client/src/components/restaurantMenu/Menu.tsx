@@ -9,12 +9,14 @@ import {
   Button,
   TextField,
   Select,
-  MenuItem,
   Link,
+  Fab,
 } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import * as React from "react";
 import food from "../../food";
+import AddIcon from "@material-ui/icons/Add";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuItems from "../menu/MenuItem";
 import { MenuContext } from "../../context/MenusContext";
 import { MenuItemType } from "../../types/types";
@@ -25,13 +27,14 @@ interface Iprops {}
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-function RestaurantMenu(props: Iprops) {
+function RestaurantMenu(props: Iprops, item: MenuItemType) {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
   const { menu } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
-  const [fileIsUploaded, setFileIsUploaded] = useState(false);
-  const { loggedIn, userID, checkForRestaurantAuth } = useContext(UserAuthContext);
+
+  const { loggedIn, userID, checkForRestaurantAuth } =
+    useContext(UserAuthContext);
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
@@ -54,14 +57,17 @@ function RestaurantMenu(props: Iprops) {
       <Box className={classes.menuBackground}></Box>
       <Box id="nameContainer" className={classes.restaurantNameContainer}>
         {loggedIn ? (
-          <Button
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            Open modal
-          </Button>
+          <Box className={classes.addItemButton}>
+            <Button
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              <AddIcon fontSize="large" />
+            </Button>
+          </Box>
         ) : null}
+
         <Typography className={classes.restaurantName} variant="h2">
           Brygghuset
         </Typography>
@@ -116,6 +122,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   restaurantNameContainer: {
     position: "absolute",
+    display: "flex",
+    flexDirection: "column",
     marginTop: "40%",
     zIndex: 10,
     height: "100%",
@@ -126,7 +134,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   restaurantName: {
     fontSize: "26px",
     fontWeight: 500,
-    padding: "2rem",
+    padding: ".5rem",
   },
   menuList: {
     position: "sticky",
@@ -146,6 +154,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     // backgroundColor: "blue",
     height: "100%",
     width: "100%",
+  },
+  addItemButton: {
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%",
+    marginTop: "1rem",
   },
 }));
 
