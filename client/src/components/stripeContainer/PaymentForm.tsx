@@ -1,4 +1,4 @@
-import { Box, Button, makeStyles, TextField, Theme} from "@material-ui/core";
+import { Box, Button, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -62,59 +62,61 @@ function PaymentForm({paymentResponse}: Iprops) {
    <Box>
        {!success ? 
        <form onSubmit={handleSubmit}>
-        <fieldset>
-        <TextField
-              label="Credit Card Number"
-              name="ccnumber"
-              variant="outlined"
-              required
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              InputProps={{ 
-                inputComponent: StripeInput,
-                inputProps: {
-                  component: CardNumberElement
-             }, 
-              }}
-          />
+        <Box>
           <TextField
-                label="Expiration Date"
-                name="ccexp"
+                label="Credit Card Number"
+                name="ccnumber"
                 variant="outlined"
                 required
                 fullWidth
                 InputLabelProps={{ shrink: true }}
-                InputProps={{
-                    inputComponent: StripeInput,
-                    inputProps: {
-                        component: CardExpiryElement
-                    },
+                InputProps={{ 
+                  inputComponent: StripeInput,
+                  inputProps: {
+                    component: CardNumberElement
+              }, 
                 }}
             />
             <TextField
-                label="CVC"
-                name="cvc"
-                variant="outlined"
-                required
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                InputProps={{
-                    inputComponent: StripeInput,
-                    inputProps: {
-                        component: CardCvcElement
-                    },
-                }}
-            />
-          <div>
-           {/*  <CardElement options={CARD_OPTIONS}/> */}
-          </div>
-        </fieldset>
-        <button>Pay</button>
+                  label="Expiration Date"
+                  name="ccexp"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                      inputComponent: StripeInput,
+                      inputProps: {
+                          component: CardExpiryElement
+                      },
+                  }}
+              />
+              <TextField
+                  label="CVC"
+                  name="cvc"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                      inputComponent: StripeInput,
+                      inputProps: {
+                          component: CardCvcElement
+                      },
+                  }}
+              />
+        </Box>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+        >Pay
+        </Button>
        </form>
        :
-       <div>
-         <h2>Payment Succesful!</h2>
-       </div>
+       <Box>
+         <Typography>Payment Succesful!</Typography>
+       </Box>
        }
    </Box>
   );

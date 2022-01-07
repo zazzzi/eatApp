@@ -21,7 +21,7 @@ function SwishPayment({paymentResponse}: Iprops) {
     const payment = {
       payerAlias: number,
       amount: 100,
-      /* message: "hello", */
+      message: "put restaurant order and table here??",
     }
 
     fetch("api/paymentrequests", {  
