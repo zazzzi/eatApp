@@ -15,18 +15,18 @@ import { onAuthStateChanged } from "firebase/auth";
 interface IState {
   loggedIn: boolean;
   userID: string | null;
-  userInformation: User
+  userInformation: User | null;
 }
 
 interface ContextValue extends IState {
-  checkForRestaurantAuth: (userID: string ) => void;
+  checkForRestaurantAuth: (userID: string) => void;
 }
 
 export const UserAuthContext = createContext<ContextValue>({
   checkForRestaurantAuth: () => {},
   loggedIn: false,
   userID: null,
-  userInformation: {} as User
+  userInformation: {} as User,
 });
 
 interface Props {
@@ -36,14 +36,14 @@ interface Props {
 function UserAuthProvider(props: Props) {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [userID, setUserID] = useState<string | null>(null);
-  const [userInformation, setUserInformation] = useState<User>({} as User);
+  const [userInformation, setUserInformation] = useState<User | null>(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
         setUserID(user.uid);
-        getUserInformation(user.uid)
+        getUserInformation(user.uid);
         console.log("Logged in to: ", user.email);
       } else {
         setUserID(null);
@@ -51,8 +51,7 @@ function UserAuthProvider(props: Props) {
         console.log("Not logged in.");
       }
     });
-  },[]);
-  
+  }, []);
 
   // COMMENT OUT DURING STYLING
   async function getUserInformation(userID: string) {
@@ -60,8 +59,8 @@ function UserAuthProvider(props: Props) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log( docSnap.data());
-      setUserInformation(docSnap.data().userInformation)
+      console.log(docSnap.data());
+      setUserInformation(docSnap.data().userInformation);
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
@@ -86,7 +85,7 @@ function UserAuthProvider(props: Props) {
         loggedIn: loggedIn,
         userID: userID,
         checkForRestaurantAuth: checkForRestaurantAuth,
-        userInformation: userInformation
+        userInformation: userInformation,
       }}
     >
       {props.children}
