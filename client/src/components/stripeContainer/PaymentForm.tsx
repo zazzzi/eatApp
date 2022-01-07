@@ -12,10 +12,10 @@ import StripeInput from "./StripeInput"
 
 interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void;
+  priceTotal: number;
 }
 
-function PaymentForm({paymentResponse}: Iprops) {
-  const [success, setSucces] = useState<boolean>(false)
+function PaymentForm({paymentResponse, priceTotal}: Iprops) {
   const stripe = useStripe()
   const elements = useElements()
 
@@ -38,17 +38,15 @@ function PaymentForm({paymentResponse}: Iprops) {
       type: "card",
       card: elements!.getElement(CardNumberElement)!
     })
-    //send in cart payment amount 
     if(!error) {
       try {
         const {id} = paymentMethod!
         const response = await axios.post("api/payment", {
-        amount: 1000,
+        amount: priceTotal * 1000,
         id: id
       })
       if(response.data.success) {
-        paymentResponse("Successful card payment", response.data.body)
-        setSucces(true)
+        paymentResponse("Successful card payment", response.data)
       }
       } catch (error){
         console.log("Error", error)
@@ -60,7 +58,6 @@ function PaymentForm({paymentResponse}: Iprops) {
 
   return (
    <Box>
-       {!success ? 
        <form onSubmit={handleSubmit}>
         <Box>
           <TextField
@@ -113,11 +110,6 @@ function PaymentForm({paymentResponse}: Iprops) {
         >Pay
         </Button>
        </form>
-       :
-       <Box>
-         <Typography>Payment Succesful!</Typography>
-       </Box>
-       }
    </Box>
   );
 }

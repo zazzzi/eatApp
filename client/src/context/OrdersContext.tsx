@@ -1,14 +1,15 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {db} from '../firebase'
-import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import { Order } from "../types/types";
+import { collection, getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { Order, UserDb } from "../types/types";
 import { MenuItem } from "./CartContext";
+import { UserAuthContext } from "./UsersContext";
 
 interface IState {
   order: any
 }
 interface ContextValue extends IState {
-  createOrder: (response: any, cart: MenuItem[]) => void;
+  createOrder: (response: any, cart: MenuItem[], total: number) => void;
 }
 
 export const OrderContext = createContext<ContextValue>({
@@ -22,21 +23,38 @@ interface Props {
 
 function OrderProvider(props: Props) {
   const [order, setorder] = useState<Order | null>(null);
-  const usersCollectionRef = collection(db, 'orders')
+  const {userID} = useContext(UserAuthContext)
+  const [userData, setUserData] = useState<UserDb | null>(null)
+  const ordersCollectionRef = collection(db, 'orders')
+  const docRef = doc(db, "users", `${userID}`)
 
-  /* useEffect(() => {
-    const getMenu = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setMenu(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        setUserData(docSnap.data() as UserDb)
+      } else {
+        console.log("No such user!");
+      }
     }
-    getMenu()
-  }, []) */
+    getUserData()
+  }, [])
 
-  
 
-  const createOrder = (response: any, cart: MenuItem[]) => {
-    console.log(response)
-    console.log(cart)
+  const createOrder = (paymentData: any, cart: MenuItem[], total: number) => {
+
+    const order: Order = {
+      orderDate: Date(),
+      cart: cart,
+      session: userData!,
+      priceTotal: total,
+      table: "table 1",
+      payment: paymentData.body,
+      paymentType: paymentData.paymentType,
+    }
+
+    return order
   }
 
 

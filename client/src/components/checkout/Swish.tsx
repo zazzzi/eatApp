@@ -4,9 +4,10 @@ import swish from "../../assets/img/swish.png";
 
 interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void
+  priceTotal: number
 }
 
-function SwishPayment({paymentResponse}: Iprops) {
+function SwishPayment({paymentResponse, priceTotal}: Iprops) {
   const classes = useStyles();
   const [number, setNumber] = useState<any>(0);
 
@@ -20,7 +21,7 @@ function SwishPayment({paymentResponse}: Iprops) {
     evt.preventDefault()
     const payment = {
       payerAlias: number,
-      amount: 100,
+      amount: priceTotal,
       message: "put restaurant order and table here??",
     }
 
@@ -53,6 +54,7 @@ function SwishPayment({paymentResponse}: Iprops) {
   }
 
   return (
+    //if bad response from number make swish box red
    <Box>
       <Box className={classes.padding}>
         <img className={classes.img} src={swish}/>
