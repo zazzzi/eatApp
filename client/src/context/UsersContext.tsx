@@ -54,6 +54,7 @@ function UserAuthProvider(props: Props) {
   },[]);
   
 
+  // COMMENT OUT DURING STYLING
   async function getUserInformation(userID: string) {
     const docRef = doc(db, "users", userID);
     const docSnap = await getDoc(docRef);

@@ -34,7 +34,7 @@ function Login(props: Iprops) {
         setIsLoggedIn(true)
       }
     });
-  });
+  },[]);
 
   //async funtion to log the user in
   async function loginDataCallback(user: IncomingUser) {
