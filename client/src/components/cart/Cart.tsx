@@ -1,4 +1,4 @@
-import { Box, makeStyles, Theme, Button, Typography, Divider} from "@material-ui/core";
+import { Box, makeStyles, Theme, Button, Typography, Divider, CircularProgress} from "@material-ui/core";
 import { SsidChartTwoTone } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -14,18 +14,20 @@ function Cart(props: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
 
+  if(!cart.length) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
    <Box className={classes.height}>
      <Typography variant="h4" gutterBottom component="div">
         Cart
       </Typography>
-      {!cart.length ? 
-        <Typography variant="h4" gutterBottom component="div">
-          Your cart is empty
-        </Typography> 
-        :
         <MenuItems menuItems = {cart}/>
-      }
    </Box>
   );
 }

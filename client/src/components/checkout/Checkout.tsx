@@ -19,6 +19,7 @@ import Cart from '../cart/Cart'
 import Swish from "./Swish";
 import { CartContext } from "../../context/CartContext";
 import { OrderContext } from "../../context/OrdersContext";
+import { Order } from "../../types/types";
 
 
 interface Iprops {
@@ -30,9 +31,18 @@ function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
+  const [order, setOrder] = useState<Order | null>(null)
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const { cart } = useContext(CartContext);
   const { createOrder } = useContext(OrderContext);
+
+  console.log(order)
+
+  useEffect(()=>{
+    if(activeStep === 1){
+      setPaymentMethod(null)
+    }
+  },[activeStep])
 
   useEffect(()=>{
     setTotalPrice(cart.reduce((total, item) => (item.price * item.quantity) + total, 0))
@@ -54,12 +64,10 @@ function Checkout() {
   const paymentResponse = (status: string | undefined, response?: any) => {
     if(status === "Successful card payment" || status === "Successful swish payment"){
       const order = createOrder(response, cart, totalPrice)
-      console.log(order)
+      setOrder(order!)
       setActiveStep(3)
     }
   }
-
-  //go to the next page when card payment is completed and order response is sent from the orders context
 
   const getStepContent = (stepIndex: number) => {
     switch(stepIndex){
@@ -103,7 +111,6 @@ function Checkout() {
     }
   }
   
-
   return (
     <Box>
       <MobileStepper
@@ -116,24 +123,20 @@ function Checkout() {
           <Button size="small" onClick={handleNext} disabled={
             activeStep === 3 || 
             activeStep === 1 && 
-            paymentMethod === null
+            paymentMethod === null ||
+            order === null && activeStep === 2
           }>
-            {activeStep === 0 ? "Payment" : activeStep === 1 ? "Confirm" : "Finished"}
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
+            {activeStep === 0 ? "Betalsätt" : activeStep === 1 ? "Betala" : ""}
+            {activeStep === 3 ? null : (<KeyboardArrowRight />)}
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
+          <Button size="small" onClick={handleBack} disabled={
+            activeStep === 0 ||
+            order !== null
+            }>
+            {activeStep === 3 || activeStep === 0 ? null : (<KeyboardArrowLeft />)}
+            {activeStep === 3 || activeStep === 0 ? "" : "Tillbaka"}
           </Button>
         }
       />

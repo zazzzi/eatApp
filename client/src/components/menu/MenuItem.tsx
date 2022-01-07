@@ -25,10 +25,6 @@ function MenuItems({menuItems}:Iprops) {
     )
   }
 
-  console.log(loggedIn);
-  console.log(userID);
-  
-
   return (
    <Box>
       {menuItems.map((item: MenuItemType | MenuItem) => 
