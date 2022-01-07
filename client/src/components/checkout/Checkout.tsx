@@ -36,7 +36,7 @@ function Checkout() {
   const { cart } = useContext(CartContext);
   const { createOrder } = useContext(OrderContext);
 
-  console.log(order)
+  console.log(activeStep)
 
   useEffect(()=>{
     if(activeStep === 1){
@@ -126,7 +126,7 @@ function Checkout() {
             activeStep === 3 || 
             order === null && activeStep === 2 
           }>
-            {activeStep === 0 ? "Betalsätt" : activeStep === 1 ? "Betala" : ""}
+            {activeStep === 0 ? "Betalsätt" : activeStep === 1 || activeStep === 2 ? "Betala" : ""}
             {activeStep === 3 ? null : (<KeyboardArrowRight />)}
           </Button>
         }
