@@ -24,10 +24,11 @@ function MenuProvider(props: Props) {
   const [menu, setMenu] = useState<any>([]);
   const [id, setId] = useState<string>("")
   const [restaurantData, setRestaurantdata] = useState<any>(null)
-  const usersCollectionRef = collection(db, 'menu')
 
+  console.log(restaurantData)
 
   useEffect(() => {
+    if(!id) return
     const getRestaurantData = async () => {
       const docRef = doc(db, "restaurants", `${id}`);
       const docSnap = await getDoc(docRef);
@@ -38,7 +39,7 @@ function MenuProvider(props: Props) {
       }
     }
     getRestaurantData()
-  }, [])
+  }, [id])
 
   useEffect(() => {
     const getMenu = async () => {
@@ -54,25 +55,10 @@ const urlParam = (param: string) => {
   setId(param)
 }
 
-  async function getTabs() {
-    const usersCollectionRef = collection(db, "restaurants", "");
+  /* async function getTabs() {
+    const usersCollectionRef = collection(db, "restaurants", `${id}`);
     const data = await getDocs(usersCollectionRef);
-  }
-
-
-  function populateMenu(product: MenuItemType) {
-    /* setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.name === product.name);
-      if (isItemInCart) {
-        return prev.map((item: CartItem) =>
-          item.name === product.name
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    }); */
-  }
+  } */
 
   return (
     <MenuContext.Provider
