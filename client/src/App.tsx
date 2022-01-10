@@ -31,7 +31,6 @@ import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
 function App() {
   const { loggedIn, userID } = useContext(UserAuthContext);
-  const [restaurantId, setRestarauntId] = useState<string>("J87KKq1W7PW2tK75e1NGDJdd5GK2")
 
   const theme = createTheme({
     palette: {
@@ -46,8 +45,7 @@ function App() {
   });
 
   useEffect(() => {
-    console.log(loggedIn);
-    console.log(userID);
+    console.log("is logged in", loggedIn);
   },[]) 
 
  return (

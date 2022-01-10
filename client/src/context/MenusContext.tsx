@@ -1,10 +1,19 @@
 import { createContext, useEffect, useState } from "react";
-import {db} from '../firebase'
-import { collection, getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { MenuItemType } from "../types/types";
 
 interface IState {
   menu: MenuItemType[];
+  restaurantData: any;
 }
 
 interface ContextValue extends IState {
@@ -13,6 +22,7 @@ interface ContextValue extends IState {
 
 export const MenuContext = createContext<ContextValue>({
   menu: [],
+  restaurantData: {},
   sendUrlParam: () => {},
 });
 
@@ -22,24 +32,22 @@ interface Props {
 
 function MenuProvider(props: Props) {
   const [menu, setMenu] = useState<any>([]);
-  const [id, setId] = useState<string>("")
-  const [restaurantData, setRestaurantdata] = useState<any>(null)
-
-  console.log(restaurantData)
+  const [id, setId] = useState<string>("");
+  const [restaurantData, setRestaurantdata] = useState<any>(null);
 
   useEffect(() => {
-    if(!id) return
+    if (!id) return;
     const getRestaurantData = async () => {
       const docRef = doc(db, "restaurants", `${id}`);
       const docSnap = await getDoc(docRef);
-      if(docSnap.exists()){
-        setRestaurantdata(docSnap.data())
+      if (docSnap.exists()) {
+        setRestaurantdata(docSnap.data());
       } else {
         console.log("No such restaurant!");
       }
-    }
-    getRestaurantData()
-  }, [id])
+    };
+    getRestaurantData();
+  }, [id]);
 
   useEffect(() => {
     const getMenu = async () => {
@@ -50,10 +58,9 @@ function MenuProvider(props: Props) {
     getMenu();
   }, []);
 
-
-const urlParam = (param: string) => {
-  setId(param)
-}
+  const urlParam = (param: string) => {
+    setId(param);
+  };
 
   /* async function getTabs() {
     const usersCollectionRef = collection(db, "restaurants", `${id}`);
@@ -64,7 +71,8 @@ const urlParam = (param: string) => {
     <MenuContext.Provider
       value={{
         menu: menu,
-        sendUrlParam: urlParam
+        restaurantData: restaurantData,
+        sendUrlParam: urlParam,
       }}
     >
       {props.children}
