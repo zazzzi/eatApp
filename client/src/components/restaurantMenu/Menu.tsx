@@ -79,8 +79,15 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
       ¨
       {restaurantData ? (
         <>
-          <Box className={classes.menuBackground}></Box>
-          <Box id="nameContainer" className={classes.restaurantNameContainer}>
+          <Box
+            style={{ backgroundImage: `url(${restaurantData.img})` }}
+            className={classes.menuBackground}
+          ></Box>
+          <Box
+            id="nameContainer"
+            style={{ backgroundColor: `#${restaurantData.color}` }}
+            className={classes.restaurantNameContainer}
+          >
             {loggedIn ? (
               <Box className={classes.addItemButton}>
                 <Button
@@ -94,7 +101,7 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
             ) : null}
 
             <Typography className={classes.restaurantName} variant="h2">
-              Brygghuset
+              {restaurantData.restaurantName}
             </Typography>
             <a href="/">
               <Typography variant="body1">Home</Typography>
@@ -108,14 +115,14 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
                   indicatorColor="secondary"
                   onChange={handleChange}
                 >
-                  {tabs.map((t) => (
+                  {restaurantData.categories.map((t: any) => (
                     <Tab label={t} value={t} />
                   ))}
                 </Tabs>
               </Box>
               <hr />
               <Box className={classes.menuItemContainer}>
-                {menu.map((i: any) => filterMenuItems(i))}
+                {restaurantData.menu.map((i: any) => filterMenuItems(i))}
               </Box>
             </Box>
           </Box>
@@ -155,7 +162,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     backgroundSize: "cover",
     backgroundPosition: "top",
-    backgroundImage: `url(${"https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"})`,
   },
   restaurantNameContainer: {
     position: "absolute",
@@ -166,7 +172,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: "100%",
     width: "100%",
     borderRadius: "38px 38px 0px 0px",
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
   restaurantName: {
     fontSize: "26px",

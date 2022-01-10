@@ -23,15 +23,6 @@ function MenuItems({ menuItems }: Iprops) {
   const classes = useStyles();
   const { loggedIn, userID } = useContext(UserAuthContext);
 
-  const itemContents = (cont: any) => {
-    return (
-      <Box>
-        {cont.map((i: string[]) => (
-          <p className={classes.font}>{i}</p>
-        ))}
-      </Box>
-    );
-  };
   return (
     <Box className={classes.baseContainer}>
       {menuItems.map((item: MenuItemType | MenuItem, i: any) => (
@@ -42,9 +33,8 @@ function MenuItems({ menuItems }: Iprops) {
             </Container>
             <Container className={classes.itemColumn}>
               <Typography variant="h6" display="block" gutterBottom>
-                {item.title}
+                <p className={classes.font}>{item.description}</p>
               </Typography>
-              {itemContents(item.content)}
             </Container>
           </Box>
           <Box className={classes.bottomContainer}>
