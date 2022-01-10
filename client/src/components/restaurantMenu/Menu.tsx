@@ -31,7 +31,7 @@ interface Iprops {}
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-function RestaurantMenu(props: Iprops, item: MenuItemType) {
+const  RestaurantMenu = ({location}: any) => {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, menu, sendUrlParam } = useContext(MenuContext);
@@ -40,7 +40,11 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
 
-  console.log(restaurantData);
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const table = queryParams.get('t');
+  console.log(table)
+  
 
   useEffect(() => {
     if (!id) return;
