@@ -5,12 +5,9 @@ import {
   Routes,
   Navigate 
 } from "react-router-dom";
-import {db} from './firebase'
-import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import Hero from "./components/hero/Hero"
 import Login from "./components/login/Login"
 import RestaurantMenu from "./components/restaurantMenu/Menu"
-import Cart from './components/cart/Cart';
 import CreateUser from './components/login/CreateUser';
 import Checkout from './components/checkout/Checkout';
 import CartProvider from './context/CartContext';
@@ -34,12 +31,12 @@ function App() {
         <MenuProvider>
           <Router>
             <Routes>
-              <Route path="/" element={<Hero/>}/>
-              <Route path="/login" element={<Login/>} />
-              <Route path="/create-user" element={<CreateUser/>}/>
-              <Route path="/menu" element={<RestaurantMenu/>}/>
-              <Route path={`/user/${userID}`} element={<UserPage/>}/>
-              <Route path="/checkout" element={<Checkout/>}/>
+                <Route path="/" element={<Hero/>}/>
+                <Route path="/login" element={<Login/>} />
+                <Route path="/create-user" element={<CreateUser/>}/>
+                <Route path="/menu" element={<RestaurantMenu/>}/>
+                <Route path={`/user/${userID}`} element={<UserPage/>}/>
+                <Route path="/checkout" element={<Checkout/>}/>
             </Routes>
           </Router>
         </MenuProvider>
@@ -48,5 +45,10 @@ function App() {
   );  
 }
 
+
 export default App;
+
+
+
+
 

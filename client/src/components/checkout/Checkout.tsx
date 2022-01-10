@@ -114,7 +114,9 @@ function Checkout() {
   }
   
   return (
-    <Box className={classes.height}>
+    <Box 
+    height="100%"
+    className={classes.height}>
       <MobileStepper
         variant="dots"
         steps={4}
