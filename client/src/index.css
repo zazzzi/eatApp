@@ -1,4 +1,3 @@
-
 body {
   height: 100%;
   margin: 0;
@@ -7,15 +6,19 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 hr {
-	width: 80%;
-	height: 2px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color:rgba(196, 196, 196, 0.29);
-	border: 0 none;
+  width: 80%;
+  height: 2px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(196, 196, 196, 0.29);
+  border: 0 none;
+}
+
+.MuiButtonGroup-groupedOutlinedHorizontal:not(:last-child) {
+  border-right-color: rgba(0, 0, 0, 0.23) !important;
 }

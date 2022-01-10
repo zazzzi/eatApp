@@ -33,8 +33,8 @@ function MenuItems({ menuItems }: Iprops) {
     );
   };
   return (
-    <Box>
-      {menuItems.map((item: MenuItemType | MenuItem) => (
+    <Box className={classes.baseContainer}>
+      {menuItems.map((item: MenuItemType | MenuItem, i: any) => (
         <Box className={classes.menuitemContainer}>
           <Box className={classes.menuItem}>
             <Container className={classes.imageColumn}>
@@ -48,14 +48,14 @@ function MenuItems({ menuItems }: Iprops) {
             </Container>
           </Box>
           <Box className={classes.bottomContainer}>
+            <Box className={classes.incrementerContainer}>
+              <Incrementer menuItem={item} />
+            </Box>
             <Container className={classes.priceColumn}>
               <Typography variant="overline" display="block" gutterBottom>
                 {item.price} kr
               </Typography>
             </Container>
-            <Box className={classes.incrementerContainer}>
-              <Incrementer menuItem={item} />
-            </Box>
           </Box>
           <hr />
         </Box>
@@ -65,7 +65,11 @@ function MenuItems({ menuItems }: Iprops) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  baseContainer: {
+    width: "100vw",
+  },
   menuItem: {
+    width: "100%",
     display: "flex",
     justifyContent: "space-between",
     padding: "1rem 0rem 1rem 0rem",
@@ -88,11 +92,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
   },
   itemColumn: {
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignContent: "space-between",
-    alignItems: "flex-start",
+    alignContent: "center",
+    alignItems: "center",
   },
   imageColumn: {
     display: "flex",
@@ -120,11 +125,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
   },
   bottomContainer: {
-    width: "80%",
+    width: "100%",
     margin: "auto",
     display: "flex",
     flexDirection: "row-reverse",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
 }));
 
