@@ -5,6 +5,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+
 import { db } from "./firebase";
 import {
   collection,
@@ -69,4 +70,6 @@ function App() {
   );
 }
 
+
 export default App;
+

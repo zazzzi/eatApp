@@ -55,25 +55,36 @@ function SwishPayment({paymentResponse, priceTotal}: Iprops) {
 
   return (
     //if bad response from number make swish box red
-   <Box>
+   <Box 
+    height="100%"
+    className={classes.height}
+   >
       <Box className={classes.padding}>
-        <img className={classes.img} src={swish}/>
+        <Box className={classes.swishLogo}>
+          <img className={classes.img} src={swish}/>
+        </Box>
         <form onSubmit={handleSubmit}>
-          <TextField
-            type="number"
-            label="Swish number"
-            id="margin-normal"
-            name="number"
-            className={classes.textField}
-            onChange={handleInput}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Pay 
-          </Button>
+          <Box className={classes.container}>
+            <TextField
+              type="number"
+              label="Swish number"
+              id="margin-normal"
+              required
+              fullWidth
+              name="number"
+              InputLabelProps={{ shrink: true }}
+              className={classes.textField}
+              onChange={handleInput}
+            />
+            <Button
+              className={classes.button}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Betala
+            </Button>
+          </Box>
         </form>
       </Box>
    </Box>
@@ -81,8 +92,11 @@ function SwishPayment({paymentResponse, priceTotal}: Iprops) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  height: {
+    height: "100%"
+  },
   img: {
-    height: "4rem"
+    width: "10rem"
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -94,6 +108,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     padding: '2rem'
+  },
+  container: {
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: "center"
+  },
+  button: {
+    width: "10rem"
+  },
+  swishLogo: {
+    display: "flex",
+    justifyContent: "center",
   }
 }));
 

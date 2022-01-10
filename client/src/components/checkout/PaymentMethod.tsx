@@ -37,7 +37,7 @@ function PaymentMethod({paymentMethod}: IProps) {
 const useStyles = makeStyles((theme: Theme) => ({
   center: { 
     textAlign: "center",
-    paddingTop: "1rem"
+    paddingTop: "2rem"
   },
   img: {
     height: "4rem"
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   boxContainer: {
     flexWrap: "wrap",
-    padding: "3rem 2rem 3rem 2rem",
+    padding: "1rem 2rem 1rem 2rem",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
