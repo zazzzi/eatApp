@@ -11,17 +11,20 @@ import {
   Select,
   Link,
   Fab,
+  Fade,
 } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import * as React from "react";
 import food from "../../food";
 import AddIcon from "@material-ui/icons/Add";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import cartIcon from "../../assets/icons/cart.png";
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuItems from "../menu/MenuItem";
 import { MenuContext } from "../../context/MenusContext";
 import { MenuItemType } from "../../types/types";
 import EditMenuModal from "./EditModal";
 import { UserAuthContext } from "../../context/UsersContext";
+import { CartContext } from "../../context/CartContext";
 
 interface Iprops {}
 
@@ -32,6 +35,8 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
   const [value, setValue] = useState<string>("Dryck");
   const { menu } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
+  const [itemsInCart, setItemsInCart] = useState(false);
+  const { cart } = useContext(CartContext);
 
   const { loggedIn, userID, checkForRestaurantAuth } =
     useContext(UserAuthContext);
@@ -51,6 +56,14 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
     });
     return <MenuItems menuItems={filterUndefined} />;
   };
+
+  useEffect(() => {
+    if (cart.length >= 1) {
+      setItemsInCart(true);
+    } else {
+      setItemsInCart(false);
+    }
+  }, [cart]);
 
   return (
     <Box className={classes.menuPageContainer}>
@@ -100,6 +113,12 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
           editOpen={Boolean(open)}
         />
       ) : null}
+
+      <Fade in={itemsInCart}>
+        <Fab href="/checkout" color="primary" className={classes.cartButton}>
+          <ShoppingCartOutlinedIcon htmlColor="#FFF" />
+        </Fab>
+      </Fade>
     </Box>
   );
 }
@@ -160,6 +179,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "flex-end",
     width: "100%",
     marginTop: "1rem",
+  },
+  cartButton: {
+    position: "fixed",
+    bottom: 30,
+    right: 30,
+    zIndex: 15,
+  },
+  cartIconStyle: {
+    width: "50%",
   },
 }));
 

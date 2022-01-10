@@ -1,8 +1,14 @@
 import { createContext, useEffect, useState } from "react";
-import {db} from '../firebase'
-import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { MenuItemType } from "../types/types";
-
 
 interface IState {
   menu: MenuItemType[];
@@ -23,16 +29,20 @@ interface Props {
 
 function MenuProvider(props: Props) {
   const [menu, setMenu] = useState<any>([]);
-  const usersCollectionRef = collection(db, 'menu')
 
   useEffect(() => {
     const getMenu = async () => {
+      const usersCollectionRef = collection(db, "menu");
       const data = await getDocs(usersCollectionRef);
-      setMenu(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-    }
-    getMenu()
-  }, [])
+      setMenu(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getMenu();
+  }, []);
 
+  async function getTabs() {
+    const usersCollectionRef = collection(db, "restaurants", "");
+    const data = await getDocs(usersCollectionRef);
+  }
 
   function populateMenu(product: MenuItemType) {
     /* setCartItems((prev) => {
@@ -48,12 +58,11 @@ function MenuProvider(props: Props) {
     }); */
   }
 
-
   return (
     <MenuContext.Provider
       value={{
         menu: menu,
-        populateMenu: populateMenu
+        populateMenu: populateMenu,
       }}
     >
       {props.children}
