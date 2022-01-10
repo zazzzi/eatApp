@@ -24,9 +24,8 @@ import { MenuContext } from "../../context/MenusContext";
 import { MenuItemType } from "../../types/types";
 import EditMenuModal from "./EditModal";
 import { UserAuthContext } from "../../context/UsersContext";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
-
 
 interface Iprops {}
 
@@ -35,17 +34,18 @@ const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 function RestaurantMenu(props: Iprops, item: MenuItemType) {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
-  const { menu, sendUrlParam } = useContext(MenuContext);
+  const { restaurantData, menu, sendUrlParam } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
   const [itemsInCart, setItemsInCart] = useState(false);
   const { cart } = useContext(CartContext);
-  const { id } = useParams()
+  const { id } = useParams();
+
+  console.log(restaurantData);
 
   useEffect(() => {
-    if(!id) return
-    sendUrlParam(id)
-  },[])
-
+    if (!id) return;
+    sendUrlParam(id);
+  }, []);
 
   const { loggedIn, userID, checkForRestaurantAuth } =
     useContext(UserAuthContext);
@@ -76,58 +76,67 @@ function RestaurantMenu(props: Iprops, item: MenuItemType) {
 
   return (
     <Box className={classes.menuPageContainer}>
-      <Box className={classes.menuBackground}></Box>
-      <Box id="nameContainer" className={classes.restaurantNameContainer}>
-        {loggedIn ? (
-          <Box className={classes.addItemButton}>
-            <Button
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
-              <AddIcon fontSize="large" />
-            </Button>
-          </Box>
-        ) : null}
+      ¨
+      {restaurantData ? (
+        <>
+          <Box className={classes.menuBackground}></Box>
+          <Box id="nameContainer" className={classes.restaurantNameContainer}>
+            {loggedIn ? (
+              <Box className={classes.addItemButton}>
+                <Button
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  <AddIcon fontSize="large" />
+                </Button>
+              </Box>
+            ) : null}
 
-        <Typography className={classes.restaurantName} variant="h2">
-          Brygghuset
-        </Typography>
-        <a href="/">
-          <Typography variant="body1">Home</Typography>
-        </a>
-        <Box className={classes.menuList}>
-          <Box className={classes.menuTabs}>
-            <Tabs
-              variant="scrollable"
-              aria-label="scrollable prevent tabs example"
-              value={value}
-              indicatorColor="secondary"
-              onChange={handleChange}
+            <Typography className={classes.restaurantName} variant="h2">
+              Brygghuset
+            </Typography>
+            <a href="/">
+              <Typography variant="body1">Home</Typography>
+            </a>
+            <Box className={classes.menuList}>
+              <Box className={classes.menuTabs}>
+                <Tabs
+                  variant="scrollable"
+                  aria-label="scrollable prevent tabs example"
+                  value={value}
+                  indicatorColor="secondary"
+                  onChange={handleChange}
+                >
+                  {tabs.map((t) => (
+                    <Tab label={t} value={t} />
+                  ))}
+                </Tabs>
+              </Box>
+              <hr />
+              <Box className={classes.menuItemContainer}>
+                {menu.map((i: any) => filterMenuItems(i))}
+              </Box>
+            </Box>
+          </Box>
+          {open ? (
+            <EditMenuModal
+              closeModal={() => setOpen(false)}
+              editOpen={Boolean(open)}
+            />
+          ) : null}
+
+          <Fade in={itemsInCart}>
+            <Fab
+              href="/checkout"
+              color="primary"
+              className={classes.cartButton}
             >
-              {tabs.map((t) => (
-                <Tab label={t} value={t} />
-              ))}
-            </Tabs>
-          </Box>
-          <hr />
-          <Box className={classes.menuItemContainer}>
-            {menu.map((i: any) => filterMenuItems(i))}
-          </Box>
-        </Box>
-      </Box>
-      {open ? (
-        <EditMenuModal
-          closeModal={() => setOpen(false)}
-          editOpen={Boolean(open)}
-        />
+              <ShoppingCartOutlinedIcon htmlColor="#FFF" />
+            </Fab>
+          </Fade>
+        </>
       ) : null}
-
-      <Fade in={itemsInCart}>
-        <Fab href="/checkout" color="primary" className={classes.cartButton}>
-          <ShoppingCartOutlinedIcon htmlColor="#FFF" />
-        </Fab>
-      </Fade>
     </Box>
   );
 }
