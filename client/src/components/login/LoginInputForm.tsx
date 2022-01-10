@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import SendIcon from '@material-ui/icons/Send';
 import { IncomingUser, User } from "../../types/types";
 
 interface Iprops {
@@ -35,13 +35,14 @@ function LoginInputForm(props: Iprops) {
 
   return (
     <Box>
-      <Box className={classes.outerContainer}>
-        <form onSubmit={handleSubmit}>
+      <Box>
+        <form className={classes.formStyling} onSubmit={handleSubmit}>
           <TextField
             className={classes.inputField}
             id="email"
             label="E-mail"
-            variant="standard"
+            variant="outlined"
+            size="small"
             type="email"
             autoComplete="current-email"
             onChange={handleChange}
@@ -50,22 +51,26 @@ function LoginInputForm(props: Iprops) {
             className={classes.inputField}
             id="password"
             label="Password"
+            size="small"
+            variant="outlined"
             type="password"
             autoComplete="current-password"
             onChange={handleChange}
           />
-          <Button type="submit">Logga in ➡️</Button>
+          <Box className={classes.loginHelperContainer}>
+            <Typography variant="body2">Problem med att logga in?</Typography>
+          </Box>
+          <Box className={classes.loginBtnContainer}>
+            <Button endIcon={<SendIcon / >} size="large" type="submit">Logga in </Button>
+          </Box>
         </form>
-      </Box>
-      <Box>
-        <Typography variant="body1">Problem med att logga in?</Typography>
       </Box>
     </Box>
   );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  outerContainer: {
+  formStyling: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -73,6 +78,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   inputField: {
     width: "15rem",
+    marginTop: "1rem",
+  },
+  loginHelperContainer: {
+    width: "15rem",
+    textAlign: "end",
+    marginTop: "0.3rem",
+  },
+  loginBtnContainer: {
+    display: "flex",
+    justifyContent: "end",
+    width: "15rem",
+    marginTop: "4rem"
   },
 }));
 

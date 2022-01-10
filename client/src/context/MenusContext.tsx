@@ -3,7 +3,6 @@ import {db} from '../firebase'
 import { collection, getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { MenuItemType } from "../types/types";
 
-
 interface IState {
   menu: MenuItemType[];
 }
@@ -27,6 +26,7 @@ function MenuProvider(props: Props) {
   const [restaurantData, setRestaurantdata] = useState<any>(null)
   const usersCollectionRef = collection(db, 'menu')
 
+
   useEffect(() => {
     const getRestaurantData = async () => {
       const docRef = doc(db, "restaurants", `${id}`);
@@ -42,15 +42,23 @@ function MenuProvider(props: Props) {
 
   useEffect(() => {
     const getMenu = async () => {
+      const usersCollectionRef = collection(db, "menu");
       const data = await getDocs(usersCollectionRef);
-      setMenu(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-    }
-    getMenu()
-  }, [])
+      setMenu(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getMenu();
+  }, []);
+
 
 const urlParam = (param: string) => {
   setId(param)
 }
+
+  async function getTabs() {
+    const usersCollectionRef = collection(db, "restaurants", "");
+    const data = await getDocs(usersCollectionRef);
+  }
+
 
   function populateMenu(product: MenuItemType) {
     /* setCartItems((prev) => {
@@ -65,7 +73,6 @@ const urlParam = (param: string) => {
       return [...prev, { ...product, quantity: 1 }];
     }); */
   }
-
 
   return (
     <MenuContext.Provider
