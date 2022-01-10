@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import {db} from '../firebase'
-import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { MenuItemType } from "../types/types";
 
 
@@ -9,12 +9,12 @@ interface IState {
 }
 
 interface ContextValue extends IState {
-  populateMenu: (product: MenuItemType) => void;
+  sendUrlParam: (param: string) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
   menu: [],
-  populateMenu: () => {},
+  sendUrlParam: () => {},
 });
 
 interface Props {
@@ -23,7 +23,22 @@ interface Props {
 
 function MenuProvider(props: Props) {
   const [menu, setMenu] = useState<any>([]);
+  const [id, setId] = useState<string>("")
+  const [restaurantData, setRestaurantdata] = useState<any>(null)
   const usersCollectionRef = collection(db, 'menu')
+
+  useEffect(() => {
+    const getRestaurantData = async () => {
+      const docRef = doc(db, "restaurants", `${id}`);
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        setRestaurantdata(docSnap.data())
+      } else {
+        console.log("No such restaurant!");
+      }
+    }
+    getRestaurantData()
+  }, [])
 
   useEffect(() => {
     const getMenu = async () => {
@@ -33,6 +48,9 @@ function MenuProvider(props: Props) {
     getMenu()
   }, [])
 
+const urlParam = (param: string) => {
+  setId(param)
+}
 
   function populateMenu(product: MenuItemType) {
     /* setCartItems((prev) => {
@@ -53,7 +71,7 @@ function MenuProvider(props: Props) {
     <MenuContext.Provider
       value={{
         menu: menu,
-        populateMenu: populateMenu
+        sendUrlParam: urlParam
       }}
     >
       {props.children}

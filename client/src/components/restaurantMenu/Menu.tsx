@@ -22,6 +22,7 @@ import { MenuContext } from "../../context/MenusContext";
 import { MenuItemType } from "../../types/types";
 import EditMenuModal from "./EditModal";
 import { UserAuthContext } from "../../context/UsersContext";
+import {useParams} from 'react-router-dom'
 
 interface Iprops {}
 
@@ -30,8 +31,16 @@ const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 function RestaurantMenu(props: Iprops, item: MenuItemType) {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
-  const { menu } = useContext(MenuContext);
+  const { menu, sendUrlParam } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
+  const { id } = useParams()
+
+  useEffect(() => {
+    if(!id) return
+
+    sendUrlParam(id)
+  },[])
+  
 
   const { loggedIn, userID, checkForRestaurantAuth } =
     useContext(UserAuthContext);

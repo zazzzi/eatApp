@@ -15,10 +15,12 @@ import MenuProvider from "./context/MenusContext";
 import OrderProvider from "./context/OrdersContext";
 import { UserAuthContext } from "./context/UsersContext";
 import UserPage from "./components/users/UserPage";
+import { isEnumDeclaration } from "typescript";
 
 
 function App() {
   const { loggedIn, userID } = useContext(UserAuthContext);
+  const [restaurantId, setRestarauntId] = useState<string>("J87KKq1W7PW2tK75e1NGDJdd5GK2")
 
   useEffect(()=> {
     console.log(loggedIn);
@@ -34,7 +36,7 @@ function App() {
                 <Route path="/" element={<Hero/>}/>
                 <Route path="/login" element={<Login/>} />
                 <Route path="/create-user" element={<CreateUser/>}/>
-                <Route path="/menu" element={<RestaurantMenu/>}/>
+                <Route path="/menu/:id" element={<RestaurantMenu/>}/>
                 <Route path={`/user/${userID}`} element={<UserPage/>}/>
                 <Route path="/checkout" element={<Checkout/>}/>
             </Routes>
