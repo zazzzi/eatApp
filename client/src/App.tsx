@@ -28,8 +28,10 @@ import { UserAuthContext } from "./context/UsersContext";
 import UserPage from "./components/users/UserPage";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
+
 function App() {
   const { loggedIn, userID } = useContext(UserAuthContext);
+  const [restaurantId, setRestarauntId] = useState<string>("J87KKq1W7PW2tK75e1NGDJdd5GK2")
 
   const theme = createTheme({
     palette: {
@@ -46,28 +48,26 @@ function App() {
   useEffect(() => {
     console.log(loggedIn);
     console.log(userID);
-  }, []);
+  },[]) 
 
-  return (
-    <MuiThemeProvider theme={theme}>
-      <OrderProvider>
-        <CartProvider>
-          <MenuProvider>
-            <Router>
-              <Routes>
-                <Route path="/" element={<Hero />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/create-user" element={<CreateUser />} />
-                <Route path="/menu" element={<RestaurantMenu />} />
-                <Route path={`/user/${userID}`} element={<UserPage />} />
-                <Route path="/checkout" element={<Checkout />} />
-              </Routes>
-            </Router>
-          </MenuProvider>
-        </CartProvider>
-      </OrderProvider>
-    </MuiThemeProvider>
-  );
+ return (
+   <OrderProvider>
+      <CartProvider>
+        <MenuProvider>
+          <Router>
+            <Routes>
+                <Route path="/" element={<Hero/>}/>
+                <Route path="/login" element={<Login/>} />
+                <Route path="/create-user" element={<CreateUser/>}/>
+                <Route path="/menu/:id" element={<RestaurantMenu/>}/>
+                <Route path={`/user/${userID}`} element={<UserPage/>}/>
+                <Route path="/checkout" element={<Checkout/>}/>
+            </Routes>
+          </Router>
+        </MenuProvider>
+      </CartProvider>
+    </OrderProvider>
+  );  
 }
 
 
