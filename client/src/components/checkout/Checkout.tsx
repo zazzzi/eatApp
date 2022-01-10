@@ -159,6 +159,9 @@ function Checkout() {
             </Box>
             <Box className={classes.align}>
             <Divider className={classes.divider}/>
+            { activeStep === 3 ? 
+              null
+              :
               <Box className={classes.priceTotal}>
                 <Typography>
                   Summa
@@ -166,7 +169,9 @@ function Checkout() {
                 <Typography>
                   {totalPrice} kr
                 </Typography>
+              
               </Box>
+            }
             </Box>
         </Box>
       </Box>
