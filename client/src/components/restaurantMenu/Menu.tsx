@@ -19,31 +19,34 @@ import EditMenuModal from "./EditModal";
 import { UserAuthContext } from "../../context/UsersContext";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
-
+import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
+import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 interface Iprops {
   restaurantId: RestaurantTableData;
 }
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-const  RestaurantMenu = ({restaurantId}:Iprops) => {
+const RestaurantMenu = ({ restaurantId }: Iprops) => {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
   const [itemsInCart, setItemsInCart] = useState(false);
   const { cart } = useContext(CartContext);
   const { id } = useParams();
+  const [isOwner, setIsOwner] = useState<boolean>(false);
 
   useEffect(() => {
     if (!id) return;
     const queryParams = new URLSearchParams(window.location.search);
-    const table = queryParams.get('table');
-    if(!table) return
+    const table = queryParams.get("table");
+    if (!table) return;
     sendUrlParam(id, table);
   }, []);
 
-  const { loggedIn, userID, checkForRestaurantAuth } =
+  const { loggedIn, userID, checkForRestaurantAuth, userInformation } =
     useContext(UserAuthContext);
 
   const handleChange = (event: any, newValue: any) => {
@@ -70,6 +73,20 @@ const  RestaurantMenu = ({restaurantId}:Iprops) => {
     }
   }, [cart]);
 
+  useEffect(() => {
+    checkIfOwner();
+  }, [userInformation]);
+
+  function checkIfOwner() {
+    if (
+      userInformation &&
+      userInformation.role === "owner" &&
+      userInformation.rID === restaurantId.restaurantId
+    ) {
+      setIsOwner(true);
+    }
+  }
+
   return (
     <Box className={classes.menuPageContainer}>
       ¨
@@ -84,8 +101,16 @@ const  RestaurantMenu = ({restaurantId}:Iprops) => {
             style={{ backgroundColor: `#${restaurantData.color}` }}
             className={classes.restaurantNameContainer}
           >
-            {loggedIn ? (
+            {isOwner ? (
               <Box className={classes.addItemButton}>
+                <Button
+                  onClick={() => {
+                    setOpenSettings(!openSettings);
+                  }}
+                >
+                  <SettingsApplicationsRoundedIcon fontSize="large" />
+                </Button>
+
                 <Button
                   onClick={() => {
                     setOpen(true);
@@ -103,23 +128,57 @@ const  RestaurantMenu = ({restaurantId}:Iprops) => {
               <Typography variant="body1">Home</Typography>
             </a>
             <Box className={classes.menuList}>
-              <Box className={classes.menuTabs}>
-                <Tabs
-                  variant="scrollable"
-                  aria-label="scrollable prevent tabs example"
-                  value={value}
-                  indicatorColor="secondary"
-                  onChange={handleChange}
-                >
-                  {restaurantData.categories.map((t: any) => (
-                    <Tab label={t} value={t} />
-                  ))}
-                </Tabs>
-              </Box>
-              <hr />
-              <Box className={classes.menuItemContainer}>
-                {restaurantData.menu.map((i: any) => filterMenuItems(i))}
-              </Box>
+              {!openSettings ? (
+                <>
+                  <Box className={classes.menuTabs}>
+                    <Tabs
+                      variant="scrollable"
+                      aria-label="scrollable prevent tabs example"
+                      value={value}
+                      indicatorColor="secondary"
+                      onChange={handleChange}
+                    >
+                      {restaurantData.categories.map((t: any) => (
+                        <Tab label={t} value={t} />
+                      ))}
+                    </Tabs>
+                  </Box>
+                  <hr />
+                  <Box className={classes.menuItemContainer}>
+                    {restaurantData.menu.map((i: any) => filterMenuItems(i))}
+                  </Box>
+                </>
+              ) : (
+                <Box p={3} className="classes.settingsContainer">
+                  <Box
+                    className="classes.settingsListItem"
+                    display="flex"
+                    justifyContent="space-between"
+                    p={1}
+                  >
+                    <Typography variant="h5">Färgtema</Typography>
+                    <ArrowForwardIosRoundedIcon />
+                  </Box>
+                  <Box
+                    className="classes.settingsListItem"
+                    display="flex"
+                    justifyContent="space-between"
+                    p={1}
+                  >
+                    <Typography variant="h5">Bakgrundsbild</Typography>
+                    <ArrowForwardIosRoundedIcon />
+                  </Box>
+                  <Box
+                    className="classes.settingsListItem"
+                    display="flex"
+                    justifyContent="space-between"
+                    p={1}
+                  >
+                    <Typography variant="h5">Bord</Typography>
+                    <ArrowForwardIosRoundedIcon />
+                  </Box>
+                </Box>
+              )}
             </Box>
           </Box>
           {open ? (
@@ -128,21 +187,22 @@ const  RestaurantMenu = ({restaurantId}:Iprops) => {
               editOpen={Boolean(open)}
             />
           ) : null}
-
-          <Fade in={itemsInCart}>
-            <Fab
-              href="/checkout"
-              color="primary"
-              className={classes.cartButton}
-            >
-              <ShoppingCartOutlinedIcon htmlColor="#FFF" />
-            </Fab>
-          </Fade>
+          {!isOwner ? (
+            <Fade in={itemsInCart}>
+              <Fab
+                href="/checkout"
+                color="primary"
+                className={classes.cartButton}
+              >
+                <ShoppingCartOutlinedIcon htmlColor="#FFF" />
+              </Fab>
+            </Fade>
+          ) : null}
         </>
       ) : null}
     </Box>
   );
-}
+};
 
 const useStyles = makeStyles((theme: Theme) => ({
   menuPageContainer: {
@@ -208,6 +268,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   cartIconStyle: {
     width: "50%",
+  },
+  settingsContainer: {
+    height: "100%",
+    width: "100%",
+  },
+  settingsListItem: {
+    width: "100%",
+    height: "100%",
+    padding: "2rem",
   },
 }));
 

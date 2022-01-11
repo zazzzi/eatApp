@@ -14,6 +14,8 @@ import { MenuItemType } from "../../types/types";
 import Incrementer from "../incrementer/Incrementer";
 import { MenuItem } from "../../context/CartContext";
 import { UserAuthContext } from "../../context/UsersContext";
+import { MenuContext } from "../../context/MenusContext";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
 
 interface Iprops {
   menuItems: any;
@@ -21,7 +23,23 @@ interface Iprops {
 
 function MenuItems({ menuItems }: Iprops) {
   const classes = useStyles();
-  const { loggedIn, userID } = useContext(UserAuthContext);
+  const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
+  const { restaurantId } = useContext(MenuContext);
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+
+  useEffect(() => {
+    checkIfOwner();
+  }, [userInformation]);
+
+  function checkIfOwner() {
+    if (
+      userInformation &&
+      userInformation.role === "owner" &&
+      userInformation.rID === restaurantId.restaurantId
+    ) {
+      setIsOwner(true);
+    }
+  }
 
   return (
     <Box className={classes.baseContainer}>
@@ -46,7 +64,7 @@ function MenuItems({ menuItems }: Iprops) {
           </Box>
           <Box className={classes.bottomContainer}>
             <Box className={classes.incrementerContainer}>
-              <Incrementer menuItem={item} />
+              {isOwner ? <EditRoundedIcon /> : <Incrementer menuItem={item} />}
             </Box>
             <Container className={classes.priceColumn}>
               <Typography variant="overline" display="block" gutterBottom>
