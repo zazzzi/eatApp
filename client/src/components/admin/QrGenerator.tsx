@@ -8,7 +8,6 @@ interface Iprops {
 }
 
 function QrGenerator({restaurantId}: Iprops) {
-  console.log(restaurantId)
   return (
    <Box>
      <QRCode value={`http://localhost:3000/menu/${restaurantId.restaurantId}/${restaurantId.table}`} />
