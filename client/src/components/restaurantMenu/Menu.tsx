@@ -29,13 +29,12 @@ import { CartContext } from "../../context/CartContext";
 
 interface Iprops {
   restaurantId: RestaurantTableData;
-  item: MenuItemType;
 }
 
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-const  RestaurantMenu = ({restaurantId, item}:Iprops) => {
+const  RestaurantMenu = ({restaurantId}:Iprops) => {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
