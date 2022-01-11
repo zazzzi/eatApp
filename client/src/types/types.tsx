@@ -19,9 +19,8 @@ export interface User {
   email: string;
   phoneNumber: number;
   password: string;
-  ID?: string;
-  backgroundImg?: string;
-  themeColor?: string;
+  role: string;
+  rID?: string;
 }
 
 export interface UserDb {
