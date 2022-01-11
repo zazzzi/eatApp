@@ -138,7 +138,7 @@ const  RestaurantMenu = ({restaurantId}:Iprops) => {
 
           <Fade in={itemsInCart}>
             <Fab
-              href={`/checkout/${restaurantId.restaurantId}?table=${restaurantId.table}`}
+              href="/checkout"
               color="primary"
               className={classes.cartButton}
             >

@@ -54,7 +54,6 @@ function SwishPayment({paymentResponse, priceTotal}: Iprops) {
   }
 
   return (
-    //if bad response from number make swish box red
    <Box 
     height="100%"
     className={classes.height}

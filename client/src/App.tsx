@@ -60,7 +60,7 @@ function App() {
           <Route path="/create-user" element={<CreateUser/>}/>
           <Route path={`/menu/:id`} element={<RestaurantMenu restaurantId={currentTableAndRestaurant!}/>}/>
           <Route path={`/user/${userID}`} element={<UserPage/>}/>
-          <Route path="/checkout/:id" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
+          <Route path="/checkout" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
       </Routes>
     </Router>
   );  

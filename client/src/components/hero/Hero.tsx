@@ -41,7 +41,7 @@ function Hero({restaurantId}: Iprops) {
 				<Link to={"login"}>
 					<Typography variant="body1">Inget konto? Skapa ett här!</Typography>
 				</Link>
-				<Link to={`checkout/${restaurantId.restaurantId}?table=${restaurantId.table}`}>
+				<Link to="/checkout">
 					<Typography variant="body1">cart</Typography>
 				</Link>
 				<Link to={`menu/${restaurantId.restaurantId}?table=${restaurantId.table}`}>
