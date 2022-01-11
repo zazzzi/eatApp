@@ -114,10 +114,14 @@ function Checkout({restaurantId}:Iprops) {
     }
   }
 
-  if(!restaurantId) {
+  if(!restaurantId){
+    return (<></>)
+  }
+
+  if(Object.keys(restaurantId).length === 0) {
     return (
       <>
-      hi
+        Please scan a QR code to make an order.
       </>
     )
   }
