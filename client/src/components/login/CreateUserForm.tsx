@@ -35,6 +35,7 @@ function CreateUserForm(props: Iprops) {
     email: "",
     phoneNumber: 0,
     password: "",
+    role: "customer"
   });
 
   useEffect(() => {
