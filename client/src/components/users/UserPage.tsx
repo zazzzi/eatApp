@@ -13,6 +13,7 @@ import { UserAuthContext } from "../../context/UsersContext";
 import { auth } from "../../firebase";
 import { User, UserInfoToUpdate } from "../../types/types";
 import LogOutBtn from "../login/LogOutBtn";
+import PasswordModal from "./PasswordModal";
 
 interface Iprops {}
 
@@ -21,6 +22,7 @@ function UserPage(props: Iprops) {
     useContext(UserAuthContext);
   const classes = useStyles();
   const [userInfoState, setUserInfoState] = useState<User | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [updatedInfo, setUpdatedInfo] = useState<UserInfoToUpdate>({} as UserInfoToUpdate);
 
   useEffect(() => {
@@ -32,6 +34,10 @@ function UserPage(props: Iprops) {
       ...updatedInfo,
       [id]: value,
     });
+  }
+
+  function openModal(){
+    setIsOpen(true)
   }
 
   function handleChange(
@@ -124,7 +130,11 @@ function UserPage(props: Iprops) {
         <Box>ORDERS HÄR</Box>
       ) : null}
       <Box className={classes.buttonContainer}>
-        <Button>Byt lösenord</Button>
+        <Button onClick={openModal}>Byt lösenord</Button>
+        {isOpen ? <PasswordModal
+          closeModal={() => setIsOpen(false)}
+          editOpen={Boolean(isOpen)}
+        /> : null}
         {userInfoState && userInfoState.role === "owner" ? (
           <Button href={`/menu/${userInfoState.rID}`}>
             Redigera din restaurang

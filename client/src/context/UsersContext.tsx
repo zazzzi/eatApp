@@ -11,8 +11,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { MenuItemType, User, UserInfoToUpdate } from "../types/types";
-import { onAuthStateChanged } from "firebase/auth";
-
+import { onAuthStateChanged, updatePassword } from "firebase/auth";
 
 interface IState {
   loggedIn: boolean;
@@ -22,13 +21,14 @@ interface IState {
 
 interface ContextValue extends IState {
   checkForRestaurantAuth: (userID: string) => void;
+  updateUserPassword: (password: string) => void;
   updateUserInformation: (userID: string, data: UserInfoToUpdate) => void;
-  
 }
 
 export const UserAuthContext = createContext<ContextValue>({
   checkForRestaurantAuth: () => {},
   updateUserInformation: () => {},
+  updateUserPassword: () => {},
   loggedIn: false,
   userID: null,
   userInformation: {} as User,
@@ -72,8 +72,17 @@ function UserAuthProvider(props: Props) {
     }
   }
 
-  async function updateUserInformation(userID: string, data: UserInfoToUpdate){
- 
+  async function updateUserPassword(password: string) {
+    const user = auth.currentUser;
+    if (user) {
+      await updatePassword(user, password).then(() => {
+        console.log("password updated");
+        
+      })
+    }
+  }
+
+  async function updateUserInformation(userID: string, data: UserInfoToUpdate) {
     const docRef = doc(db, "users", userID);
     await updateDoc(docRef, {
       "userInformation.email": data.email,
@@ -82,10 +91,8 @@ function UserAuthProvider(props: Props) {
       "userInformation.phoneNumber": data.phoneNumber,
       "userInformation.role": data.role,
       "userInformation.rID": data.rID,
-    })
+    });
   }
-
-
 
   function checkForRestaurantAuth(userID: string) {
     // onAuthStateChanged(auth, (user) => {
@@ -107,7 +114,8 @@ function UserAuthProvider(props: Props) {
         userInformation: userInformation,
         checkForRestaurantAuth: checkForRestaurantAuth,
         updateUserInformation: updateUserInformation,
-      }}
+        updateUserPassword: updateUserPassword
+        }}
     >
       {props.children}
     </UserAuthContext.Provider>
