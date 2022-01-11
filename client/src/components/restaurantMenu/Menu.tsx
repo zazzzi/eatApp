@@ -29,8 +29,6 @@ import { CartContext } from "../../context/CartContext";
 
 interface Iprops {}
 
-const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
-
 function RestaurantMenu(props: Iprops, item: MenuItemType) {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
