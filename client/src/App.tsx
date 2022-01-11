@@ -25,6 +25,7 @@ import { UserAuthContext } from "./context/UsersContext";
 import UserPage from "./components/users/UserPage";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { RestaurantTableData } from "./types/types";
+import AdminIndex from "./components/admin";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
     let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
     setcurrentTableAndRestaurant(restaurant); 
   }, []);
+
 
   const theme = createTheme({
     palette: {
@@ -61,6 +63,7 @@ function App() {
           <Route path={`/menu/:id`} element={<RestaurantMenu restaurantId={currentTableAndRestaurant!}/>}/>
           <Route path={`/user/${userID}`} element={<UserPage/>}/>
           <Route path="/checkout" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
+          <Route path="/admin" element={<AdminIndex restaurantId={currentTableAndRestaurant!}/>}/>
       </Routes>
     </Router>
   );  

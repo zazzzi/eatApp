@@ -47,6 +47,9 @@ function Hero({restaurantId}: Iprops) {
 				<Link to={`menu/${restaurantId.restaurantId}?table=${restaurantId.table}`}>
 					<Typography variant="body1">Menu</Typography>
 				</Link>
+        <Link to="/admin">
+					<Typography variant="body1">Admin</Typography>
+				</Link>
 			</Box>
 		</Box>
 	);

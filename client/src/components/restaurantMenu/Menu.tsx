@@ -5,19 +5,12 @@ import {
   Typography,
   Tabs,
   Tab,
-  Modal,
   Button,
-  TextField,
-  Select,
-  Link,
   Fab,
   Fade,
 } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
-import * as React from "react";
-import food from "../../food";
 import AddIcon from "@material-ui/icons/Add";
-import cartIcon from "../../assets/icons/cart.png";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuItems from "../menu/MenuItem";
 import { MenuContext } from "../../context/MenusContext";
@@ -30,7 +23,6 @@ import { CartContext } from "../../context/CartContext";
 interface Iprops {
   restaurantId: RestaurantTableData;
 }
-
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
