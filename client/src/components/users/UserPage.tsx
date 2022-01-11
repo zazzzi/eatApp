@@ -11,22 +11,51 @@ import { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserAuthContext } from "../../context/UsersContext";
 import { auth } from "../../firebase";
-import { User } from "../../types/types";
+import { User, UserInfoToUpdate } from "../../types/types";
 import LogOutBtn from "../login/LogOutBtn";
 
 interface Iprops {}
 
 function UserPage(props: Iprops) {
-  const { userInformation } = useContext(UserAuthContext);
+  const { userInformation, updateUserInformation, userID } =
+    useContext(UserAuthContext);
   const classes = useStyles();
   const [userInfoState, setUserInfoState] = useState<User | null>(null);
-
-  console.log(userInfoState);
+  const [updatedInfo, setUpdatedInfo] = useState<UserInfoToUpdate>({} as UserInfoToUpdate);
 
   useEffect(() => {
     setUserInfoState(userInformation);
-  },);
+  });
+  
+  function updateInfoState(id: string, value: string) {
+    setUpdatedInfo({
+      ...updatedInfo,
+      [id]: value,
+    });
+  }
 
+  function handleChange(
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
+  ) {
+    console.log(event.target.value);
+    updateInfoState(event.target.id, event.target.value);
+  }
+
+  function handleSubmit(event: React.SyntheticEvent) {
+    event.preventDefault();
+    const user = {
+      email: updatedInfo.email ? updatedInfo.email : userInfoState!.email,
+      firstName: updatedInfo.firstName ? updatedInfo.firstName : userInfoState!.firstName,
+      lastName: updatedInfo.lastName ? updatedInfo.lastName : userInfoState!.lastName,
+      phoneNumber: updatedInfo.phoneNumber ? updatedInfo.phoneNumber : userInfoState!.phoneNumber,
+      role: userInfoState!.role,
+      rID: userInfoState!.rID ? userInformation!.rID! : "" ,
+    }
+    if (updatedInfo && userID) {
+      updateUserInformation(userID, user);
+      console.log(updatedInfo);
+    }
+  }
 
   return (
     <Box>
@@ -42,46 +71,65 @@ function UserPage(props: Iprops) {
       </Box>
       <Box className={classes.formContainer}>
         {userInfoState ? (
-          <form className={classes.formStyling} action="">
+          <form
+            onSubmit={handleSubmit}
+            className={classes.formStyling}
+            action=""
+          >
             <TextField
               className={classes.textFieldStyling}
               id="email"
               label="Epostadress"
+              type="email"
+              variant="outlined"
               defaultValue={userInfoState.email}
+              onChange={handleChange}
             />
             <TextField
               className={classes.textFieldStyling}
               label="Förnamn"
+              id="firstName"
+              variant="outlined"
               defaultValue={userInfoState.firstName}
+              onChange={handleChange}
             />
             <TextField
               className={classes.textFieldStyling}
               defaultValue={userInfoState.lastName}
               label="Efternamn"
-              id="user-lastName"
+              id="lastName"
+              variant="outlined"
+              onChange={handleChange}
             />
             <TextField
               className={classes.textFieldStyling}
               label="Telefonnummer"
-              id="user-phoneNumber"
+              id="phoneNumber"
+              variant="outlined"
               defaultValue={userInfoState.phoneNumber}
+              onChange={handleChange}
             />
             <Button
               color="primary"
               variant="contained"
               className={classes.formSubmitBtn}
+              type="submit"
             >
               Spara ändringar
             </Button>
           </form>
         ) : null}
       </Box>
-      <Box>
-        ORDERS HÄR
-      </Box>
+      {userInfoState && userInfoState.role === "customer" ? (
+        <Box>ORDERS HÄR</Box>
+      ) : null}
       <Box className={classes.buttonContainer}>
         <Button>Byt lösenord</Button>
-        {userInfoState && userInfoState.role === "owner" ? <Button href={`/menu/${userInfoState.rID}`}>Redigera din restaurang</Button> : null}
+        {userInfoState && userInfoState.role === "owner" ? (
+          <Button href={`/menu/${userInfoState.rID}`}>
+            Redigera din restaurang
+          </Button>
+        ) : null}
         <LogOutBtn />
       </Box>
     </Box>
@@ -97,13 +145,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: "center",
   },
   informationMessageContainer: {
-    marginLeft: "2rem",
-    marginTop: "1rem",
+    display: "flex",
+    justifyContent: "center",
+    textAlign: "center",
+    margin: "1rem 0",
   },
   formContainer: {
     display: "flex",
     flexDirection: "column",
-    width: "25rem",
   },
   formStyling: {
     display: "flex",
@@ -116,6 +165,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   textFieldStyling: {
     width: "15rem",
+    margin: ".5rem 0",
   },
   buttonContainer: {
     display: "flex",

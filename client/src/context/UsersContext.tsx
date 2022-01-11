@@ -8,9 +8,11 @@ import {
   doc,
   deleteDoc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
-import { MenuItemType, User } from "../types/types";
+import { MenuItemType, User, UserInfoToUpdate } from "../types/types";
 import { onAuthStateChanged } from "firebase/auth";
+
 
 interface IState {
   loggedIn: boolean;
@@ -20,10 +22,13 @@ interface IState {
 
 interface ContextValue extends IState {
   checkForRestaurantAuth: (userID: string) => void;
+  updateUserInformation: (userID: string, data: UserInfoToUpdate) => void;
+  
 }
 
 export const UserAuthContext = createContext<ContextValue>({
   checkForRestaurantAuth: () => {},
+  updateUserInformation: () => {},
   loggedIn: false,
   userID: null,
   userInformation: {} as User,
@@ -67,6 +72,21 @@ function UserAuthProvider(props: Props) {
     }
   }
 
+  async function updateUserInformation(userID: string, data: UserInfoToUpdate){
+ 
+    const docRef = doc(db, "users", userID);
+    await updateDoc(docRef, {
+      "userInformation.email": data.email,
+      "userInformation.firstName": data.firstName,
+      "userInformation.lastName": data.lastName,
+      "userInformation.phoneNumber": data.phoneNumber,
+      "userInformation.role": data.role,
+      "userInformation.rID": data.rID,
+    })
+  }
+
+
+
   function checkForRestaurantAuth(userID: string) {
     // onAuthStateChanged(auth, (user) => {
     //   if (user) {
@@ -84,8 +104,9 @@ function UserAuthProvider(props: Props) {
       value={{
         loggedIn: loggedIn,
         userID: userID,
-        checkForRestaurantAuth: checkForRestaurantAuth,
         userInformation: userInformation,
+        checkForRestaurantAuth: checkForRestaurantAuth,
+        updateUserInformation: updateUserInformation,
       }}
     >
       {props.children}
