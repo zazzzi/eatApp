@@ -32,6 +32,13 @@ function MenuItems({ menuItems }: Iprops) {
               <img className={classes.image} src={item.img} />
             </Container>
             <Container className={classes.itemColumn}>
+              <Typography
+                style={{ textAlign: "center" }}
+                variant="h6"
+                display="block"
+              >
+                {item.title}
+              </Typography>
               <Typography variant="h6" display="block" gutterBottom>
                 <p className={classes.font}>{item.description}</p>
               </Typography>
@@ -43,7 +50,7 @@ function MenuItems({ menuItems }: Iprops) {
             </Box>
             <Container className={classes.priceColumn}>
               <Typography variant="overline" display="block" gutterBottom>
-                {item.price} kr
+                <b>{item.price} kr</b>
               </Typography>
             </Container>
           </Box>
