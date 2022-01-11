@@ -37,6 +37,7 @@ function App() {
     setcurrentTableAndRestaurant(restaurant); 
   }, []);
 
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -62,7 +63,7 @@ function App() {
           <Route path={`/menu/:id`} element={<RestaurantMenu restaurantId={currentTableAndRestaurant!}/>}/>
           <Route path={`/user/${userID}`} element={<UserPage/>}/>
           <Route path="/checkout" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
-          <Route path="/admin" element={<AdminIndex/>}/>
+          <Route path="/admin" element={<AdminIndex restaurantId={currentTableAndRestaurant!}/>}/>
       </Routes>
     </Router>
   );  

@@ -1,20 +1,16 @@
 import { Box, makeStyles, Theme} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { RestaurantTableData } from "../../types/types";
-import TablesEditor from "./Tables";
+import QrGenerator from "./QrGenerator"
 
 interface Iprops {
   restaurantId: RestaurantTableData
 }
 
-function AdminIndex({restaurantId}: Iprops) {
-
-  //log in as owner
-  //
-
+function TablesEditor({restaurantId}: Iprops) {
   return (
    <Box>
-      <TablesEditor restaurantId={restaurantId}/>
+       <QrGenerator restaurantId={restaurantId}/>
    </Box>
   );
 }
@@ -22,4 +18,4 @@ function AdminIndex({restaurantId}: Iprops) {
 const useStyles = makeStyles((theme: Theme) => ({}));
 
 
-export default AdminIndex; 
+export default TablesEditor; 
