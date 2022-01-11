@@ -69,6 +69,18 @@ function Checkout({restaurantId}:Iprops) {
     }
   }
 
+  if(!restaurantId){
+    return (<></>)
+  }
+
+  if(Object.keys(restaurantId).length === 0) {
+    return (
+      <>
+        Please scan a QR code to make an order.
+      </>
+    )
+  }
+
   const getStepContent = (stepIndex: number) => {
     switch(stepIndex){
       case 0:
@@ -114,18 +126,6 @@ function Checkout({restaurantId}:Iprops) {
     }
   }
 
-  if(!restaurantId){
-    return (<></>)
-  }
-
-  if(Object.keys(restaurantId).length === 0) {
-    return (
-      <>
-        Please scan a QR code to make an order.
-      </>
-    )
-  }
-  
   return (
     <Box 
     height="100%"
