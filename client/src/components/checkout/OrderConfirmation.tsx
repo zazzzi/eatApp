@@ -2,18 +2,18 @@ import { Box, makeStyles, Theme, Typography, Button} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MenuItem } from "../../context/CartContext";
-import { Order } from "../../types/types";
+import { Order, RestaurantTableData } from "../../types/types";
 
 
 interface Iprops {
- order: Order
+ order: Order;
+ restaurantId: RestaurantTableData;
 }
 
-function OrderConfirmation({order}: Iprops) {
-  console.log(order)
+function OrderConfirmation({order, restaurantId}: Iprops) {
   const classes = useStyles();
 
-  if(!order){
+  if(!order || !restaurantId){
     return (
       <Box>
         nothing here bruh
@@ -35,12 +35,12 @@ function OrderConfirmation({order}: Iprops) {
          </Box>
        ))}
       <Typography>Betallsätt: {order.paymentType}</Typography>
-      <Typography>Till: {order.table}</Typography>
+      {/* <Typography>Till: {order.table}</Typography> */}
       <Typography>Totalpris: {order.priceTotal}</Typography>
      </Box>
    </Box>
   <Box>
-  <Button><Link className={classes.link} to={"/menu"}>Tillbaks till menyn</Link></Button>
+  <Button><Link className={classes.link} to={`/menu/${restaurantId.restaurantId}?table=${restaurantId.table}`}>Tillbaks till menyn</Link></Button>
   </Box>
 </Box>
   );

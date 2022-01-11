@@ -21,16 +21,20 @@ import RestaurantMenu from "./components/restaurantMenu/Menu";
 import Cart from "./components/cart/Cart";
 import CreateUser from "./components/login/CreateUser";
 import Checkout from "./components/checkout/Checkout";
-import CartProvider from "./context/CartContext";
-import MenuProvider from "./context/MenusContext";
-import OrderProvider from "./context/OrdersContext";
 import { UserAuthContext } from "./context/UsersContext";
 import UserPage from "./components/users/UserPage";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import { RestaurantTableData } from "./types/types";
 
 
 function App() {
   const { loggedIn, userID } = useContext(UserAuthContext);
+  const [currentTableAndRestaurant, setcurrentTableAndRestaurant] = useState<RestaurantTableData | null>(null)
+
+  useEffect(() => {
+    let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
+    setcurrentTableAndRestaurant(restaurant); 
+  }, []);
 
   const theme = createTheme({
     palette: {
@@ -49,22 +53,16 @@ function App() {
   },[]) 
 
  return (
-   <OrderProvider>
-      <CartProvider>
-        <MenuProvider>
-          <Router>
-            <Routes>
-                <Route path="/" element={<Hero/>}/>
-                <Route path="/login" element={<Login/>} />
-                <Route path="/create-user" element={<CreateUser/>}/>
-                <Route path="/menu/:id" element={<RestaurantMenu/>}/>
-                <Route path={`/user/${userID}`} element={<UserPage/>}/>
-                <Route path="/checkout" element={<Checkout/>}/>
-            </Routes>
-          </Router>
-        </MenuProvider>
-      </CartProvider>
-    </OrderProvider>
+    <Router>
+      <Routes>
+          <Route path="/" element={<Hero restaurantId={currentTableAndRestaurant!}/>}/>
+          <Route path="/login" element={<Login/>} />
+          <Route path="/create-user" element={<CreateUser/>}/>
+          <Route path={`/menu/:id`} element={<RestaurantMenu restaurantId={currentTableAndRestaurant!}/>}/>
+          <Route path={`/user/${userID}`} element={<UserPage/>}/>
+          <Route path="/checkout/:id" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
+      </Routes>
+    </Router>
   );  
 }
 

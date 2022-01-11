@@ -1,19 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {db} from '../firebase'
 import { collection, getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import { Order, UserDb } from "../types/types";
+import { Order, RestaurantTableData, UserDb } from "../types/types";
 import { MenuItem } from "./CartContext";
 import { UserAuthContext } from "./UsersContext";
-
-interface IState {
+interface ContextValue{
   order: any
-}
-interface ContextValue extends IState {
-  createOrder: (response: any, cart: MenuItem[], total: number) => void;
+  createOrder: (
+    response: any, 
+    cart: MenuItem[], 
+    total: number, 
+    restaurantData: RestaurantTableData
+  ) => void;
 }
 
 export const OrderContext = createContext<ContextValue>({
-  order: [],
+  order: {},
   createOrder: () => {},
 });
 
@@ -42,14 +44,14 @@ function OrderProvider(props: Props) {
   }, [])
 
 
-  const createOrder = (paymentData: any, cart: MenuItem[], total: number) => {
+  const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
 
     const order: Order = {
       orderDate: Date(),
       cart: cart,
       session: userData!,
       priceTotal: total,
-      table: "table 1",
+      restaurantData: restaurantData,
       payment: paymentData.body,
       paymentType: paymentData.paymentType,
     }

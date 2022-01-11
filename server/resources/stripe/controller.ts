@@ -3,6 +3,7 @@ import {Request, Response} from "express";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);;
 
 exports.stripePayment = async(req: Request, res: Response) => {
+  console.log('hello')
   let {amount, id} = req.body
   try{
     const payment = await stripe.paymentIntents.create({

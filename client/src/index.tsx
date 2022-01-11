@@ -9,11 +9,20 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import UserAuthProvider from "./context/UsersContext";
+import MenuProvider from "./context/MenusContext";
+import CartProvider from "./context/CartContext";
+import OrderProvider from "./context/OrdersContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <UserAuthProvider>
-      <App />
+      <OrderProvider>
+        <CartProvider>
+          <MenuProvider>
+            <App />
+          </MenuProvider>
+        </CartProvider>
+      </OrderProvider>
     </UserAuthProvider>
   </React.StrictMode>,
   document.getElementById("root")

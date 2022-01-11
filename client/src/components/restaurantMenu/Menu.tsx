@@ -21,34 +21,33 @@ import cartIcon from "../../assets/icons/cart.png";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuItems from "../menu/MenuItem";
 import { MenuContext } from "../../context/MenusContext";
-import { MenuItemType } from "../../types/types";
+import { MenuItemType, RestaurantTableData } from "../../types/types";
 import EditMenuModal from "./EditModal";
 import { UserAuthContext } from "../../context/UsersContext";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 
-interface Iprops {}
+interface Iprops {
+  restaurantId: RestaurantTableData
+}
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-const  RestaurantMenu = ({location}: any) => {
+const  RestaurantMenu = ({restaurantId}:Iprops) => {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
-  const { restaurantData, menu, sendUrlParam } = useContext(MenuContext);
+  const { restaurantData, sendUrlParam } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
   const [itemsInCart, setItemsInCart] = useState(false);
   const { cart } = useContext(CartContext);
   const { id } = useParams();
 
-
-  const queryParams = new URLSearchParams(window.location.search);
-  const table = queryParams.get('t');
-  console.log(table)
-  
-
   useEffect(() => {
     if (!id) return;
-    sendUrlParam(id);
+    const queryParams = new URLSearchParams(window.location.search);
+    const table = queryParams.get('table');
+    if(!table) return
+    sendUrlParam(id, table);
   }, []);
 
   const { loggedIn, userID, checkForRestaurantAuth } =
@@ -139,7 +138,7 @@ const  RestaurantMenu = ({location}: any) => {
 
           <Fade in={itemsInCart}>
             <Fab
-              href="/checkout"
+              href={`/checkout/${restaurantId.restaurantId}?table=${restaurantId.table}`}
               color="primary"
               className={classes.cartButton}
             >

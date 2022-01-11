@@ -9,6 +9,11 @@ export interface MenuItemType {
   img: string;
 }
 
+export interface RestaurantTableData {
+  restaurantId: string,
+  table: number
+}
+
 export interface IncomingUser {
   email: string;
   password: string;
@@ -36,7 +41,7 @@ export interface Order {
   cart: MenuItem[];
   session: UserDb;
   priceTotal: number;
-  table: string;
+  restaurantData: RestaurantTableData;
   payment: any;
   paymentType: string;
 }
