@@ -18,6 +18,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import AddIcon from "@material-ui/icons/Add";
 
 interface Iprops {
   userDataCallback(user: User): void;
@@ -73,75 +74,75 @@ function CreateUserForm(props: Iprops) {
 
   return (
     <Box>
-      <Box className={classes.outerContainer}>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            className={classes.inputField}
-            id="email"
-            label="E-mail"
-            variant="standard"
-            type="email"
-            autoComplete="current-email"
-            onBlur={handleChange}
-          />
-          <TextField
-            className={classes.inputField}
-            id="firstName"
-            label="Förnamn"
-            variant="standard"
-            type="name"
-            autoComplete="current-email"
-            onBlur={handleChange}
-          />
-          <TextField
-            className={classes.inputField}
-            id="lastName"
-            label="Efternamn"
-            variant="standard"
-            type="name"
-            autoComplete="current-email"
-            onBlur={handleChange}
-          />
-          <TextField
-            className={classes.inputField}
-            id="phoneNumber"
-            label="Telefonnummer"
-            variant="standard"
-            type="phone"
-            autoComplete="current-email"
-            onBlur={handleChange}
-          />
-          <TextField
-            className={classes.inputField}
-            id="password"
-            label="Lösenord"
-            type="password"
-            autoComplete="current-password"
-            // onBlur={passwordValidation}
-            onBlur={handleChange}
-          />
-          <TextField
-            className={classes.inputField}
-            id="password2"
-            label="Lösenord"
-            type="password"
-            autoComplete="current-password"
-            helperText={!passwordMatch ? "Lösenorden matchar inte" : null}
-            onChange={passwordValidation}
-            onBlur={passwordValidation}
-            error={!passwordMatch}
-          />
-          <Box>
-            <Button type="submit">Skapa användare➡️</Button>
-          </Box>
-        </form>
-      </Box>
+      <form className={classes.formStyling} onSubmit={handleSubmit}>
+        <TextField
+          className={classes.inputField}
+          id="email"
+          label="E-mail"
+          type="email"
+          autoComplete="current-email"
+          onBlur={handleChange}
+          variant="outlined"
+        />
+        <TextField
+          className={classes.inputField}
+          id="firstName"
+          label="Förnamn"
+          variant="outlined"
+          type="name"
+          autoComplete="current-email"
+          onBlur={handleChange}
+        />
+        <TextField
+          className={classes.inputField}
+          id="lastName"
+          label="Efternamn"
+          variant="outlined"
+          type="name"
+          autoComplete="current-email"
+          onBlur={handleChange}
+        />
+        <TextField
+          className={classes.inputField}
+          id="phoneNumber"
+          label="Telefonnummer"
+          variant="outlined"
+          type="phone"
+          autoComplete="current-email"
+          onBlur={handleChange}
+        />
+        <TextField
+          className={classes.inputField}
+          id="password"
+          variant="outlined"
+          label="Lösenord"
+          type="password"
+          autoComplete="current-password"
+          onChange={passwordValidation}
+          onBlur={handleChange}
+        />
+        <TextField
+          className={classes.inputField}
+          id="password2"
+          variant="outlined"
+          label="Lösenord"
+          type="password"
+          autoComplete="current-password"
+          helperText={!passwordMatch ? "Lösenorden matchar inte" : null}
+          onChange={passwordValidation}
+          onBlur={passwordValidation}
+          error={!passwordMatch}
+        />
+        <Box>
+          <Button variant="contained" endIcon={<AddIcon />} type="submit">Skapa användare</Button>
+        </Box>
+      </form>
     </Box>
   );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  outerContainer: {
+  formStyling: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -149,11 +150,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   inputField: {
     width: "15rem",
+    margin: "0.5rem",
   },
   buttonContainer: {
-	  display: "flex",
-	  justifyContent: "center",
-  }
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 export default CreateUserForm;

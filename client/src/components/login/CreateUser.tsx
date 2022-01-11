@@ -62,11 +62,11 @@ function CreateUser(props: Iprops) {
       <Box>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </Box>
-      <Box>
-        <Typography variant="h2">Skapa nytt konto</Typography>
+      <Box className={classes.welcomeTextContainer}>
+        <Typography variant="h4">Skapa nytt konto</Typography>
         <Typography variant="body2">Fyll i dina uppgifter här.</Typography>
       </Box>
-      <Box>
+      <Box className={classes.formContainer}>
         <CreateUserForm userDataCallback={userDataCallback} />
       </Box>
       <Box>
@@ -80,7 +80,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
+    marginTop: "2rem"
   },
+  welcomeTextContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "2rem 0 1rem 0",
+  },
+  formContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%"
+  }
 }));
 
 export default CreateUser;
