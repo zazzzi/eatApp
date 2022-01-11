@@ -45,7 +45,7 @@ function UserPage(props: Iprops) {
             <TextField
               className={classes.textFieldStyling}
               id="email"
-              label="Förnamn"
+              label="Epostadress"
               defaultValue={userInfoState.email}
             />
             <TextField
@@ -75,11 +75,13 @@ function UserPage(props: Iprops) {
           </form>
         ) : null}
       </Box>
+      <Box>
+        ORDERS HÄR
+      </Box>
       <Box className={classes.buttonContainer}>
         <Button>Byt lösenord</Button>
         <LogOutBtn />
       </Box>
-      <Box></Box>
     </Box>
   );
 }

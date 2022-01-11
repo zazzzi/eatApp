@@ -26,11 +26,16 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import LogOutBtn from "./LogOutBtn";
+import { Navigate } from "react-router-dom";
 interface Iprops {}
 
 function CreateUser(props: Iprops) {
   const classes = useStyles();
   const usersCollectionRef = collection(db, "users");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const [uid, setUid] = useState<string>();
+
+
 
   // CREATES NEW USER WITH DATA FROM CHILD
   async function userDataCallback(user: User) {
@@ -51,6 +56,8 @@ function CreateUser(props: Iprops) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user.email, " Logged in");
+        setUid(user.uid);
+        setIsLoggedIn(true);
       } else {
         console.log("Logged out");
       }
@@ -59,14 +66,15 @@ function CreateUser(props: Iprops) {
 
   return (
     <Box>
+      {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
       <Box>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </Box>
-      <Box>
-        <Typography variant="h2">Skapa nytt konto</Typography>
+      <Box className={classes.welcomeTextContainer}>
+        <Typography variant="h4">Skapa nytt konto</Typography>
         <Typography variant="body2">Fyll i dina uppgifter här.</Typography>
       </Box>
-      <Box>
+      <Box className={classes.formContainer}>
         <CreateUserForm userDataCallback={userDataCallback} />
       </Box>
       <Box>
@@ -80,7 +88,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
+    marginTop: "2rem"
   },
+  welcomeTextContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "2rem 0 1rem 0",
+  },
+  formContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%"
+  }
 }));
 
 export default CreateUser;
