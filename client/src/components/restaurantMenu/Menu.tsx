@@ -28,12 +28,14 @@ import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 
 interface Iprops {
-  restaurantId: RestaurantTableData
+  restaurantId: RestaurantTableData;
+  item: MenuItemType;
 }
+
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-const  RestaurantMenu = ({restaurantId}:Iprops) => {
+const  RestaurantMenu = ({restaurantId, item}:Iprops) => {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
