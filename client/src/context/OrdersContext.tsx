@@ -45,6 +45,7 @@ function OrderProvider(props: Props) {
 
 
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
+    console.log(paymentData)
 
     const order: Order = {
       orderDate: Date(),
