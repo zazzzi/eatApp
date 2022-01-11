@@ -133,7 +133,7 @@ function CreateUserForm(props: Iprops) {
           onBlur={passwordValidation}
           error={!passwordMatch}
         />
-        <Box>
+        <Box className={classes.submitBtnStyling}>
           <Button variant="contained" endIcon={<AddIcon />} type="submit">Skapa användare</Button>
         </Box>
       </form>
@@ -156,6 +156,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  submitBtnStyling: {
+    marginTop: "1rem"
+  }
 }));
 
 export default CreateUserForm;

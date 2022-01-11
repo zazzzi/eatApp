@@ -26,11 +26,16 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import LogOutBtn from "./LogOutBtn";
+import { Navigate } from "react-router-dom";
 interface Iprops {}
 
 function CreateUser(props: Iprops) {
   const classes = useStyles();
   const usersCollectionRef = collection(db, "users");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const [uid, setUid] = useState<string>();
+
+
 
   // CREATES NEW USER WITH DATA FROM CHILD
   async function userDataCallback(user: User) {
@@ -51,6 +56,8 @@ function CreateUser(props: Iprops) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user.email, " Logged in");
+        setUid(user.uid);
+        setIsLoggedIn(true);
       } else {
         console.log("Logged out");
       }
@@ -59,6 +66,7 @@ function CreateUser(props: Iprops) {
 
   return (
     <Box>
+      {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
       <Box>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </Box>
