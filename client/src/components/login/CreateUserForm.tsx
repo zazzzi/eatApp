@@ -79,7 +79,7 @@ function CreateUserForm(props: Iprops) {
         <TextField
           className={classes.inputField}
           id="email"
-          label="E-mail"
+          label="Epostadress"
           type="email"
           autoComplete="current-email"
           onBlur={handleChange}

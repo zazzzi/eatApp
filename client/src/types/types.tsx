@@ -13,6 +13,17 @@ export interface IncomingUser {
   email: string;
   password: string;
 }
+
+export interface UserInfoToUpdate {
+  email: string,
+  firstName: string,
+  lastName: string, 
+  phoneNumber: number,
+  role: string,
+  rID: string,
+}
+
+
 export interface User {
   firstName: string;
   lastName: string;
