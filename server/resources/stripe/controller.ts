@@ -3,6 +3,7 @@ import {Request, Response} from "express";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);;
 
 exports.stripePayment = async(req: Request, res: Response) => {
+  console.log('hello')
   let {amount, id} = req.body
   try{
     const payment = await stripe.paymentIntents.create({
@@ -16,7 +17,8 @@ exports.stripePayment = async(req: Request, res: Response) => {
     res.json({
       message: "Payment successful",
       success: true,
-      body: payment
+      body: payment,
+      paymentType: "card"
     })
   }catch (error) {
     console.log("Error", error)

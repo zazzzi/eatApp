@@ -22,7 +22,7 @@ function SwishPayment({paymentResponse, priceTotal}: Iprops) {
     const payment = {
       payerAlias: number,
       amount: priceTotal,
-      message: "put restaurant order and table here??",
+      message: `Order to table`,
     }
 
     fetch("api/paymentrequests", {  
@@ -54,7 +54,6 @@ function SwishPayment({paymentResponse, priceTotal}: Iprops) {
   }
 
   return (
-    //if bad response from number make swish box red
    <Box 
     height="100%"
     className={classes.height}

@@ -21,14 +21,14 @@ import Cart from '../cart/Cart'
 import Swish from "./Swish";
 import { CartContext } from "../../context/CartContext";
 import { OrderContext } from "../../context/OrdersContext";
-import { Order } from "../../types/types";
+import { Order, RestaurantTableData } from "../../types/types";
 
 
 interface Iprops {
- 
+ restaurantId: RestaurantTableData;
 }
 
-function Checkout() {
+function Checkout({restaurantId}:Iprops) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
@@ -63,10 +63,22 @@ function Checkout() {
 
   const paymentResponse = (status: string | undefined, response?: any) => {
     if(status === "Successful card payment" || status === "Successful swish payment"){
-      const order = createOrder(response, cart, totalPrice)
+      const order = createOrder(response, cart, totalPrice, restaurantId)
       setOrder(order!)
       setActiveStep(3)
     }
+  }
+
+  if(!restaurantId){
+    return (<></>)
+  }
+
+  if(Object.keys(restaurantId).length === 0) {
+    return (
+      <>
+        Please scan a QR code to make an order.
+      </>
+    )
   }
 
   const getStepContent = (stepIndex: number) => {
@@ -104,6 +116,7 @@ function Checkout() {
         return (
           <Box>
             <OrderConfirmation
+              restaurantId={restaurantId}
               order={order!}
             />
           </Box>
@@ -112,7 +125,7 @@ function Checkout() {
         return "How did you end up here???";
     }
   }
-  
+
   return (
     <Box 
     height="100%"
@@ -148,7 +161,7 @@ function Checkout() {
             }>
             {activeStep === 3 ? null : activeStep === 0 ? (<RestaurantMenuIcon className={classes.icon}/>) : (<KeyboardArrowLeft />)}
             {activeStep === 3 ? "" : activeStep === 0 ? 
-              (<Link className={classes.link} to={"/menu"}>Meny</Link>) : "Tillbaka"}
+              (<Link className={classes.link} to={`/menu/${restaurantId.restaurantId}?table=${restaurantId.table}`}>Meny</Link>) : "Tillbaka"}
           </Button>
         }
       />

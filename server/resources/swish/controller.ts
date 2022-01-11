@@ -66,7 +66,8 @@ exports.paymentRequests = async(req: Request, res: Response) => {
 					url: location,
 					token: token,
 					id: id,
-          body: resp.body
+          body: resp.body,
+          paymentType: "swish"
 				})
 			})
 		} else {

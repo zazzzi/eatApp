@@ -12,16 +12,16 @@ import {
 import { MenuItemType } from "../types/types";
 
 interface IState {
-  menu: MenuItemType[];
+  restaurantId: any;
   restaurantData: any;
 }
 
 interface ContextValue extends IState {
-  sendUrlParam: (param: string) => void;
+  sendUrlParam: (param: string, table: string) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
-  menu: [],
+  restaurantId: {},
   restaurantData: {},
   sendUrlParam: () => {},
 });
@@ -31,9 +31,10 @@ interface Props {
 }
 
 function MenuProvider(props: Props) {
-  const [menu, setMenu] = useState<any>([]);
   const [id, setId] = useState<string>("");
+  const [table, setTable] = useState<number>(0)
   const [restaurantData, setRestaurantdata] = useState<any>(null);
+  const [currentTableAndRestaurant, setcurrentTableAndRestaurant] = useState<any | null>(null)
 
   useEffect(() => {
     if (!id) return;
@@ -50,17 +51,26 @@ function MenuProvider(props: Props) {
   }, [id]);
 
   useEffect(() => {
-    const getMenu = async () => {
-      const usersCollectionRef = collection(db, "menu");
-      const data = await getDocs(usersCollectionRef);
-      setMenu(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getMenu();
+    let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
+    setcurrentTableAndRestaurant(restaurant); 
   }, []);
 
-  const urlParam = (param: string) => {
+
+  const urlParam = (param: string, table: string) => {
+    const currentRestaurant = {
+      restaurantId: param,
+      table: table
+    }
+    setTable(Number(table))
     setId(param);
+    localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
   };
+
+  /* function clearCart() {
+    setCartItems([]);
+    localStorage.setItem("cart", JSON.stringify([]));
+  } */
+
 
   /* async function getTabs() {
     const usersCollectionRef = collection(db, "restaurants", `${id}`);
@@ -70,7 +80,7 @@ function MenuProvider(props: Props) {
   return (
     <MenuContext.Provider
       value={{
-        menu: menu,
+        restaurantId: currentTableAndRestaurant,
         restaurantData: restaurantData,
         sendUrlParam: urlParam,
       }}

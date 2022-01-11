@@ -3,11 +3,22 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import qrBtn from "../../assets/img/qrBtn.png";
+import { RestaurantTableData } from "../../types/types";
 
-interface Iprops {}
+interface Iprops {
+  restaurantId: RestaurantTableData
+}
 
-function Hero(props: Iprops) {
+function Hero({restaurantId}: Iprops) {
 	const classes = useStyles();
+
+  if(!restaurantId){
+    return (
+      <>
+      hi
+      </>
+    )
+  }
 
 	return (
 		<Box className={classes.heroContainer}>
@@ -30,10 +41,10 @@ function Hero(props: Iprops) {
 				<Link to={"login"}>
 					<Typography variant="body1">Inget konto? Skapa ett här!</Typography>
 				</Link>
-				<Link to={"checkout"}>
+				<Link to="/checkout">
 					<Typography variant="body1">cart</Typography>
 				</Link>
-				<Link to={"menu"}>
+				<Link to={`menu/${restaurantId.restaurantId}?table=${restaurantId.table}`}>
 					<Typography variant="body1">Menu</Typography>
 				</Link>
 			</Box>
