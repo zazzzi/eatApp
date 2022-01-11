@@ -25,7 +25,8 @@ function UserPage(props: Iprops) {
 
   useEffect(() => {
     setUserInfoState(userInformation);
-  });
+  },);
+
 
   return (
     <Box>
@@ -80,6 +81,7 @@ function UserPage(props: Iprops) {
       </Box>
       <Box className={classes.buttonContainer}>
         <Button>Byt lösenord</Button>
+        {userInfoState && userInfoState.role === "owner" ? <Button href={`/menu/${userInfoState.rID}`}>Redigera din restaurang</Button> : null}
         <LogOutBtn />
       </Box>
     </Box>

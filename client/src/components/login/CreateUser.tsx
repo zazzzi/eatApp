@@ -45,7 +45,8 @@ function CreateUser(props: Iprops) {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          phoneNumber: user.phoneNumber
+          phoneNumber: user.phoneNumber,
+          role: "customer"
         }
         return await setDoc(doc(db, "users", cred.user.uid), { userInformation });
       }
