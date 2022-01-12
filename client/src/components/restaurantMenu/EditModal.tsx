@@ -28,8 +28,8 @@ function EditMenuModal(props: IProps) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-  const [categories, setCategories] = useState("");
-  const { restaurantData } = useContext(MenuContext);
+  const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
+  const { restaurantData, updateItemData } = useContext(MenuContext);
 
   const style = {
     position: "absolute",
@@ -48,11 +48,31 @@ function EditMenuModal(props: IProps) {
     p: 4,
   };
 
-  const handleChange = (
+  function updateMenuInfo(id: string, value: string) {
+    setUpdatedMenuInfo({
+      ...updatedMenuInfo,
+      [id]: value,
+    });
+  }
+
+  function handleChange(
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
-  ) => {
-    setCategories(event.target.value);
+  ) {
+    if (!event.target.id) {
+      updateMenuInfo(event.target.name, event.target.value);
+    } else {
+      updateMenuInfo(event.target.id, event.target.value);
+    }
+  }
+
+  const handleSubmit = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    updateItemData(props.menuItem.id, updatedMenuInfo);
   };
+
+  function test(event: any) {
+    console.log(event);
+  }
 
   return (
     <Modal
@@ -63,20 +83,21 @@ function EditMenuModal(props: IProps) {
     >
       <Box sx={style}>
         <Box className={classes.modalFormContainer}>
-          <form className={classes.formStyle} action="">
+          <form onSubmit={handleSubmit} className={classes.formStyle} action="">
             <TextField
               select
+              required
+              name="category"
               variant="outlined"
               onChange={handleChange}
               label="Kategori"
-              defaultValue={props.isNewItem ? null : props.menuItem.category}
+              defaultValue={props.isNewItem ? [] : props.menuItem.category}
               margin="normal"
               placeholder="Kategori"
               className={classes.selectStyle}
               SelectProps={{
                 multiple: true,
-                // value: formState.userRoles,
-                // onChange: handleFieldChange,
+                id: "category",
               }}
             >
               {restaurantData.categories.map((t: any) => {
@@ -85,6 +106,9 @@ function EditMenuModal(props: IProps) {
             </TextField>
 
             <TextField
+              id="title"
+              required
+              onChange={handleChange}
               variant="outlined"
               margin="normal"
               placeholder={"Titel"}
@@ -92,6 +116,9 @@ function EditMenuModal(props: IProps) {
               defaultValue={props.isNewItem ? null : props.menuItem.title}
             />
             <TextField
+              id="description"
+              required
+              onChange={handleChange}
               variant="outlined"
               margin="normal"
               placeholder="Information"
@@ -99,6 +126,9 @@ function EditMenuModal(props: IProps) {
               defaultValue={props.isNewItem ? null : props.menuItem.description}
             />
             <TextField
+              id="price"
+              required
+              onChange={handleChange}
               variant="outlined"
               margin="normal"
               placeholder="Pris"
@@ -112,26 +142,26 @@ function EditMenuModal(props: IProps) {
               placeholder="Ny kategori"
               label="Skapa ny kategori"
             /> */}
+            <Box mt={2} className={classes.modalButtonsContainer}>
+              <Box p={2}>
+                <Button
+                  color="secondary"
+                  startIcon={<DeleteIcon />}
+                  variant="outlined"
+                  onClick={() => {
+                    props.closeModal();
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Box>
+              <Box p={2}>
+                <Button type="submit" variant="contained" color="primary">
+                  Save
+                </Button>
+              </Box>
+            </Box>
           </form>
-        </Box>
-        <Box mt={2} className={classes.modalButtonsContainer}>
-          <Box p={2}>
-            <Button
-              color="secondary"
-              startIcon={<DeleteIcon />}
-              variant="outlined"
-              onClick={() => {
-                props.closeModal();
-              }}
-            >
-              Cancel
-            </Button>
-          </Box>
-          <Box p={2}>
-            <Button variant="contained" color="primary">
-              Save
-            </Button>
-          </Box>
         </Box>
       </Box>
     </Modal>
@@ -141,7 +171,6 @@ function EditMenuModal(props: IProps) {
 const useStyles = makeStyles((theme: Theme) => ({
   modalButtonsContainer: {
     display: "flex",
-    width: "20%",
     justifyContent: "space-around",
   },
   modalFormContainer: {
