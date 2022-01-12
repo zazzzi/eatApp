@@ -8,6 +8,7 @@ import {
   Button,
   Fab,
   Fade,
+  MenuItem,
 } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import AddIcon from "@material-ui/icons/Add";
@@ -183,6 +184,8 @@ const RestaurantMenu = ({ restaurantId }: Iprops) => {
           </Box>
           {open ? (
             <EditMenuModal
+              isNewItem={true}
+              menuItem={restaurantData.menu}
               closeModal={() => setOpen(false)}
               editOpen={Boolean(open)}
             />

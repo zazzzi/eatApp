@@ -16,6 +16,7 @@ import { MenuItem } from "../../context/CartContext";
 import { UserAuthContext } from "../../context/UsersContext";
 import { MenuContext } from "../../context/MenusContext";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import EditMenuModal from "../restaurantMenu/EditModal";
 
 interface Iprops {
   menuItems: any;
@@ -26,6 +27,7 @@ function MenuItems({ menuItems }: Iprops) {
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
   const { restaurantId } = useContext(MenuContext);
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     checkIfOwner();
@@ -64,7 +66,11 @@ function MenuItems({ menuItems }: Iprops) {
           </Box>
           <Box className={classes.bottomContainer}>
             <Box className={classes.incrementerContainer}>
-              {isOwner ? <EditRoundedIcon /> : <Incrementer menuItem={item} />}
+              {isOwner ? (
+                <EditRoundedIcon onClick={() => setOpen(true)} />
+              ) : (
+                <Incrementer menuItem={item} />
+              )}
             </Box>
             <Container className={classes.priceColumn}>
               <Typography variant="overline" display="block" gutterBottom>
@@ -72,6 +78,12 @@ function MenuItems({ menuItems }: Iprops) {
               </Typography>
             </Container>
           </Box>
+          <EditMenuModal
+            menuItem={item}
+            closeModal={() => setOpen(false)}
+            editOpen={open}
+            isNewItem={false}
+          />
           <hr />
         </Box>
       ))}
