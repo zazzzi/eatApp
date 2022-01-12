@@ -61,7 +61,6 @@ function MenuProvider(props: Props) {
 
 
   const urlParam = (param: string, table: string) => {
-    console.log(param, table)
     const currentRestaurant = {
       restaurantId: param,
       table: table

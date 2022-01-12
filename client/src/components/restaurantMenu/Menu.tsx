@@ -38,13 +38,10 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
-
-  console.log(isOwner)
   
   useEffect(() => {
     if (!id) return;
     if (!isOwner) {
-      console.log('test')
       const queryParams = new URLSearchParams(window.location.search);
       const table = queryParams.get("table");
       if (!table) return;
