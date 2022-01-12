@@ -33,7 +33,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
-  const [openSettings, setOpenSettings] = useState(true);
+  const [openSettings, setOpenSettings] = useState(false);
   const [itemsInCart, setItemsInCart] = useState(false);
   const { cart } = useContext(CartContext);
   const { id } = useParams();
