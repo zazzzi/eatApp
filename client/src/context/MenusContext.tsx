@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import {
   collection,
@@ -10,6 +10,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { MenuItemType } from "../types/types";
+import { UserAuthContext } from "./UsersContext";
 
 interface IState {
   restaurantId: any;
@@ -35,6 +36,7 @@ function MenuProvider(props: Props) {
   const [table, setTable] = useState<number>(0)
   const [restaurantData, setRestaurantdata] = useState<any>(null);
   const [currentTableAndRestaurant, setcurrentTableAndRestaurant] = useState<any | null>(null)
+  const { userInformation } = useContext(UserAuthContext);
 
   useEffect(() => {
     if (!id) return;
@@ -51,8 +53,10 @@ function MenuProvider(props: Props) {
   }, [id]);
 
   useEffect(() => {
+    
     let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
     setcurrentTableAndRestaurant(restaurant); 
+  
   }, []);
 
 

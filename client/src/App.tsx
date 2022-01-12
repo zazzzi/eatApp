@@ -29,14 +29,13 @@ import AdminIndex from "./components/admin";
 
 
 function App() {
-  const { loggedIn, userID } = useContext(UserAuthContext);
+  const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
   const [currentTableAndRestaurant, setcurrentTableAndRestaurant] = useState<RestaurantTableData | null>(null)
 
   useEffect(() => {
     let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
     setcurrentTableAndRestaurant(restaurant); 
   }, []);
-
 
   const theme = createTheme({
     palette: {
@@ -54,16 +53,22 @@ function App() {
     console.log("is logged in", loggedIn);
   },[]) 
 
+//get it working so that if you are an owner and you navigate to /menu you come to the menu, as opposed to using an id
  return (
     <Router>
       <Routes>
           <Route path="/" element={<Hero restaurantId={currentTableAndRestaurant!}/>}/>
           <Route path="/login" element={<Login/>} />
           <Route path="/create-user" element={<CreateUser/>}/>
-          <Route path={`/menu/:id`} element={<RestaurantMenu restaurantId={currentTableAndRestaurant!}/>}/>
+          <Route path={`/menu/:id`} element={
+            <RestaurantMenu 
+              restaurantId={currentTableAndRestaurant!}
+              userInfo={userInformation}
+            />}
+            />
           <Route path={`/user/${userID}`} element={<UserPage/>}/>
           <Route path="/checkout" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
-          <Route path="/admin" element={<AdminIndex restaurantId={currentTableAndRestaurant!}/>}/>
+          <Route path="/admin" element={<AdminIndex userInfo={userInformation}/>}/>
       </Routes>
     </Router>
   );  

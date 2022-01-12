@@ -21,13 +21,15 @@ import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
+import AdminIndex from "../admin/index"
 interface Iprops {
   restaurantId: RestaurantTableData;
+  userInfo: any | null
 }
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-const RestaurantMenu = ({ restaurantId }: Iprops) => {
+const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
@@ -37,18 +39,34 @@ const RestaurantMenu = ({ restaurantId }: Iprops) => {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
-
+  
   useEffect(() => {
     if (!id) return;
-    const queryParams = new URLSearchParams(window.location.search);
-    const table = queryParams.get("table");
-    if (!table) return;
-    sendUrlParam(id, table);
+    if (!isOwner) {
+      const queryParams = new URLSearchParams(window.location.search);
+      const table = queryParams.get("table");
+      if (!table) return;
+      sendUrlParam(id, table);
+      }
+    if(isOwner){
+      const table = "0"
+      sendUrlParam(userInfo.rID, table)
+    } 
   }, []);
 
-  const { loggedIn, userID, checkForRestaurantAuth, userInformation } =
-    useContext(UserAuthContext);
+  useEffect(() => {
+    if (cart.length >= 1) {
+      setItemsInCart(true);
+    } else {
+      setItemsInCart(false);
+    }
+  }, [cart]);
 
+  useEffect(() => {
+    checkIfOwner();
+  }, [userInfo]);
+
+  
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
@@ -65,25 +83,16 @@ const RestaurantMenu = ({ restaurantId }: Iprops) => {
     return <MenuItems menuItems={filterUndefined} />;
   };
 
-  useEffect(() => {
-    if (cart.length >= 1) {
-      setItemsInCart(true);
-    } else {
-      setItemsInCart(false);
-    }
-  }, [cart]);
-
-  useEffect(() => {
-    checkIfOwner();
-  }, [userInformation]);
-
+  
   function checkIfOwner() {
     if (
-      userInformation &&
-      userInformation.role === "owner" &&
-      userInformation.rID === restaurantId.restaurantId
+      userInfo &&
+      userInfo.role === "owner" &&
+      userInfo.rID === restaurantId.restaurantId
     ) {
       setIsOwner(true);
+    } else {
+      setIsOwner(false);
     }
   }
 
@@ -149,36 +158,11 @@ const RestaurantMenu = ({ restaurantId }: Iprops) => {
                   </Box>
                 </>
               ) : (
-                <Box p={3} className="classes.settingsContainer">
-                  <Box
-                    className="classes.settingsListItem"
-                    display="flex"
-                    justifyContent="space-between"
-                    p={1}
-                  >
-                    <Typography variant="h5">Färgtema</Typography>
-                    <ArrowForwardIosRoundedIcon />
-                  </Box>
-                  <Box
-                    className="classes.settingsListItem"
-                    display="flex"
-                    justifyContent="space-between"
-                    p={1}
-                  >
-                    <Typography variant="h5">Bakgrundsbild</Typography>
-                    <ArrowForwardIosRoundedIcon />
-                  </Box>
-                  <Box
-                    className="classes.settingsListItem"
-                    display="flex"
-                    justifyContent="space-between"
-                    p={1}
-                  >
-                    <Typography variant="h5">Bord</Typography>
-                    <ArrowForwardIosRoundedIcon />
-                  </Box>
-                </Box>
-              )}
+                <AdminIndex
+                  userInfo={userInfo}
+                />
+              )
+              }
             </Box>
           </Box>
           {open ? (
