@@ -53,6 +53,7 @@ function App() {
     console.log("is logged in", loggedIn);
   },[]) 
 
+//get it working so that if you are an owner and you navigate to /menu you come to the menu, as opposed to using an id
  return (
     <Router>
       <Routes>
