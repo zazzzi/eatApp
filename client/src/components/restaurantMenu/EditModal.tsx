@@ -9,14 +9,18 @@ import {
   InputLabel,
   FormControl,
 } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MenuItemType } from "../../types/types";
 
 import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import { MenuContext } from "../../context/MenusContext";
 
 interface IProps {
   closeModal: () => void;
   editOpen: boolean;
+  menuItem: MenuItemType;
+  isNewItem: boolean;
 }
 
 function EditMenuModal(props: IProps) {
@@ -24,9 +28,8 @@ function EditMenuModal(props: IProps) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState("Dryck");
-
-  const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
+  const [categories, setCategories] = useState("");
+  const { restaurantData } = useContext(MenuContext);
 
   const style = {
     position: "absolute",
@@ -48,7 +51,7 @@ function EditMenuModal(props: IProps) {
   const handleChange = (
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => {
-    setCategory(event.target.value);
+    setCategories(event.target.value);
   };
 
   return (
@@ -66,29 +69,49 @@ function EditMenuModal(props: IProps) {
               variant="outlined"
               onChange={handleChange}
               label="Kategori"
-              value={category}
+              defaultValue={props.isNewItem ? null : props.menuItem.category}
               margin="normal"
               placeholder="Kategori"
               className={classes.selectStyle}
+              SelectProps={{
+                multiple: true,
+                // value: formState.userRoles,
+                // onChange: handleFieldChange,
+              }}
             >
-              {tabs.map((t) => {
+              {restaurantData.categories.map((t: any) => {
                 return <MenuItem value={t}>{t}</MenuItem>;
               })}
             </TextField>
 
-            <TextField variant="outlined" margin="normal" placeholder="Titel" />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              placeholder={"Titel"}
+              label="Titel"
+              defaultValue={props.isNewItem ? null : props.menuItem.title}
+            />
             <TextField
               variant="outlined"
               margin="normal"
               placeholder="Information"
+              label="Information"
+              defaultValue={props.isNewItem ? null : props.menuItem.description}
             />
-            <TextField variant="outlined" margin="normal" placeholder="Pris" />
             <TextField
               variant="outlined"
-              helperText="Lägg till ny kategori"
               margin="normal"
-              placeholder="Ny kategori"
+              placeholder="Pris"
+              label="Pris"
+              defaultValue={props.isNewItem ? null : props.menuItem.price}
             />
+            {/* <TextField
+              variant="outlined"
+              margin="normal"
+              defaultValue={null}
+              placeholder="Ny kategori"
+              label="Skapa ny kategori"
+            /> */}
           </form>
         </Box>
         <Box mt={2} className={classes.modalButtonsContainer}>
