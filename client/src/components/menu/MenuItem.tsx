@@ -6,10 +6,9 @@ import {
   Theme,
   Typography,
   Button,
+  Tooltip,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
 import { MenuItemType } from "../../types/types";
 import Incrementer from "../incrementer/Incrementer";
 import { MenuItem } from "../../context/CartContext";
@@ -17,6 +16,7 @@ import { UserAuthContext } from "../../context/UsersContext";
 import { MenuContext } from "../../context/MenusContext";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import EditMenuModal from "../restaurantMenu/EditModal";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 interface Iprops {
   menuItems: any;
@@ -25,9 +25,10 @@ interface Iprops {
 function MenuItems({ menuItems }: Iprops) {
   const classes = useStyles();
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
-  const { restaurantId } = useContext(MenuContext);
+  const { restaurantId, deleteMenuItem } = useContext(MenuContext);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
+  const [deletedItemArray, setDeletedItemArray] = useState([menuItems]);
 
   useEffect(() => {
     checkIfOwner();
@@ -43,9 +44,20 @@ function MenuItems({ menuItems }: Iprops) {
     }
   }
 
+  function handleDelete(index: any) {
+    const currentMenu = menuItems[index];
+
+    console.log(currentMenu);
+    console.log(index);
+
+    // const newMenuArray = currentMenu.slice(index, 1);
+    // setDeletedItemArray(newMenuArray);
+    // deleteMenuItem(deletedItemArray);
+  }
+
   return (
-    <Box className={classes.baseContainer}>
-      {menuItems.map((item: MenuItemType | MenuItem, i: any) => (
+    <>
+      {menuItems.map((item: MenuItemType | MenuItem, index: any) => (
         <Box className={classes.menuitemContainer}>
           <Box className={classes.menuItem}>
             <Container className={classes.imageColumn}>
@@ -67,7 +79,18 @@ function MenuItems({ menuItems }: Iprops) {
           <Box className={classes.bottomContainer}>
             <Box className={classes.incrementerContainer}>
               {isOwner ? (
-                <EditRoundedIcon onClick={() => setOpen(true)} />
+                <>
+                  <Box mr={2}>
+                    <Tooltip title="Delete">
+                      <DeleteIcon onClick={() => handleDelete(index)} />
+                    </Tooltip>
+                  </Box>
+                  <Box>
+                    <Tooltip title="Edit">
+                      <EditRoundedIcon onClick={() => setOpen(true)} />
+                    </Tooltip>
+                  </Box>
+                </>
               ) : (
                 <Incrementer menuItem={item} />
               )}
@@ -87,7 +110,7 @@ function MenuItems({ menuItems }: Iprops) {
           <hr />
         </Box>
       ))}
-    </Box>
+    </>
   );
 }
 

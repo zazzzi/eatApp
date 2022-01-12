@@ -7,7 +7,9 @@ import {
   addDoc,
   updateDoc,
   doc,
+  setDoc,
   deleteDoc,
+  deleteField,
 } from "firebase/firestore";
 import { MenuItemType } from "../types/types";
 import { UserAuthContext } from "./UsersContext";
@@ -21,6 +23,8 @@ interface IState {
 interface ContextValue extends IState {
   sendUrlParam: (param: string, table: string) => void;
   updateItemData: (itemId: string, value: any) => void;
+  createNewMenuItem: (value: any) => void;
+  deleteMenuItem: (value: any) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
@@ -28,6 +32,8 @@ export const MenuContext = createContext<ContextValue>({
   restaurantData: {},
   sendUrlParam: () => {},
   updateItemData: () => {},
+  createNewMenuItem: () => {},
+  deleteMenuItem: () => {},
 });
 
 interface Props {
@@ -73,39 +79,46 @@ function MenuProvider(props: Props) {
   };
 
   async function updateItemData(itemId: string, value: any) {
-
     const docRef = doc(db, "restaurants", `${id}`);
 
     const menu: any = restaurantData.menu.map((obj: any) => {
-        if(obj.title === itemId){
-            Object.keys(value).map((key: string) => {
-            obj[key] = value[key]
-            return obj
-          }) 
-          return {...obj}
-        } else {
-          return obj
-        }
+      if (obj.title === itemId) {
+        Object.keys(value).map((key: string) => {
+          obj[key] = value[key];
+          return obj;
+        });
+        return { ...obj };
+      } else {
+        return obj;
       }
-    );
+    });
+    await updateDoc(docRef, {
+      menu,
+    }).then(() => {
+      console.log(value);
+    });
+  }
 
-    console.log(menu)
+  async function createNewMenuItem(value: any) {
+    const newItem = restaurantData;
+    newItem.menu.push(value);
+    await setDoc(doc(db, "restaurants", `${id}`), newItem);
+  }
 
+  async function deleteMenuItem(value: any) {
+    console.log(value, "deleted");
+    // const docRef = doc(db, "restaurants", `${id}`);
     // await updateDoc(docRef, {
-    //   menu,
-    // }).then(() => {
-    //   console.log(value);
+    //   value: deleteField(),
     // });
+    // const menu = restaurantData;
+    // menu.menu.splice(value);
+    // await setDoc(doc(db, "restaurants", `${id}`), menu);
   }
 
   /* function clearCart() {
     setCartItems([]);
     localStorage.setItem("cart", JSON.stringify([]));
-  } */
-
-  /* async function getTabs() {
-    const usersCollectionRef = collection(db, "restaurants", `${id}`);
-    const data = await getDocs(usersCollectionRef);
   } */
 
   return (
@@ -115,6 +128,8 @@ function MenuProvider(props: Props) {
         restaurantData: restaurantData,
         sendUrlParam: urlParam,
         updateItemData: updateItemData,
+        createNewMenuItem: createNewMenuItem,
+        deleteMenuItem: deleteMenuItem,
       }}
     >
       {props.children}
