@@ -5,7 +5,6 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-
 import { db } from "./firebase";
 import {
   collection,
@@ -26,11 +25,14 @@ import UserPage from "./components/users/UserPage";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { RestaurantTableData } from "./types/types";
 import AdminIndex from "./components/admin";
+import TablesEditor from "./components/admin/Tables"
+import { MenuContext } from "./context/MenusContext";
 
 
 function App() {
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
   const [currentTableAndRestaurant, setcurrentTableAndRestaurant] = useState<RestaurantTableData | null>(null)
+  const { restaurantData } = useContext(MenuContext);
 
   useEffect(() => {
     let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
@@ -69,6 +71,7 @@ function App() {
           <Route path={`/user/${userID}`} element={<UserPage/>}/>
           <Route path="/checkout" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
           <Route path="/admin" element={<AdminIndex userInfo={userInformation}/>}/>
+          <Route path="/tables" element={<TablesEditor restaurantData={restaurantData}/>}/>
       </Routes>
     </Router>
   );  

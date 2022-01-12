@@ -1,8 +1,7 @@
 import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
 import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
-import { useEffect, useState } from "react";
-import { RestaurantTableData } from "../../types/types";
+import { useContext } from "react";
 import TablesEditor from "./Tables";
 import { db } from "../../firebase";
 import {
@@ -15,28 +14,16 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
+import {
+  BrowserRouter as Router,
+  Link,
+} from "react-router-dom";
+
 interface Iprops {
   userInfo: any
 }
 
 function AdminIndex({userInfo}: Iprops) {
-  const [restaurantData, setRestaurantdata] = useState<any>(null);
-
-  //fetch the restaurant from the userData id instead when logged in as an owner. 
- /*  useEffect(() => {
-    if (!restaurantId.restaurantId) return;
-    const getRestaurantData = async () => {
-      const docRef = doc(db, "restaurants", `${restaurantId.restaurantId}`);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setRestaurantdata(docSnap.data());
-      } else {
-        console.log("No such restaurant!");
-      }
-    };
-    getRestaurantData();
-  }, [restaurantId]); */
-
 
   return (
    <Box>
@@ -59,15 +46,18 @@ function AdminIndex({userInfo}: Iprops) {
         <Typography variant="h5">Bakgrundsbild</Typography>
         <ArrowForwardIosRoundedIcon />
       </Box>
-      <Box
-        className="classes.settingsListItem"
-        display="flex"
-        justifyContent="space-between"
-        p={1}
-      >
-        <Typography variant="h5">Bord</Typography>
-        <ArrowForwardIosRoundedIcon />
-        <TablesEditor/>
+      <Box>
+        <Link to="/tables">
+        <Box
+          className="classes.settingsListItem"
+          display="flex"
+          justifyContent="space-between"
+          p={1}
+        > 
+          <Typography variant="h5">Bord</Typography>
+          <ArrowForwardIosRoundedIcon />
+        </Box>
+        </Link>
       </Box>
     </Box>
    </Box>

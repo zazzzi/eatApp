@@ -136,7 +136,7 @@ function UserPage(props: Iprops) {
           editOpen={isOpen}
         /> : null}
         {userInfoState && userInfoState.role === "owner" ? (
-          <Button href={`/menu/${userInfoState.rID}`}>
+          <Button href={`/menu/${userInfoState.rID}?table=0`}>
             Redigera din restaurang
           </Button>
         ) : null}
