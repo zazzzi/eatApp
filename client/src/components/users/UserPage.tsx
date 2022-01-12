@@ -133,7 +133,7 @@ function UserPage(props: Iprops) {
         <Button onClick={openModal}>Byt lösenord</Button>
         {isOpen ? <PasswordModal
           closeModal={() => setIsOpen(false)}
-          editOpen={Boolean(isOpen)}
+          editOpen={isOpen}
         /> : null}
         {userInfoState && userInfoState.role === "owner" ? (
           <Button href={`/menu/${userInfoState.rID}`}>
