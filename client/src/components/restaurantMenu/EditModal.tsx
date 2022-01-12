@@ -67,7 +67,7 @@ function EditMenuModal(props: IProps) {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    updateItemData(props.menuItem.id, updatedMenuInfo);
+    updateItemData(props.menuItem.title, updatedMenuInfo);
   };
 
   function test(event: any) {
