@@ -1,17 +1,51 @@
 import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RestaurantTableData } from "../../types/types";
 import QrGenerator from "./QrGenerator"
 import AddIcon from '@material-ui/icons/Add';
 import EditTableModal from './TableModal'
-
+import { Link } from "react-router-dom";
+import { db } from "../../firebase";
+import {
+  collection,
+  getDoc,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 interface Iprops {
-  restaurantData: any
+  restaurantTable: RestaurantTableData
+  selectedTable: (table: any) => void
+  userInfo: any
 }
 
-function TablesEditor({restaurantData}: Iprops) {
+function TablesEditor({ restaurantTable, userInfo, selectedTable}: Iprops) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [restaurantData, setRestaurantData] = useState<any>(null)
+
+  useEffect(() => {
+    if (!userInfo) return;
+    const getRestaurantData = async () => {
+      const docRef = doc(db, "restaurants", `${userInfo.rID}`);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setRestaurantData(docSnap.data());
+      } else {
+        console.log("No such restaurant!");
+      }
+    };
+    getRestaurantData();
+  }, [userInfo]);
+
+  if(!restaurantData) {
+    return (
+    <>
+    404
+    </>
+    )
+  }
 
   return (
     <Box>
@@ -30,13 +64,20 @@ function TablesEditor({restaurantData}: Iprops) {
       </Box>
     <Box className={classes.container}>
       {restaurantData.tables.map((table: number) => (
-        <Box className={classes.boxContainer}>
-            <Typography variant="h3">{table}</Typography>
-            <QrGenerator table={table}/>
-        </Box>
+        <Link to={`/tables/${table}`}>
+          <Box 
+            className={classes.boxContainer}
+            onClick={()=> selectedTable(table)}
+          >
+              <Typography variant="h3">{table}</Typography>
+          </Box>
+        </Link>
       ))}
     </Box>
-   </Box>
+    <Link to={`/menu/${restaurantTable.restaurantId}?table=${restaurantTable.table}`}>
+      <Typography>Tillbaks till menyn</Typography>
+    </Link>
+   </Box> 
   );
 }
 

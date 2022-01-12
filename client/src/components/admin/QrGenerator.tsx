@@ -4,13 +4,16 @@ import { RestaurantTableData } from "../../types/types";
 import QRCode from "react-qr-code";
 
 interface Iprops {
-  table: number
+  table: any
 }
 
 function QrGenerator({table}: Iprops) {
+
+  console.log("hello")
+
   return (
    <Box>
-     {/* <QRCode value={String(table)} /> */}
+     <QRCode value={String(table)} />
    </Box>
   );
 }

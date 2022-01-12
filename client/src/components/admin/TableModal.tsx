@@ -25,8 +25,6 @@ function EditTableModal(props: Iprops) {
   const [open, setOpen] = useState(false);
   const [tableValue, setTableValue] = useState<number>()
 
-  console.log(tableValue)
- 
   const style = {
     position: "absolute",
     display: "flex",
