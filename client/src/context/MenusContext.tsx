@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { MenuItemType } from "../types/types";
 import { UserAuthContext } from "./UsersContext";
+import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 interface IState {
   restaurantId: any;
@@ -71,13 +72,24 @@ function MenuProvider(props: Props) {
     localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
   };
 
-  async function updateItemData(itemId: string, value: object) {
-    console.log(Object.keys(value));
+  async function updateItemData(itemId: string, value: any) {
+
     const docRef = doc(db, "restaurants", `${id}`);
-    const menu = restaurantData.menu.map((obj: { id: string }) =>
-      obj.id === itemId ? { ...obj, value } : obj
+
+    const menu: any = restaurantData.menu.map((obj: any) => {
+        if(obj.title === itemId){
+            Object.keys(value).map((key: string) => {
+            obj[key] = value[key]
+            return obj
+          }) 
+          return {...obj}
+        } else {
+          return obj
+        }
+      }
     );
-    console.log(menu);
+
+    console.log(menu)
 
     // await updateDoc(docRef, {
     //   menu,
