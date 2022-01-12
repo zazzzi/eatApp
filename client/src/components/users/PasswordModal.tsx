@@ -9,9 +9,14 @@ import {
   InputLabel,
   FormControl,
   Typography,
+  Input,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
-
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { UserAuthContext } from "../../context/UsersContext";
@@ -29,6 +34,7 @@ function PasswordModal(props: IProps) {
   const [password1, setPassword1] = useState<string>();
   const [password2, setPassword2] = useState<string>();
   const { updateUserPassword } = useContext(UserAuthContext);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const style = {
     position: "absolute",
@@ -61,7 +67,7 @@ function PasswordModal(props: IProps) {
     event.preventDefault();
     if (password1 && password1 === password2) {
       updateUserPassword(password1);
-      props.closeModal()
+      props.closeModal();
     }
   }
 
@@ -76,19 +82,39 @@ function PasswordModal(props: IProps) {
         <Box className={classes.modalFormContainer}>
           <form onSubmit={handleSubmit} className={classes.formStyle} action="">
             <Typography>Byt ditt lösenord:</Typography>
-            <TextField
+            <OutlinedInput
+              className={classes.inputField}
               id="password1"
-              variant="outlined"
-              margin="normal"
               placeholder="Lösenord"
               onChange={handleChange}
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
-            <TextField
+            <OutlinedInput
+              className={classes.inputField}
               id="password2"
-              variant="outlined"
-              margin="normal"
-              placeholder="Upprepa lösenord"
+              placeholder="Lösenord"
               onChange={handleChange}
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
             <Box mt={2} className={classes.modalButtonsContainer}>
               <Box p={2}>
@@ -104,11 +130,7 @@ function PasswordModal(props: IProps) {
                 </Button>
               </Box>
               <Box p={2}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                >
+                <Button type="submit" variant="contained" color="primary">
                   Spara
                 </Button>
               </Box>
@@ -137,6 +159,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   formStyle: {
     display: "flex",
     flexDirection: "column",
+  },
+  inputField: {
+    margin: "0.5rem 0",
   },
 }));
 
