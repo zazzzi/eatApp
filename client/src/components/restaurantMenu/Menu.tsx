@@ -39,25 +39,36 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
 
-  console.log(userInfo)
+  console.log(isOwner)
   
   useEffect(() => {
     if (!id) return;
-    if (!userInfo) {
+    if (!isOwner) {
+      console.log('test')
       const queryParams = new URLSearchParams(window.location.search);
       const table = queryParams.get("table");
       if (!table) return;
       sendUrlParam(id, table);
       }
-    if(userInfo && userInfo.role === "owner"){
+    if(isOwner){
       const table = "0"
       sendUrlParam(userInfo.rID, table)
     } 
   }, []);
 
-  const { loggedIn, userID, checkForRestaurantAuth, userInformation } =
-    useContext(UserAuthContext);
+  useEffect(() => {
+    if (cart.length >= 1) {
+      setItemsInCart(true);
+    } else {
+      setItemsInCart(false);
+    }
+  }, [cart]);
 
+  useEffect(() => {
+    checkIfOwner();
+  }, [userInfo]);
+
+  
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
@@ -74,25 +85,16 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     return <MenuItems menuItems={filterUndefined} />;
   };
 
-  useEffect(() => {
-    if (cart.length >= 1) {
-      setItemsInCart(true);
-    } else {
-      setItemsInCart(false);
-    }
-  }, [cart]);
-
-  useEffect(() => {
-    checkIfOwner();
-  }, [userInformation]);
-
+  
   function checkIfOwner() {
     if (
-      userInformation &&
-      userInformation.role === "owner" &&
-      userInformation.rID === restaurantId.restaurantId
+      userInfo &&
+      userInfo.role === "owner" &&
+      userInfo.rID === restaurantId.restaurantId
     ) {
       setIsOwner(true);
+    } else {
+      setIsOwner(false);
     }
   }
 
