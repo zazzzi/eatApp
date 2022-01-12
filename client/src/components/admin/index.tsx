@@ -1,4 +1,6 @@
-import { Box, makeStyles, Theme} from "@material-ui/core";
+import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
+import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
+import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import { useEffect, useState } from "react";
 import { RestaurantTableData } from "../../types/types";
 import TablesEditor from "./Tables";
@@ -14,15 +16,14 @@ import {
 } from "firebase/firestore";
 
 interface Iprops {
-  restaurantId: RestaurantTableData
+  userInfo: any
 }
 
-function AdminIndex({restaurantId}: Iprops) {
+function AdminIndex({userInfo}: Iprops) {
   const [restaurantData, setRestaurantdata] = useState<any>(null);
-  console.log(restaurantData)
 
   //fetch the restaurant from the userData id instead when logged in as an owner. 
-  useEffect(() => {
+ /*  useEffect(() => {
     if (!restaurantId.restaurantId) return;
     const getRestaurantData = async () => {
       const docRef = doc(db, "restaurants", `${restaurantId.restaurantId}`);
@@ -34,12 +35,41 @@ function AdminIndex({restaurantId}: Iprops) {
       }
     };
     getRestaurantData();
-  }, [restaurantId]);
+  }, [restaurantId]); */
 
 
   return (
    <Box>
-      <TablesEditor restaurantId={restaurantId}/>
+     <Box p={3} className="classes.settingsContainer">
+      <Box
+        className="classes.settingsListItem"
+        display="flex"
+        justifyContent="space-between"
+        p={1}
+      >
+        <Typography variant="h5">Färgtema</Typography>
+        <ArrowForwardIosRoundedIcon />
+      </Box>
+      <Box
+        className="classes.settingsListItem"
+        display="flex"
+        justifyContent="space-between"
+        p={1}
+      >
+        <Typography variant="h5">Bakgrundsbild</Typography>
+        <ArrowForwardIosRoundedIcon />
+      </Box>
+      <Box
+        className="classes.settingsListItem"
+        display="flex"
+        justifyContent="space-between"
+        p={1}
+      >
+        <Typography variant="h5">Bord</Typography>
+        <ArrowForwardIosRoundedIcon />
+        <TablesEditor/>
+      </Box>
+    </Box>
    </Box>
   );
 }

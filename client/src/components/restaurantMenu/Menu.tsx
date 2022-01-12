@@ -21,6 +21,7 @@ import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
+import AdminIndex from "../admin/index"
 interface Iprops {
   restaurantId: RestaurantTableData;
   userInfo: any | null
@@ -157,36 +158,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                   </Box>
                 </>
               ) : (
-                <Box p={3} className="classes.settingsContainer">
-                  <Box
-                    className="classes.settingsListItem"
-                    display="flex"
-                    justifyContent="space-between"
-                    p={1}
-                  >
-                    <Typography variant="h5">Färgtema</Typography>
-                    <ArrowForwardIosRoundedIcon />
-                  </Box>
-                  <Box
-                    className="classes.settingsListItem"
-                    display="flex"
-                    justifyContent="space-between"
-                    p={1}
-                  >
-                    <Typography variant="h5">Bakgrundsbild</Typography>
-                    <ArrowForwardIosRoundedIcon />
-                  </Box>
-                  <Box
-                    className="classes.settingsListItem"
-                    display="flex"
-                    justifyContent="space-between"
-                    p={1}
-                  >
-                    <Typography variant="h5">Bord</Typography>
-                    <ArrowForwardIosRoundedIcon />
-                  </Box>
-                </Box>
-              )}
+                <AdminIndex
+                  userInfo={userInfo}
+                />
+              )
+              }
             </Box>
           </Box>
           {open ? (

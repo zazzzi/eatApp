@@ -68,7 +68,7 @@ function App() {
             />
           <Route path={`/user/${userID}`} element={<UserPage/>}/>
           <Route path="/checkout" element={<Checkout restaurantId={currentTableAndRestaurant!}/>}/>
-          <Route path="/admin" element={<AdminIndex restaurantId={currentTableAndRestaurant!}/>}/>
+          <Route path="/admin" element={<AdminIndex userInfo={userInformation}/>}/>
       </Routes>
     </Router>
   );  
