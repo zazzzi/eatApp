@@ -23,11 +23,12 @@ import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicat
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 interface Iprops {
   restaurantId: RestaurantTableData;
+  userInfo: any | null
 }
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
 
-const RestaurantMenu = ({ restaurantId }: Iprops) => {
+const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const classes = useStyles();
   const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
@@ -38,12 +39,20 @@ const RestaurantMenu = ({ restaurantId }: Iprops) => {
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
 
+  console.log(userInfo)
+  
   useEffect(() => {
     if (!id) return;
-    const queryParams = new URLSearchParams(window.location.search);
-    const table = queryParams.get("table");
-    if (!table) return;
-    sendUrlParam(id, table);
+    if (!userInfo) {
+      const queryParams = new URLSearchParams(window.location.search);
+      const table = queryParams.get("table");
+      if (!table) return;
+      sendUrlParam(id, table);
+      }
+    if(userInfo && userInfo.role === "owner"){
+      const table = "0"
+      sendUrlParam(userInfo.rID, table)
+    } 
   }, []);
 
   const { loggedIn, userID, checkForRestaurantAuth, userInformation } =
