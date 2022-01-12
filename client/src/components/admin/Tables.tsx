@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { RestaurantTableData } from "../../types/types";
 import QrGenerator from "./QrGenerator"
 import AddIcon from '@material-ui/icons/Add';
+import EditTableModal from './TableModal'
 
 interface Iprops {
   restaurantData: any
@@ -10,12 +11,22 @@ interface Iprops {
 
 function TablesEditor({restaurantData}: Iprops) {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   return (
     <Box>
       <Box className={classes.header}>
         <Typography variant="h2"><b>Bord</b></Typography>
-        <AddIcon className={classes.icon}/>
+        <AddIcon 
+          className={classes.icon}
+          onClick={() => {
+            setOpen(true);
+          }}
+        />
+        <EditTableModal
+          closeModal={() => setOpen(false)}
+          editOpen={Boolean(open)}
+        />
       </Box>
     <Box className={classes.container}>
       {restaurantData.tables.map((table: number) => (

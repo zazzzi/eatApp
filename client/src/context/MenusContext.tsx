@@ -53,10 +53,8 @@ function MenuProvider(props: Props) {
   }, [id]);
 
   useEffect(() => {
-    
     let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
     setcurrentTableAndRestaurant(restaurant); 
-  
   }, []);
 
 
