@@ -16,9 +16,6 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable}: Iprops) {
   const [open, setOpen] = useState(false);
   const {restaurantData, fetchDatabaseWithId} = useContext(MenuContext)
 
-  console.log(restaurantData)
-  //state not updating huhhuhuh.
-
   useEffect(()=> {
     if(!userInfo) return
     fetchDatabaseWithId(userInfo.rID)
