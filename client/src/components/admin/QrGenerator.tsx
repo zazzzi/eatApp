@@ -5,6 +5,7 @@ import QRCode from "react-qr-code";
 import { Link, useParams } from "react-router-dom";
 import {MenuContext} from "../../context/MenusContext";
 import DeleteIcon from '@material-ui/icons/Delete';
+import eatAppLogo from "../../assets/logos/eatAppLogo.png"
 
 interface Iprops {
   table: any
@@ -15,6 +16,7 @@ function QrGenerator({table, userInfo}: Iprops) {
   const classes = useStyles(); 
   const { id } = useParams();
   const {restaurantData, fetchDatabaseWithId} = useContext(MenuContext)
+  console.log(restaurantData)
 
   useEffect(()=> {
     if(!userInfo) return
@@ -43,9 +45,10 @@ function QrGenerator({table, userInfo}: Iprops) {
 
   return (
    <Box className={classes.padding}>
-     <Box>
-      <Typography variant="h2">Bord {!table ? id : table}</Typography>
+     <Box className={classes.qrContainer}>
+      <Typography className={classes.h} variant="h5">{restaurantData.restaurantName}: bord {!table ? id : table}</Typography>
       <QRCode value={url} />
+      <img className={classes.logo}src={eatAppLogo}/>
      </Box>
      <Box className={classes.buttonGroup}>
      <Link to={`/tables`}>
@@ -66,6 +69,9 @@ function QrGenerator({table, userInfo}: Iprops) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  h: {
+    padding: '0.5rem'
+  },
   padding: {
     display: "flex",
     justifyContent: "space-evenly",
@@ -96,6 +102,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row"
+  },
+  logo: {
+    padding: "0.8rem",
+    width: '60%'
+  }, 
+  qrContainer: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flexDirection: "column"
   }
 }));
 
