@@ -27,6 +27,7 @@ interface ContextValue extends IState {
   deleteMenuItem: (value: any) => void;
   fetchDatabaseWithId: (id: string) => void;
   addTable: (table: string) => void;
+
 }
 
 export const MenuContext = createContext<ContextValue>({
@@ -113,15 +114,14 @@ function MenuProvider(props: Props) {
     await setDoc(doc(db, "restaurants", `${id}`), newItem);
   }
 
-  async function deleteMenuItem(value: any) {
-    console.log(value, "deleted");
-    // const docRef = doc(db, "restaurants", `${id}`);
-    // await updateDoc(docRef, {
-    //   value: deleteField(),
-    // });
-    // const menu = restaurantData;
-    // menu.menu.splice(value);
-    // await setDoc(doc(db, "restaurants", `${id}`), menu);
+  async function deleteMenuItem(value: any, itemId: string) {
+    console.log(value[0].title, "deleted");
+    const docRef = doc(db, "restaurants", `${id}`);
+    const menu = restaurantData.menu.filter((obj: any) => obj.id !== itemId);
+
+    await updateDoc(docRef, {
+      menu,
+    });
   }
 
   /* function clearCart() {
