@@ -9,6 +9,7 @@ import {
   Fab,
   Fade,
   MenuItem,
+  Tooltip,
 } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import AddIcon from "@material-ui/icons/Add";
@@ -20,10 +21,12 @@ import EditMenuModal from "./EditModal";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
-import AdminIndex from "../admin/index"
+import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
+import AdminIndex from "../admin/index";
+
 interface Iprops {
   restaurantId: RestaurantTableData;
-  userInfo: any | null
+  userInfo: any | null;
 }
 
 const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
@@ -38,7 +41,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  
+
   useEffect(() => {
     if (!id) return;
     if (!isOwner) {
@@ -46,11 +49,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
       const table = queryParams.get("table");
       if (!table) return;
       sendUrlParam(id, table);
-      }
-    if(isOwner){
-      const table = "0"
-      sendUrlParam(userInfo.rID, table)
-    } 
+    }
+    if (isOwner) {
+      const table = "0";
+      sendUrlParam(userInfo.rID, table);
+    }
   }, []);
 
   useEffect(() => {
@@ -65,7 +68,6 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     checkIfOwner();
   }, [userInfo]);
 
-  
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
@@ -82,7 +84,6 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     return <MenuItems menuItems={filterUndefined} />;
   };
 
-  
   function checkIfOwner() {
     if (
       userInfo &&
@@ -116,7 +117,9 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                     setOpenSettings(!openSettings);
                   }}
                 >
-                  <SettingsApplicationsRoundedIcon fontSize="large" />
+                  <Tooltip title="Settings">
+                    <SettingsApplicationsRoundedIcon fontSize="large" />
+                  </Tooltip>
                 </Button>
 
                 <Button
@@ -124,7 +127,9 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                     setOpen(true);
                   }}
                 >
-                  <AddIcon fontSize="large" />
+                  <Tooltip title="Add new">
+                    <AddIcon fontSize="large" />
+                  </Tooltip>
                 </Button>
               </Box>
             ) : null}
@@ -157,11 +162,8 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                   </Box>
                 </>
               ) : (
-                <AdminIndex
-                  userInfo={userInfo}
-                />
-              )
-              }
+                <AdminIndex userInfo={userInfo} />
+              )}
             </Box>
           </Box>
           {open ? (

@@ -29,7 +29,9 @@ function EditMenuModal(props: IProps) {
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
-  const { restaurantData, updateItemData } = useContext(MenuContext);
+  const [newMenuItem, setNewMenuItem] = useState<any>({});
+  const { restaurantData, updateItemData, createNewMenuItem } =
+    useContext(MenuContext);
 
   const style = {
     position: "absolute",
@@ -55,19 +57,31 @@ function EditMenuModal(props: IProps) {
     });
   }
 
+  function createNew(id: string, value: string) {
+    setNewMenuItem({
+      ...newMenuItem,
+      [id]: value,
+    });
+  }
+
   function handleChange(
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) {
     if (!event.target.id) {
       updateMenuInfo(event.target.name, event.target.value);
+      createNew(event.target.name, event.target.value);
     } else {
       updateMenuInfo(event.target.id, event.target.value);
+      createNew(event.target.id, event.target.value);
     }
   }
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    updateItemData(props.menuItem.title, updatedMenuInfo);
+    props.isNewItem
+      ? createNewMenuItem(newMenuItem)
+      : updateItemData(props.menuItem.title, updatedMenuInfo);
+    console.log(newMenuItem);
   };
 
   function test(event: any) {
