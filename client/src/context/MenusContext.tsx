@@ -89,7 +89,7 @@ function MenuProvider(props: Props) {
 
   async function updateItemData(itemId: string, value: any) {
     const docRef = doc(db, "restaurants", `${id}`);
-    const menu: any = restaurantData.menu.map((obj: any) => {
+    const menu: object = restaurantData.menu.map((obj: any) => {
       if (obj.title === itemId) {
         Object.keys(value).map((key: string) => {
           obj[key] = value[key];
@@ -130,9 +130,16 @@ function MenuProvider(props: Props) {
   } */
 
   const addTable = async (table: string) => {
-    console.log(table)
     const docRef = doc(db, "restaurants", `${id}`);
+    restaurantData.tables.push(table)
+    const tables = restaurantData.tables
+    await updateDoc(docRef, {
+      tables ,
+    }).then(() => {
+      console.log("succ");
+    });
   }
+
 
   return (
     <MenuContext.Provider

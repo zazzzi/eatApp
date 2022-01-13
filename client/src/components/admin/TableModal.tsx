@@ -29,8 +29,6 @@ function EditTableModal(props: Iprops) {
   const {addTable} = useContext(MenuContext)
   const [tableValueTaken, setTableValueTaken] =useState<boolean>(false)
   
-  console.log(props.restaurantData)
-
   const style = {
     position: "absolute",
     display: "flex",
@@ -80,7 +78,7 @@ function EditTableModal(props: Iprops) {
               placeholder={"Nummer"}
               label="Nummer"
               onChange={handleInput}
-              helperText={ tableValueTaken ? "Table already exists" : null}
+              helperText={ tableValueTaken ? "Bordet finns redan" : null}
             />
           
         </Box>
@@ -99,6 +97,7 @@ function EditTableModal(props: Iprops) {
           </Box>
           <Box p={2}>
             <Button 
+              disabled={tableValueTaken} 
               variant="contained" 
               color="primary"
               type="submit"
