@@ -101,12 +101,14 @@ function MenuItems({ menuItems }: Iprops) {
               </Typography>
             </Container>
           </Box>
-          <EditMenuModal
+          { isOwner ? 
+          (<EditMenuModal
             menuItem={item}
             closeModal={() => setOpen(false)}
             editOpen={open}
             isNewItem={false}
-          />
+          />) : null
+          }
           <hr />
         </Box>
       ))}

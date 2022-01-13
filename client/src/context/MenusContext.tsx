@@ -24,7 +24,10 @@ interface ContextValue extends IState {
   sendUrlParam: (param: string, table: string) => void;
   updateItemData: (itemId: string, value: any) => void;
   createNewMenuItem: (value: any) => void;
-  deleteMenuItem: (value: any, itemId: string) => void;
+  deleteMenuItem: (value: any) => void;
+  fetchDatabaseWithId: (id: string) => void;
+  addTable: (table: string) => void;
+
 }
 
 export const MenuContext = createContext<ContextValue>({
@@ -34,6 +37,8 @@ export const MenuContext = createContext<ContextValue>({
   updateItemData: () => {},
   createNewMenuItem: () => {},
   deleteMenuItem: () => {},
+  fetchDatabaseWithId: () => {},
+  addTable: () => {}
 });
 
 interface Props {
@@ -79,10 +84,13 @@ function MenuProvider(props: Props) {
     localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
   };
 
+  const fetchDatabaseWithId = (id: string) => {
+    setId(id);
+  }
+
   async function updateItemData(itemId: string, value: any) {
     const docRef = doc(db, "restaurants", `${id}`);
-
-    const menu: any = restaurantData.menu.map((obj: any) => {
+    const menu: object = restaurantData.menu.map((obj: any) => {
       if (obj.title === itemId) {
         Object.keys(value).map((key: string) => {
           obj[key] = value[key];
@@ -121,6 +129,18 @@ function MenuProvider(props: Props) {
     localStorage.setItem("cart", JSON.stringify([]));
   } */
 
+  const addTable = async (table: string) => {
+    const docRef = doc(db, "restaurants", `${id}`);
+    restaurantData.tables.push(table)
+    const tables = restaurantData.tables
+    await updateDoc(docRef, {
+      tables ,
+    }).then(() => {
+      console.log("succ");
+    });
+  }
+
+
   return (
     <MenuContext.Provider
       value={{
@@ -130,6 +150,8 @@ function MenuProvider(props: Props) {
         updateItemData: updateItemData,
         createNewMenuItem: createNewMenuItem,
         deleteMenuItem: deleteMenuItem,
+        fetchDatabaseWithId: fetchDatabaseWithId,
+        addTable: addTable,
       }}
     >
       {props.children}

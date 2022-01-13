@@ -1,19 +1,10 @@
-import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, CircularProgress, makeStyles, Theme, Typography} from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { RestaurantTableData } from "../../types/types";
-import QrGenerator from "./QrGenerator"
 import AddIcon from '@material-ui/icons/Add';
 import EditTableModal from './TableModal'
 import { Link } from "react-router-dom";
-import { db } from "../../firebase";
-import {
-  collection,
-  getDoc,
-  addDoc,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
+import { MenuContext } from "../../context/MenusContext";
 interface Iprops {
   restaurantTable: RestaurantTableData
   selectedTable: (table: any) => void
@@ -23,27 +14,19 @@ interface Iprops {
 function TablesEditor({ restaurantTable, userInfo, selectedTable}: Iprops) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [restaurantData, setRestaurantData] = useState<any>(null)
+  const {restaurantData, fetchDatabaseWithId} = useContext(MenuContext)
 
-  useEffect(() => {
-    if (!userInfo) return;
-    const getRestaurantData = async () => {
-      const docRef = doc(db, "restaurants", `${userInfo.rID}`);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setRestaurantData(docSnap.data());
-      } else {
-        console.log("No such restaurant!");
-      }
-    };
-    getRestaurantData();
-  }, [userInfo]);
+
+  useEffect(()=> {
+    if(!userInfo) return
+    fetchDatabaseWithId(userInfo.rID)
+  },[userInfo])
 
   if(!restaurantData) {
     return (
-    <>
-    404
-    </>
+    <Box className={classes.loader}>
+      <CircularProgress/>
+    </Box>
     )
   }
 
@@ -58,6 +41,7 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable}: Iprops) {
           }}
         />
         <EditTableModal
+          restaurantData={restaurantData}
           closeModal={() => setOpen(false)}
           editOpen={Boolean(open)}
         />
@@ -107,6 +91,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   icon: {
     height: '4rem',
     width: "4rem"
+  },
+  loader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 }));
 
