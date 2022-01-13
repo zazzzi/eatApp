@@ -171,7 +171,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
               isNewItem={true}
               menuItem={restaurantData.menu}
               closeModal={() => setOpen(false)}
-              editOpen={Boolean(open)}
+              editOpen={open}
             />
           ) : null}
           {!isOwner ? (

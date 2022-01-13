@@ -22,3 +22,22 @@ hr {
 .MuiButtonGroup-groupedOutlinedHorizontal:not(:last-child) {
   border-right-color: rgba(0, 0, 0, 0.23) !important;
 }
+
+.MuiSnackbarContent-root {
+  background-color: #4caf50 !important;
+  justify-content: center !important;
+
+  font-weight: 600 !important;
+  flex-grow: 0 !important;
+
+  padding: 4px 39px !important;
+}
+
+.MuiSnackbar-anchorOriginBottomCenter {
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  position: fixed !important;
+  transform: translateY(-48%) !important;
+  /* transform: translateX(-50%) !important; */
+}

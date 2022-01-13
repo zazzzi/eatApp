@@ -72,8 +72,7 @@ function MenuProvider(props: Props) {
 
   useEffect(() => {
     let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
-    setcurrentTableAndRestaurant(restaurant); 
-
+    setcurrentTableAndRestaurant(restaurant);
   }, []);
 
   const urlParam = (param: string, table: string) => {
@@ -119,6 +118,7 @@ function MenuProvider(props: Props) {
   async function deleteMenuItem(value: any, itemId: string) {
     const docRef = doc(db, "restaurants", `${id}`);
     const menu = restaurantData.menu.filter((obj: any) => obj.id !== itemId);
+    restaurantData.menu = menu;
 
     await updateDoc(docRef, {
       menu,
