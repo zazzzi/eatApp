@@ -98,7 +98,8 @@ const saveAs = (blob: string, fileName: string) =>{
         variant="text"
         color="primary"
         onClick={exportAsPicture}
-      ><PrintIcon/>Skriv ut</Button>
+        startIcon={<PrintIcon/>}
+      >Skriv ut</Button>
      <Box className={classes.buttonGroup}>
      <Link to={`/tables`}>
       <Button
@@ -121,7 +122,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   padding: {
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
     height: "100vh",
     padding: '2rem',
@@ -155,6 +156,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '60%'
   }, 
   qrContainer: {
+    outline: "solid",
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",

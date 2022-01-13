@@ -67,59 +67,61 @@ function EditTableModal(props: Iprops) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-      <form className={classes.formStyle} onSubmit={handleSubmit}>
-        <Box className={classes.modalFormContainer}>
-        <Typography variant="h4"><b>Bordsnummer</b></Typography>
+      <Box className={classes.modalFormContainer}>
+        <form className={classes.formStyle} onSubmit={handleSubmit}>
+          <Typography variant="h4"><b>Bordsnummer</b></Typography>
           <TextField
-              error={tableValueTaken}
-              type="number"
-              variant="outlined"
-              margin="normal"
-              placeholder={"Nummer"}
-              label="Nummer"
-              onChange={handleInput}
-              helperText={ tableValueTaken ? "Bordet finns redan" : null}
-            />
-          
+                error={tableValueTaken}
+                type="number"
+                variant="outlined"
+                margin="normal"
+                placeholder={"Nummer"}
+                label="Nummer"
+                onChange={handleInput}
+                helperText={ tableValueTaken ? "Bordet finns redan" : null}
+          /> 
+          <Box mt={1} className={classes.modalButtonsContainer}>
+            <Box p={1}>
+              <Button
+                className={classes.button}
+                color="secondary"
+                startIcon={<DeleteIcon />}
+                variant="outlined"
+                onClick={() => {
+                  props.closeModal();
+                }}
+              >
+                Cancel
+              </Button>
+            </Box>
+            <Box p={1}>
+              <Button 
+                className={classes.button}
+                disabled={tableValueTaken} 
+                variant="contained" 
+                color="primary"
+                type="submit"
+                onClick={() => {
+                  setTimeout(() => props.closeModal(), 1)
+                }}
+              >
+                Save
+              </Button>
+            </Box>
+            </Box>
+          </form>
         </Box>
-        <Box mt={2} className={classes.modalButtonsContainer}>
-          <Box p={2}>
-            <Button
-              color="secondary"
-              startIcon={<DeleteIcon />}
-              variant="outlined"
-              onClick={() => {
-                props.closeModal();
-              }}
-            >
-              Cancel
-            </Button>
-          </Box>
-          <Box p={2}>
-            <Button 
-              disabled={tableValueTaken} 
-              variant="contained" 
-              color="primary"
-              type="submit"
-              onClick={() => {
-                setTimeout(() => props.closeModal(), 1)
-              }}
-            >
-              Save
-            </Button>
-          </Box>
-        </Box>
-        </form>
       </Box>
     </Modal>
   );
 }
 
+
+
 const useStyles = makeStyles((theme: Theme) => ({
   modalButtonsContainer: {
     display: "flex",
-    width: "20%",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
   modalFormContainer: {
     display: "flex",
@@ -132,8 +134,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   formStyle: {
     display: "flex",
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: "column",
-  },
+  }, 
+  button: {
+    width: '8rem'
+  }
 }));
 
 

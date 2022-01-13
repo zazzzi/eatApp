@@ -33,8 +33,9 @@ export default function AlertDialog({table}:Iprops) {
         variant="contained"
         color="primary"
         onClick={handleClickOpen}
+        startIcon={<DeleteIcon/>}
       >
-        <DeleteIcon/>Radera
+        Radera
       </Button>
       <Dialog
         open={open}
