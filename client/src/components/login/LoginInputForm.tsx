@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import SendIcon from '@material-ui/icons/Send';
+import SendIcon from "@material-ui/icons/Send";
 import { IncomingUser, User } from "../../types/types";
 
 interface Iprops {
@@ -58,10 +58,14 @@ function LoginInputForm(props: Iprops) {
             onChange={handleChange}
           />
           <Box className={classes.loginHelperContainer}>
-            <Typography variant="body2">Problem med att logga in?</Typography>
+            <a href="/reset-password">
+              <Typography variant="body2">Problem med att logga in?</Typography>
+            </a>
           </Box>
           <Box className={classes.loginBtnContainer}>
-            <Button endIcon={<SendIcon / >} size="large" type="submit">Logga in </Button>
+            <Button endIcon={<SendIcon />} size="large" type="submit">
+              Logga in{" "}
+            </Button>
           </Box>
         </form>
       </Box>
@@ -89,7 +93,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "end",
     width: "15rem",
-    marginTop: "4rem"
+    marginTop: "4rem",
   },
 }));
 

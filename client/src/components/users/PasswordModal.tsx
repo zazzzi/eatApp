@@ -13,6 +13,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  FormHelperText,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -35,6 +36,7 @@ function PasswordModal(props: IProps) {
   const [password2, setPassword2] = useState<string>();
   const { updateUserPassword } = useContext(UserAuthContext);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [matching, setMatching] = useState(true);
 
   const style = {
     position: "absolute",
@@ -68,6 +70,8 @@ function PasswordModal(props: IProps) {
     if (password1 && password1 === password2) {
       updateUserPassword(password1);
       props.closeModal();
+    } else {
+      setMatching(false);
     }
   }
 
@@ -86,6 +90,7 @@ function PasswordModal(props: IProps) {
               className={classes.inputField}
               id="password1"
               placeholder="Lösenord"
+              required
               onChange={handleChange}
               type={showPassword ? "text" : "password"}
               endAdornment={
@@ -101,9 +106,11 @@ function PasswordModal(props: IProps) {
             />
             <OutlinedInput
               className={classes.inputField}
+              required
               id="password2"
               placeholder="Lösenord"
               onChange={handleChange}
+              error={!matching}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
@@ -116,6 +123,7 @@ function PasswordModal(props: IProps) {
                 </InputAdornment>
               }
             />
+            <FormHelperText id="password2">{!matching ? "Lösenorden matchar inte." : ""}</FormHelperText>
             <Box mt={2} className={classes.modalButtonsContainer}>
               <Box p={2}>
                 <Button

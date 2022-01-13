@@ -1,7 +1,11 @@
 import {
   Box,
   Button,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
   makeStyles,
+  OutlinedInput,
   TextField,
   Theme,
   Typography,
@@ -19,6 +23,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import AddIcon from "@material-ui/icons/Add";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 interface Iprops {
   userDataCallback(user: User): void;
@@ -27,7 +33,11 @@ interface Iprops {
 function CreateUserForm(props: Iprops) {
   const classes = useStyles();
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [passwordMatch, setPasswordMatch] = useState<boolean>();
+  const [matching, setMatching] = useState(true);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [password1, setPassword1] = useState<string>();
+  const [password2, setPassword2] = useState<string>();
+  const [passwordTooShort, setPasswordTooShort] = useState(false)
 
   const [userToCreate, setUserToCreate] = useState<User>({
     firstName: "",
@@ -35,16 +45,21 @@ function CreateUserForm(props: Iprops) {
     email: "",
     phoneNumber: 0,
     password: "",
-    role: "customer"
+    role: "customer",
   });
 
-  useEffect(() => {
-    if (userToCreate.password !== confirmPassword) {
-      setPasswordMatch(false);
+  const handlePasswordInput = (id: string, value: string) => {
+    if (id === "password1") {
+      if (value.length >= 6) {
+        setPassword1(value);
+        setPasswordTooShort(false)
+      } else {
+        setPasswordTooShort(true)
+      }
     } else {
-      setPasswordMatch(true);
+      setPassword2(value);
     }
-  }, [confirmPassword, userToCreate.password]);
+  };
 
   function updateUserObject(id: string, value: string) {
     setUserToCreate({
@@ -56,12 +71,27 @@ function CreateUserForm(props: Iprops) {
   function handleChange(
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) {
-    updateUserObject(event.target.id, event.target.value);
+    if (event.target.id === "password1" || event.target.id === "password2") {
+      if (event.target.id === "password1") {
+        updateUserObject("password", event.target.value);
+        handlePasswordInput(event.target.id, event.target.value);
+      } else {
+        handlePasswordInput(event.target.id, event.target.value);
+      }
+    } else {
+      updateUserObject(event.target.id, event.target.value);
+    }
   }
 
   function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    props.userDataCallback(userToCreate);
+    if (password1 && password1 === password2) {
+      console.log(userToCreate);
+
+      props.userDataCallback(userToCreate);
+    } else {
+      setMatching(false);
+    }
   }
 
   function passwordValidation(
@@ -78,6 +108,7 @@ function CreateUserForm(props: Iprops) {
       <form className={classes.formStyling} onSubmit={handleSubmit}>
         <TextField
           className={classes.inputField}
+          required
           id="email"
           label="Epostadress"
           type="email"
@@ -87,6 +118,7 @@ function CreateUserForm(props: Iprops) {
         />
         <TextField
           className={classes.inputField}
+          required
           id="firstName"
           label="Förnamn"
           variant="outlined"
@@ -96,6 +128,7 @@ function CreateUserForm(props: Iprops) {
         />
         <TextField
           className={classes.inputField}
+          required
           id="lastName"
           label="Efternamn"
           variant="outlined"
@@ -104,6 +137,7 @@ function CreateUserForm(props: Iprops) {
           onBlur={handleChange}
         />
         <TextField
+          required
           className={classes.inputField}
           id="phoneNumber"
           label="Telefonnummer"
@@ -112,30 +146,53 @@ function CreateUserForm(props: Iprops) {
           autoComplete="current-email"
           onBlur={handleChange}
         />
-        <TextField
+        <OutlinedInput
           className={classes.inputField}
-          id="password"
-          variant="outlined"
-          label="Lösenord"
-          type="password"
-          autoComplete="current-password"
-          onChange={passwordValidation}
-          onBlur={handleChange}
+          id="password1"
+          placeholder="Lösenord"
+          required
+          error={passwordTooShort}
+          onChange={handleChange}
+          type={showPassword ? "text" : "password"}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </IconButton>
+            </InputAdornment>
+          }
         />
-        <TextField
+        <OutlinedInput
           className={classes.inputField}
+          required
           id="password2"
-          variant="outlined"
-          label="Lösenord"
-          type="password"
-          autoComplete="current-password"
-          helperText={!passwordMatch ? "Lösenorden matchar inte" : null}
-          onChange={passwordValidation}
-          onBlur={passwordValidation}
-          error={!passwordMatch}
+          placeholder="Lösenord"
+          onChange={handleChange}
+          error={!matching}
+          type={showPassword ? "text" : "password"}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </IconButton>
+            </InputAdornment>
+          }
         />
+        <FormHelperText id="password2">
+          {!matching ? "Lösenorden matchar inte." : ""}
+          {passwordTooShort ? "Lösenordet måste vara längre än 6 karaktärer." : ""}
+        </FormHelperText>
+
         <Box className={classes.submitBtnStyling}>
-          <Button variant="contained" endIcon={<AddIcon />} type="submit">Skapa användare</Button>
+          <Button variant="contained" endIcon={<AddIcon />} type="submit">
+            Skapa användare
+          </Button>
         </Box>
       </form>
     </Box>
@@ -158,8 +215,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
   },
   submitBtnStyling: {
-    marginTop: "1rem"
-  }
+    marginTop: "1rem",
+  },
 }));
 
 export default CreateUserForm;
