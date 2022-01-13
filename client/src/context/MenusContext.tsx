@@ -25,6 +25,7 @@ interface ContextValue extends IState {
   updateItemData: (itemId: string, value: any) => void;
   createNewMenuItem: (value: any) => void;
   deleteMenuItem: (value: any) => void;
+  fetchDatabaseWithId: (id: string) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
@@ -34,6 +35,7 @@ export const MenuContext = createContext<ContextValue>({
   updateItemData: () => {},
   createNewMenuItem: () => {},
   deleteMenuItem: () => {},
+  fetchDatabaseWithId: () => {}
 });
 
 interface Props {
@@ -78,6 +80,10 @@ function MenuProvider(props: Props) {
     setId(param);
     localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
   };
+
+  const fetchDatabaseWithId = (id: string) => {
+    setId(id);
+  }
 
   async function updateItemData(itemId: string, value: any) {
     const docRef = doc(db, "restaurants", `${id}`);
@@ -131,6 +137,7 @@ function MenuProvider(props: Props) {
         updateItemData: updateItemData,
         createNewMenuItem: createNewMenuItem,
         deleteMenuItem: deleteMenuItem,
+        fetchDatabaseWithId: fetchDatabaseWithId,
       }}
     >
       {props.children}
