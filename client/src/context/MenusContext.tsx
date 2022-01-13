@@ -138,6 +138,7 @@ function MenuProvider(props: Props) {
 const deleteTable = async (table: string) => {
   const docRef = doc(db, "restaurants", `${id}`);
   const tables = restaurantData.tables.filter((t: string) => t !== table);
+  restaurantData.tables = tables
   await updateDoc(docRef, {
     tables,
   });
