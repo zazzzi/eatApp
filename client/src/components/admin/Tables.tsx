@@ -41,6 +41,7 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable}: Iprops) {
           }}
         />
         <EditTableModal
+          restaurantData={restaurantData}
           closeModal={() => setOpen(false)}
           editOpen={Boolean(open)}
         />

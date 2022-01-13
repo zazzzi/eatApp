@@ -17,6 +17,7 @@ import { MenuContext } from "../../context/MenusContext";
 interface Iprops {
   closeModal: () => void;
   editOpen: boolean;
+  restaurantData: any
 }
 
 function EditTableModal(props: Iprops) {
@@ -26,6 +27,9 @@ function EditTableModal(props: Iprops) {
   const [open, setOpen] = useState(false);
   const [tableValue, setTableValue] = useState<string>('')
   const {addTable} = useContext(MenuContext)
+  const [tableValueTaken, setTableValueTaken] =useState<boolean>(false)
+  
+  console.log(props.restaurantData)
 
   const style = {
     position: "absolute",
@@ -45,6 +49,7 @@ function EditTableModal(props: Iprops) {
   };
 
   const handleInput = (event: any) => {
+    props.restaurantData.tables.includes(event.target.value) ? setTableValueTaken(true) : setTableValueTaken(false)
     setTableValue(event.target.value)
   }
 
@@ -53,7 +58,9 @@ function EditTableModal(props: Iprops) {
     addTable(tableValue)
   };
 
-  return (
+  //check if table already exists 
+ 
+  return (  
     <Modal
       open={props.editOpen}
       onClose={handleClose}
@@ -65,12 +72,14 @@ function EditTableModal(props: Iprops) {
         <Box className={classes.modalFormContainer}>
         <Typography variant="h4"><b>Bordsnummer</b></Typography>
           <TextField
+              error={tableValueTaken}
               type="number"
               variant="outlined"
               margin="normal"
               placeholder={"Nummer"}
               label="Nummer"
               onChange={handleInput}
+              helperText={ tableValueTaken ? "Table already exists" : null}
             />
           
         </Box>
