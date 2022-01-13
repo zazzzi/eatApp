@@ -39,7 +39,7 @@ function Hero({restaurantId}: Iprops) {
 			</Box>
 			<Box className={classes.signUpContainer}>
 				<Link to={"login"}>
-					<Typography variant="body1">Inget konto? Skapa ett här!</Typography>
+					<Typography variant="body1">Logga in</Typography>
 				</Link>
 				<Link to="/checkout">
 					<Typography variant="body1">cart</Typography>
