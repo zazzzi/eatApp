@@ -37,6 +37,7 @@ function CreateUserForm(props: Iprops) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password1, setPassword1] = useState<string>();
   const [password2, setPassword2] = useState<string>();
+  const [passwordTooShort, setPasswordTooShort] = useState(false)
 
   const [userToCreate, setUserToCreate] = useState<User>({
     firstName: "",
@@ -49,7 +50,12 @@ function CreateUserForm(props: Iprops) {
 
   const handlePasswordInput = (id: string, value: string) => {
     if (id === "password1") {
-      setPassword1(value);
+      if (value.length >= 6) {
+        setPassword1(value);
+        setPasswordTooShort(false)
+      } else {
+        setPasswordTooShort(true)
+      }
     } else {
       setPassword2(value);
     }
@@ -82,7 +88,7 @@ function CreateUserForm(props: Iprops) {
     if (password1 && password1 === password2) {
       console.log(userToCreate);
 
-      // props.userDataCallback(userToCreate);
+      props.userDataCallback(userToCreate);
     } else {
       setMatching(false);
     }
@@ -145,6 +151,7 @@ function CreateUserForm(props: Iprops) {
           id="password1"
           placeholder="Lösenord"
           required
+          error={passwordTooShort}
           onChange={handleChange}
           type={showPassword ? "text" : "password"}
           endAdornment={
@@ -179,6 +186,7 @@ function CreateUserForm(props: Iprops) {
         />
         <FormHelperText id="password2">
           {!matching ? "Lösenorden matchar inte." : ""}
+          {passwordTooShort ? "Lösenordet måste vara längre än 6 karaktärer." : ""}
         </FormHelperText>
 
         <Box className={classes.submitBtnStyling}>
