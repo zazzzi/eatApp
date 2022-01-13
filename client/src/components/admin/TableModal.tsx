@@ -10,8 +10,9 @@ import {
   FormControl,
   Typography,
 } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { MenuContext } from "../../context/MenusContext";
 
 interface Iprops {
   closeModal: () => void;
@@ -23,7 +24,8 @@ function EditTableModal(props: Iprops) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-  const [tableValue, setTableValue] = useState<number>()
+  const [tableValue, setTableValue] = useState<string>('')
+  const {addTable} = useContext(MenuContext)
 
   const style = {
     position: "absolute",
@@ -42,11 +44,13 @@ function EditTableModal(props: Iprops) {
     p: 4,
   };
 
+  const handleInput = (event: any) => {
+    setTableValue(event.target.value)
+  }
+
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    //set up a loading response
-    setTableValue(event.target.value)
-    console.log(event.target.value)
+    addTable(tableValue)
   };
 
   return (
@@ -66,6 +70,7 @@ function EditTableModal(props: Iprops) {
               margin="normal"
               placeholder={"Nummer"}
               label="Nummer"
+              onChange={handleInput}
             />
           
         </Box>
@@ -88,7 +93,7 @@ function EditTableModal(props: Iprops) {
               color="primary"
               type="submit"
               onClick={() => {
-                props.closeModal();
+                setTimeout(() => props.closeModal(), 1)
               }}
             >
               Save
