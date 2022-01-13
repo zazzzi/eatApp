@@ -29,22 +29,18 @@ function QrGenerator({table, userInfo}: Iprops) {
     var bodyWidth = body.clientWidth;
     var data  = document.getElementById('exportContainer')
     var newWidth = data!.scrollWidth - data!.clientWidth
-
-    
     if (newWidth > data!.clientWidth){
         htmlWidth += newWidth 
         bodyWidth += newWidth
     }
-    
     html.style.width = htmlWidth + 'px'
     body.style.width = bodyWidth + 'px'
 
-    
     html2canvas(data!).then((canvas)=>{
         var image = canvas.toDataURL('image/png', 1.0);
         return image
     }).then((image)=>{
-        saveAs(image, 'exported-vis.png') 
+        saveAs(image, `table-${table}-QRcode.png`) 
         html.style.width = null
         body.style.width = null
     })
