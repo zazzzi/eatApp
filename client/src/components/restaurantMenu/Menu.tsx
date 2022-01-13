@@ -18,12 +18,12 @@ import MenuItems from "../menu/MenuItem";
 import { MenuContext } from "../../context/MenusContext";
 import { MenuItemType, RestaurantTableData } from "../../types/types";
 import EditMenuModal from "./EditModal";
-import { UserAuthContext } from "../../context/UsersContext";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import AdminIndex from "../admin/index";
+
 interface Iprops {
   restaurantId: RestaurantTableData;
   userInfo: any | null;
