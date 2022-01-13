@@ -24,7 +24,7 @@ interface ContextValue extends IState {
   sendUrlParam: (param: string, table: string) => void;
   updateItemData: (itemId: string, value: any) => void;
   createNewMenuItem: (value: any) => void;
-  deleteMenuItem: (value: any) => void;
+  deleteMenuItem: (value: any, itemId: string) => void;
   fetchDatabaseWithId: (id: string) => void;
   addTable: (table: string) => void;
 
@@ -115,7 +115,6 @@ function MenuProvider(props: Props) {
   }
 
   async function deleteMenuItem(value: any, itemId: string) {
-    console.log(value[0].title, "deleted");
     const docRef = doc(db, "restaurants", `${id}`);
     const menu = restaurantData.menu.filter((obj: any) => obj.id !== itemId);
 
