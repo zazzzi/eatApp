@@ -16,7 +16,6 @@ function QrGenerator({table, userInfo}: Iprops) {
   const classes = useStyles(); 
   const { id } = useParams();
   const {restaurantData, fetchDatabaseWithId} = useContext(MenuContext)
-  console.log(restaurantData)
 
   useEffect(()=> {
     if(!userInfo) return
