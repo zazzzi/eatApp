@@ -24,9 +24,10 @@ interface ContextValue extends IState {
   sendUrlParam: (param: string, table: string) => void;
   updateItemData: (itemId: string, value: any) => void;
   createNewMenuItem: (value: any) => void;
-  deleteMenuItem: (value: any) => void;
+  deleteMenuItem: (value: any, itemId: string) => void;
   fetchDatabaseWithId: (id: string) => void;
   addTable: (table: string) => void;
+  deleteTable: (table: string) => void;
 
 }
 
@@ -38,7 +39,8 @@ export const MenuContext = createContext<ContextValue>({
   createNewMenuItem: () => {},
   deleteMenuItem: () => {},
   fetchDatabaseWithId: () => {},
-  addTable: () => {}
+  addTable: () => {},
+  deleteTable: () => {}
 });
 
 interface Props {
@@ -124,21 +126,22 @@ function MenuProvider(props: Props) {
     });
   }
 
-  /* function clearCart() {
-    setCartItems([]);
-    localStorage.setItem("cart", JSON.stringify([]));
-  } */
-
   const addTable = async (table: string) => {
     const docRef = doc(db, "restaurants", `${id}`);
     restaurantData.tables.push(table)
     const tables = restaurantData.tables
     await updateDoc(docRef, {
       tables ,
-    }).then(() => {
-      console.log("succ");
     });
   }
+
+const deleteTable = async (table: string) => {
+  const docRef = doc(db, "restaurants", `${id}`);
+  const tables = restaurantData.tables.filter((t: string) => t !== table);
+  await updateDoc(docRef, {
+    tables,
+  });
+}
 
 
   return (
@@ -152,6 +155,7 @@ function MenuProvider(props: Props) {
         deleteMenuItem: deleteMenuItem,
         fetchDatabaseWithId: fetchDatabaseWithId,
         addTable: addTable,
+        deleteTable: deleteTable,
       }}
     >
       {props.children}

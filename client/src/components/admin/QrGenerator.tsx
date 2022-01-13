@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import {MenuContext} from "../../context/MenusContext";
 import DeleteIcon from '@material-ui/icons/Delete';
 import eatAppLogo from "../../assets/logos/eatAppLogo.png"
-
+import AlertDialog from "./ConfirmDialog"
 interface Iprops {
   table: any
   userInfo: any
@@ -15,7 +15,7 @@ interface Iprops {
 function QrGenerator({table, userInfo}: Iprops) {
   const classes = useStyles(); 
   const { id } = useParams();
-  const {restaurantData, fetchDatabaseWithId} = useContext(MenuContext)
+  const {restaurantData, fetchDatabaseWithId, deleteTable} = useContext(MenuContext)
 
   useEffect(()=> {
     if(!userInfo) return
@@ -40,6 +40,8 @@ function QrGenerator({table, userInfo}: Iprops) {
     )
   }
 
+ 
+
   const url = `192.168.0.15:3000/menu/${userInfo.rID}?table=${!table ? id : table}`
 
   return (
@@ -57,11 +59,9 @@ function QrGenerator({table, userInfo}: Iprops) {
         color="primary"
       >Back</Button>
      </Link>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-        ><DeleteIcon/>Radera</Button>
+     <AlertDialog
+      table={!table ? id : table}
+     />
      </Box>
    </Box>
   );
