@@ -65,6 +65,7 @@ function Login(props: Iprops) {
       </Box>
       <Box>
         <LogOutBtn />
+        <a href="/">Home</a>
       </Box>
       <Box className={classes.noAccountOuterContainer}>
         <Box className={classes.noAccountInnerContainer}>
