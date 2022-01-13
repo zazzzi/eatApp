@@ -49,7 +49,8 @@ function EditTableModal(props: Iprops) {
   };
 
   const handleInput = (event: any) => {
-    props.restaurantData.tables.includes(event.target.value) ? setTableValueTaken(true) : setTableValueTaken(false)
+    props.restaurantData.tables.includes(event.target.value) ? 
+    setTableValueTaken(true) : setTableValueTaken(false)
     setTableValue(event.target.value)
   }
 
