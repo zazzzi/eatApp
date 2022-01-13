@@ -57,10 +57,13 @@ function EditMenuModal(props: IProps) {
     });
   }
 
-  function createNew(id: string, value: string) {
+  function createNew(key: string, value: string) {
+    const randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    const uniqid = randLetter + Date.now();
     setNewMenuItem({
       ...newMenuItem,
-      [id]: value,
+      [key]: value,
+      id: uniqid,
     });
   }
 

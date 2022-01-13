@@ -28,7 +28,7 @@ function MenuItems({ menuItems }: Iprops) {
   const { restaurantId, deleteMenuItem } = useContext(MenuContext);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const [deletedItemArray, setDeletedItemArray] = useState([menuItems]);
+  const [deletedItemArray, setDeletedItemArray] = useState(menuItems);
 
   useEffect(() => {
     checkIfOwner();
@@ -44,15 +44,13 @@ function MenuItems({ menuItems }: Iprops) {
     }
   }
 
-  function handleDelete(index: any) {
+  function handleDelete(index: any, id: any) {
     const currentMenu = menuItems[index];
 
-    console.log(currentMenu);
-    console.log(index);
-
-    // const newMenuArray = currentMenu.slice(index, 1);
-    // setDeletedItemArray(newMenuArray);
-    // deleteMenuItem(deletedItemArray);
+    console.log(currentMenu.id);
+    setDeletedItemArray(currentMenu);
+    console.log(deletedItemArray);
+    deleteMenuItem(deletedItemArray, currentMenu.id);
   }
 
   return (
@@ -82,7 +80,9 @@ function MenuItems({ menuItems }: Iprops) {
                 <>
                   <Box mr={2}>
                     <Tooltip title="Delete">
-                      <DeleteIcon onClick={() => handleDelete(index)} />
+                      <DeleteIcon
+                        onClick={() => handleDelete(index, menuItems.id)}
+                      />
                     </Tooltip>
                   </Box>
                   <Box>
