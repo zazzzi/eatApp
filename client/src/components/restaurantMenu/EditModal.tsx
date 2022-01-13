@@ -88,6 +88,7 @@ function EditMenuModal(props: IProps) {
     console.log(event);
   }
 
+
   return (
     <Modal
       open={props.editOpen}

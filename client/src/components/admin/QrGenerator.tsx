@@ -1,9 +1,10 @@
-import { Box, CircularProgress, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, Button, CircularProgress, makeStyles, Theme, Typography} from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { RestaurantTableData } from "../../types/types";
 import QRCode from "react-qr-code";
 import { Link, useParams } from "react-router-dom";
 import {MenuContext} from "../../context/MenusContext";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 interface Iprops {
   table: any
@@ -38,28 +39,63 @@ function QrGenerator({table, userInfo}: Iprops) {
     )
   }
 
-  console.log(!restaurantData.tables.includes(id))
-
   const url = `192.168.0.15:3000/menu/${userInfo.rID}?table=${!table ? id : table}`
 
   return (
    <Box className={classes.padding}>
-     <Typography variant="h2">Bord {!table ? id : table}</Typography>
-     <QRCode value={url} />
+     <Box>
+      <Typography variant="h2">Bord {!table ? id : table}</Typography>
+      <QRCode value={url} />
+     </Box>
+     <Box className={classes.buttonGroup}>
+     <Link to={`/tables`}>
+      <Button
+        className={classes.button}
+        variant="outlined"
+        color="primary"
+      >Back</Button>
+     </Link>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+        ><DeleteIcon/>Radera</Button>
+     </Box>
    </Box>
   );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   padding: {
-    padding: '2rem'
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: "100vh",
+    padding: '2rem',
+    flexDirection: "column"
   }, 
+  paddingButtonContent: {
+    padding: '0rem 0.5rem 0rem 0.5rem'
+  },
   loader: {
     height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column"
+  }, 
+  button: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "8rem",
+    margin: '1rem'
+  }, 
+  buttonGroup: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row"
   }
 }));
 
