@@ -10,6 +10,7 @@ import UserPage from "./components/users/UserPage";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { RestaurantTableData } from "./types/types";
 import AdminIndex from "./components/admin";
+import ErrorBoundary from "./components/errorboundary/ErrorBoundary";
 import TablesEditor from "./components/admin/Tables";
 import QrGenerator from "./components/admin/QrGenerator";
 
@@ -32,6 +33,7 @@ function App() {
       },
       secondary: {
         main: "#E33E7F",
+        dark: "#000",
       },
     },
   });
@@ -47,48 +49,50 @@ function App() {
   //get it working so that if you are an owner and you navigate to /menu you come to the menu, as opposed to using an id
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <Routes>
-          <Route
-            path="/"
-            element={<Hero restaurantId={currentTableAndRestaurant!} />}
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-user" element={<CreateUser />} />
-          <Route
-            path={`/menu/:id`}
-            element={
-              <RestaurantMenu
-                restaurantId={currentTableAndRestaurant!}
-                userInfo={userInformation}
-              />
-            }
-          />
-          <Route path={`/user/${userID}`} element={<UserPage />} />
-          <Route
-            path="/checkout/"
-            element={<Checkout restaurantId={currentTableAndRestaurant!} />}
-          />
-          <Route
-            path="/admin"
-            element={<AdminIndex userInfo={userInformation} />}
-          />
-          <Route
-            path="/tables"
-            element={
-              <TablesEditor
-                selectedTable={selectedTable}
-                restaurantTable={currentTableAndRestaurant!}
-                userInfo={userInformation}
-              />
-            }
-          />
-          <Route
-            path="/tables/:id"
-            element={<QrGenerator table={table} userInfo={userInformation} />}
-          />
-        </Routes>
-      </Router>
+      <ErrorBoundary>
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={<Hero restaurantId={currentTableAndRestaurant!} />}
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/create-user" element={<CreateUser />} />
+            <Route
+              path={`/menu/:id`}
+              element={
+                <RestaurantMenu
+                  restaurantId={currentTableAndRestaurant!}
+                  userInfo={userInformation}
+                />
+              }
+            />
+            <Route path={`/user/${userID}`} element={<UserPage />} />
+            <Route
+              path="/checkout/"
+              element={<Checkout restaurantId={currentTableAndRestaurant!} />}
+            />
+            <Route
+              path="/admin"
+              element={<AdminIndex userInfo={userInformation} />}
+            />
+            <Route
+              path="/tables"
+              element={
+                <TablesEditor
+                  selectedTable={selectedTable}
+                  restaurantTable={currentTableAndRestaurant!}
+                  userInfo={userInformation}
+                />
+              }
+            />
+            <Route
+              path="/tables/:id"
+              element={<QrGenerator table={table} userInfo={userInformation} />}
+            />
+          </Routes>
+        </Router>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }
