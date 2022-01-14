@@ -8,14 +8,18 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  Snackbar,
 } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { forwardRef, useContext, useEffect, useState } from "react";
 import { MenuItemType } from "../../types/types";
 
 import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { MenuContext } from "../../context/MenusContext";
 import FileUploadField from "./FileUploadField";
+import CustomizedSnackbars from "../menu/Alert";
+
 
 interface IProps {
   closeModal: () => void;
@@ -29,8 +33,14 @@ function EditMenuModal(props: IProps) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertPosition, setAlertPosition] = useState({
+    vertical: "top",
+    horizontal: "center",
+  });
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
   const [newMenuItem, setNewMenuItem] = useState<any>({});
+
   const { restaurantData, updateItemData, createNewMenuItem } =
     useContext(MenuContext);
 
@@ -81,16 +91,37 @@ function EditMenuModal(props: IProps) {
   }
 
   const handleSubmit = (event: React.SyntheticEvent) => {
+    setOpenAlert(true);
     event.preventDefault();
     props.isNewItem
       ? createNewMenuItem(newMenuItem)
       : updateItemData(props.menuItem.title, updatedMenuInfo);
-    console.log(newMenuItem);
   };
 
-  function test(event: any) {
-    console.log(event);
-  }
+  // const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  //   props,
+  //   ref
+  // ) {
+  //   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  // });
+
+  const handleAlertClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+  // useEffect(() => {
+  //   if (props.editOpen === true || open === true) {
+  //     setFadeIn(true);
+  //     console.log(fadeIn);
+  //   }
+  // }, []);
 
 
   return (
@@ -100,9 +131,23 @@ function EditMenuModal(props: IProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
-        <Box className={classes.modalFormContainer}>
-          <form onSubmit={handleSubmit} className={classes.formStyle} action="">
+      <Box className={classes.modalFormContainer}>
+        <Snackbar
+          // anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={openAlert}
+          autoHideDuration={20000}
+          message={props.isNewItem ? "Produkt skapad!" : "Produkt uppdaterad!"}
+          onClose={handleAlertClose}
+        />
+        <Box sx={style}>
+          {/* <MuiAlert elevation={6} variant="filled" />; */}
+
+          <form
+            autoComplete={"off"}
+            onSubmit={handleSubmit}
+            className={classes.formStyle}
+            action=""
+          >
             <TextField
               select
               required

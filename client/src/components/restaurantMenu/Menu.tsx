@@ -10,6 +10,7 @@ import {
   Fade,
   MenuItem,
   Tooltip,
+  Link,
 } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import AddIcon from "@material-ui/icons/Add";
@@ -23,6 +24,8 @@ import { CartContext } from "../../context/CartContext";
 import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import AdminIndex from "../admin/index";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import HomeIcon from "@material-ui/icons/Home";
 
 interface Iprops {
   restaurantId: RestaurantTableData;
@@ -41,6 +44,9 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [color, setColor] = useState<string>("#75A0F5");
+  const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
+    useState<boolean>(true);
 
   useEffect(() => {
     if (!id) return;
@@ -96,8 +102,25 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     }
   }
 
+  const handleNameColorChange = () => {
+    if (restaurantNameColorBlack === true) {
+      setRestaurantNameColorBlack(false);
+    } else {
+      setRestaurantNameColorBlack(true);
+    }
+  };
+
   return (
     <Box className={classes.menuPageContainer}>
+      <Box
+        sx={{ position: "absolute", top: "0", zIndex: 100 }}
+        display="flex"
+        justifyContent="center"
+      >
+        <Link href="/">
+          <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
+        </Link>
+      </Box>
       ¨
       {restaurantData ? (
         <>
@@ -107,7 +130,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
           ></Box>
           <Box
             id="nameContainer"
-            style={{ backgroundColor: `#${restaurantData.color}` }}
+            style={{ backgroundColor: `${color}` }}
             className={classes.restaurantNameContainer}
           >
             {isOwner ? (
@@ -133,13 +156,26 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                 </Button>
               </Box>
             ) : null}
+            <Box
+              display="flex"
+              alignItems="center"
+              color={restaurantNameColorBlack ? "#000" : "#FEFEFE"}
+              mt={isOwner ? 0 : 2}
+            >
+              <Typography className={classes.restaurantName} variant="h2">
+                {restaurantData.restaurantName}
+              </Typography>
 
-            <Typography className={classes.restaurantName} variant="h2">
-              {restaurantData.restaurantName}
-            </Typography>
-            <a href="/">
-              <Typography variant="body1">Home</Typography>
-            </a>
+              {/* TODO: Send this state into database */}
+              {isOwner ? (
+                <Button size="small" onClick={handleNameColorChange}>
+                  <FiberManualRecordIcon
+                    htmlColor={restaurantNameColorBlack ? "#000" : "#FFF"}
+                  />
+                </Button>
+              ) : null}
+            </Box>
+
             <Box className={classes.menuList}>
               {!openSettings ? (
                 <>
@@ -162,7 +198,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                   </Box>
                 </>
               ) : (
-                <AdminIndex userInfo={userInfo} />
+                <AdminIndex setColor={setColor} userInfo={userInfo} />
               )}
             </Box>
           </Box>
@@ -171,7 +207,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
               isNewItem={true}
               menuItem={restaurantData.menu}
               closeModal={() => setOpen(false)}
-              editOpen={Boolean(open)}
+              editOpen={open}
             />
           ) : null}
           {!isOwner ? (

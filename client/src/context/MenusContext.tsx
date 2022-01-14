@@ -27,7 +27,7 @@ interface ContextValue extends IState {
   deleteMenuItem: (value: any, itemId: string) => void;
   fetchDatabaseWithId: (id: string) => void;
   addTable: (table: string) => void;
-
+  deleteTable: (table: string) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
@@ -38,7 +38,8 @@ export const MenuContext = createContext<ContextValue>({
   createNewMenuItem: () => {},
   deleteMenuItem: () => {},
   fetchDatabaseWithId: () => {},
-  addTable: () => {}
+  addTable: () => {},
+  deleteTable: () => {},
 });
 
 interface Props {
@@ -70,8 +71,7 @@ function MenuProvider(props: Props) {
 
   useEffect(() => {
     let restaurant = JSON.parse(localStorage.getItem("restaurant") || "{}");
-    setcurrentTableAndRestaurant(restaurant); 
-
+    setcurrentTableAndRestaurant(restaurant);
   }, []);
 
   const urlParam = (param: string, table: string) => {
@@ -86,7 +86,7 @@ function MenuProvider(props: Props) {
 
   const fetchDatabaseWithId = (id: string) => {
     setId(id);
-  }
+  };
 
   async function updateItemData(itemId: string, value: any) {
     const docRef = doc(db, "restaurants", `${id}`);
@@ -117,28 +117,30 @@ function MenuProvider(props: Props) {
   async function deleteMenuItem(value: any, itemId: string) {
     const docRef = doc(db, "restaurants", `${id}`);
     const menu = restaurantData.menu.filter((obj: any) => obj.id !== itemId);
+    restaurantData.menu = menu;
 
     await updateDoc(docRef, {
       menu,
     });
   }
 
-  /* function clearCart() {
-    setCartItems([]);
-    localStorage.setItem("cart", JSON.stringify([]));
-  } */
-
   const addTable = async (table: string) => {
     const docRef = doc(db, "restaurants", `${id}`);
-    restaurantData.tables.push(table)
-    const tables = restaurantData.tables
+    restaurantData.tables.push(table);
+    const tables = restaurantData.tables;
     await updateDoc(docRef, {
-      tables ,
-    }).then(() => {
-      console.log("succ");
+      tables,
     });
-  }
+  };
 
+  const deleteTable = async (table: string) => {
+    const docRef = doc(db, "restaurants", `${id}`);
+    const tables = restaurantData.tables.filter((t: string) => t !== table);
+    restaurantData.tables = tables;
+    await updateDoc(docRef, {
+      tables,
+    });
+  };
 
   return (
     <MenuContext.Provider
@@ -151,6 +153,7 @@ function MenuProvider(props: Props) {
         deleteMenuItem: deleteMenuItem,
         fetchDatabaseWithId: fetchDatabaseWithId,
         addTable: addTable,
+        deleteTable: deleteTable,
       }}
     >
       {props.children}
