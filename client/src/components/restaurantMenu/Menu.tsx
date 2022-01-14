@@ -44,7 +44,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [color, setColor] = useState<string>("");
+  const [color, setColor] = useState<string>("#75A0F5");
   const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
     useState<boolean>(true);
 
@@ -160,6 +160,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
               display="flex"
               alignItems="center"
               color={restaurantNameColorBlack ? "#000" : "#FEFEFE"}
+              mt={isOwner ? 0 : 2}
             >
               <Typography className={classes.restaurantName} variant="h2">
                 {restaurantData.restaurantName}
