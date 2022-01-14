@@ -17,7 +17,9 @@ import { MenuItemType } from "../../types/types";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { MenuContext } from "../../context/MenusContext";
+import FileUploadField from "./FileUploadField";
 import CustomizedSnackbars from "../menu/Alert";
+
 
 interface IProps {
   closeModal: () => void;
@@ -197,13 +199,7 @@ function EditMenuModal(props: IProps) {
               label="Pris"
               defaultValue={props.isNewItem ? null : props.menuItem.price}
             />
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              defaultValue={null}
-              placeholder="Ny kategori"
-              label="Skapa ny kategori"
-            /> */}
+            <FileUploadField/>
             <Box mt={2} className={classes.modalButtonsContainer}>
               <Box p={2}>
                 <Button
