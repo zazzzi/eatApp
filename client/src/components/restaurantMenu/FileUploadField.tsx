@@ -13,20 +13,17 @@ function FileUploadField(props: Iprops) {
         setImage(e.target.files[0])
     }
   };
-  const handleUpload = () => {
+  const handleUpload = async () => {
       const imgRef = ref(storage, `uploads/${image!.name}`)
-        uploadBytes(imgRef, image).then((snapshot)=>{
+        await uploadBytes(imgRef, image).then((snapshot)=>{
             console.log("File uploaded", snapshot);
         })
 
+        getURL();
 
 
-        getDownloadURL(imgRef).then((url) => {
-           console.log(url);
-           
-        })
   };
-  function test (){
+  function getURL (){
     const imgRef = ref(storage, `uploads/${image!.name}`)
     getDownloadURL(imgRef).then((url) => {
         console.log(url);
@@ -41,7 +38,7 @@ function FileUploadField(props: Iprops) {
     <Box>
         <input type="file" onChange={onFileChange} />
         <Button onClick={handleUpload}>Upload</Button>
-        <Button onClick={test}>get url</Button>
+        <Button onClick={getURL}>get url</Button>
         <p>{imageURL}</p>
     </Box>
   );
