@@ -18,6 +18,7 @@ import { keys } from "@material-ui/core/styles/createBreakpoints";
 interface IState {
   restaurantId: any;
   restaurantData: any;
+  restaruantTitleIsBlack: boolean;
 }
 
 interface ContextValue extends IState {
@@ -29,11 +30,13 @@ interface ContextValue extends IState {
   addTable: (table: string) => void;
   deleteTable: (table: string) => void;
   updateRestaurantColor: (hex: any) => void;
+  updateRestaurantNameColor: (value: boolean) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
   restaurantId: {},
   restaurantData: {},
+  restaruantTitleIsBlack: true,
   sendUrlParam: () => {},
   updateItemData: () => {},
   createNewMenuItem: () => {},
@@ -42,6 +45,7 @@ export const MenuContext = createContext<ContextValue>({
   addTable: () => {},
   deleteTable: () => {},
   updateRestaurantColor: () => {},
+  updateRestaurantNameColor: () => {},
 });
 
 interface Props {
@@ -53,6 +57,8 @@ function MenuProvider(props: Props) {
   const [table, setTable] = useState<number>(0);
   const [restaurantData, setRestaurantdata] = useState<any>(null);
   const [restaurantColor, setRestaurantColor] = useState<any>(null);
+  const [restaruantTitleIsBlack, setRestaruantTitleIsBlack] =
+    useState<boolean>(true);
   const [currentTableAndRestaurant, setcurrentTableAndRestaurant] = useState<
     any | null
   >(null);
@@ -157,6 +163,17 @@ function MenuProvider(props: Props) {
     console.log("color set to", color);
   }
 
+  async function updateRestaurantNameColor(value: boolean) {
+    const docRef = doc(db, "restaurants", `${id}`);
+
+    const isNameBlack = value;
+    await updateDoc(docRef, {
+      isNameBlack,
+    });
+    setRestaruantTitleIsBlack(value);
+    console.log("name is black", isNameBlack);
+  }
+
   return (
     <MenuContext.Provider
       value={{
@@ -169,7 +186,9 @@ function MenuProvider(props: Props) {
         fetchDatabaseWithId: fetchDatabaseWithId,
         addTable: addTable,
         deleteTable: deleteTable,
+        restaruantTitleIsBlack: restaruantTitleIsBlack,
         updateRestaurantColor: updateRestaurantColor,
+        updateRestaurantNameColor: updateRestaurantNameColor,
       }}
     >
       {props.children}
