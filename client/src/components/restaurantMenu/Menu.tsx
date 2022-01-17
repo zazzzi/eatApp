@@ -35,7 +35,12 @@ interface Iprops {
 
 const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const classes = useStyles();
-  const { restaurantData, sendUrlParam } = useContext(MenuContext);
+  const {
+    restaurantData,
+    sendUrlParam,
+    updateRestaurantNameColor,
+    restaruantTitleIsBlack,
+  } = useContext(MenuContext);
 
   // TODO: starting state needs to be restaurantData.color, but can't set it before it's loaded
   const [menuColor, setMenuColor] = useState<string>();
@@ -118,15 +123,9 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     } else {
       setRestaurantNameColorBlack(true);
     }
-  };
 
-  // if (!restaurantData) {
-  //   return (
-  //     <Box className={classes.loader}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
+    updateRestaurantNameColor(restaurantNameColorBlack);
+  };
 
   return (
     <Box className={classes.menuPageContainer}>
@@ -174,10 +173,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                 </Button>
               </Box>
             ) : null}
+
             <Box
               display="flex"
               alignItems="center"
-              color={restaurantNameColorBlack ? "#000" : "#FEFEFE"}
+              color={restaurantData.isNameBlack ? "#000" : "#FEFEFE"}
               mt={isOwner ? 0 : 2}
             >
               <Typography className={classes.restaurantName} variant="h2">
@@ -188,7 +188,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
               {isOwner ? (
                 <Button size="small" onClick={handleNameColorChange}>
                   <FiberManualRecordIcon
-                    htmlColor={restaurantNameColorBlack ? "#000" : "#FFF"}
+                    htmlColor={restaurantData.isNameBlack ? "#FFF" : "#000"}
                   />
                 </Button>
               ) : null}
