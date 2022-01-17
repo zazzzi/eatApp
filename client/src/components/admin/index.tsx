@@ -26,7 +26,7 @@ interface Iprops {
 
 function AdminIndex(props: Iprops) {
   const [colorSliderOpen, setColorSliderOpen] = useState(false);
-  const [chosenColor, setChosenColor] = useState<string>("");
+  const [chosenColor, setChosenColor] = useState<string>("#79D2BE");
   const { restaurantData, sendUrlParam, updateRestaurantColor } =
     useContext(MenuContext);
   const [startingColor, setStartingColor] = useState({
@@ -47,9 +47,6 @@ function AdminIndex(props: Iprops) {
         background: hex.hex,
       });
     }
-  };
-
-  const handleChangeComplete = () => {
     updateRestaurantColor(startingColor);
   };
 
@@ -80,7 +77,6 @@ function AdminIndex(props: Iprops) {
               <SliderPicker
                 color={startingColor.background}
                 onChange={handleChange}
-                onChangeComplete={handleChangeComplete}
               />
             </Box>
           ) : null}

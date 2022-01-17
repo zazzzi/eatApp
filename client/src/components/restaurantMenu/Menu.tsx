@@ -38,7 +38,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
 
   // TODO: starting state needs to be restaurantData.color, but can't set it before it's loaded
-  const [menuColor, setMenuColor] = useState<string>("#333");
+  const [menuColor, setMenuColor] = useState<string>();
 
   const [value, setValue] = useState<string>("Dryck");
   const [open, setOpen] = useState(false);
@@ -82,7 +82,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     }
     const testColor = restaurantData.color;
     setMenuColor(testColor);
-  }, []);
+  }, [restaurantData]);
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
@@ -120,129 +120,133 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     }
   };
 
-  if (!restaurantData) {
-    return (
-      <Box className={classes.loader}>
-        <CircularProgress />
+  // if (!restaurantData) {
+  //   return (
+  //     <Box className={classes.loader}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
+
+  return (
+    <Box className={classes.menuPageContainer}>
+      <Box
+        sx={{ position: "absolute", top: "0", zIndex: 100 }}
+        display="flex"
+        justifyContent="center"
+      >
+        <Link href="/">
+          <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
+        </Link>
       </Box>
-    );
-  } else {
-    return (
-      <Box className={classes.menuPageContainer}>
-        <Box
-          sx={{ position: "absolute", top: "0", zIndex: 100 }}
-          display="flex"
-          justifyContent="center"
-        >
-          <Link href="/">
-            <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
-          </Link>
-        </Box>
-        ¨
-        {restaurantData ? (
-          <>
-            <Box
-              style={{ backgroundImage: `url(${restaurantData.img})` }}
-              className={classes.menuBackground}
-            ></Box>
-            <Box
-              id="nameContainer"
-              style={{ backgroundColor: `${menuColor}` }}
-              className={classes.restaurantNameContainer}
-            >
-              {isOwner ? (
-                <Box className={classes.addItemButton}>
-                  <Button
-                    onClick={() => {
-                      setOpenSettings(!openSettings);
-                    }}
-                  >
-                    <Tooltip title="Settings">
-                      <SettingsApplicationsRoundedIcon fontSize="large" />
-                    </Tooltip>
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      setOpen(true);
-                    }}
-                  >
-                    <Tooltip title="Add new">
-                      <AddIcon fontSize="large" />
-                    </Tooltip>
-                  </Button>
-                </Box>
-              ) : null}
-              <Box
-                display="flex"
-                alignItems="center"
-                color={restaurantNameColorBlack ? "#000" : "#FEFEFE"}
-                mt={isOwner ? 0 : 2}
-              >
-                <Typography className={classes.restaurantName} variant="h2">
-                  {restaurantData.restaurantName}
-                </Typography>
-
-                {/* TODO: Send this state into database */}
-                {isOwner ? (
-                  <Button size="small" onClick={handleNameColorChange}>
-                    <FiberManualRecordIcon
-                      htmlColor={restaurantNameColorBlack ? "#000" : "#FFF"}
-                    />
-                  </Button>
-                ) : null}
-              </Box>
-
-              <Box className={classes.menuList}>
-                {!openSettings ? (
-                  <>
-                    <Box className={classes.menuTabs}>
-                      <Tabs
-                        variant="scrollable"
-                        aria-label="scrollable prevent tabs example"
-                        value={value}
-                        indicatorColor="secondary"
-                        onChange={handleChange}
-                      >
-                        {restaurantData.categories.map((t: any) => (
-                          <Tab label={t} value={t} />
-                        ))}
-                      </Tabs>
-                    </Box>
-                    <hr />
-                    <Box className={classes.menuItemContainer}>
-                      {restaurantData.menu.map((i: any) => filterMenuItems(i))}
-                    </Box>
-                  </>
-                ) : (
-                  <AdminIndex setColor={setMenuColor} userInfo={userInfo} />
-                )}
-              </Box>
-            </Box>
-            {open ? (
-              <EditMenuModal
-                isNewItem={true}
-                menuItem={restaurantData.menu}
-                closeModal={() => setOpen(false)}
-                editOpen={open}
-              />
-            ) : null}
-            {!isOwner ? (
-              <Fade in={itemsInCart}>
-                <Fab
-                  href="/checkout"
-                  color="primary"
-                  className={classes.cartButton}
+      ¨
+      {restaurantData ? (
+        <>
+          <Box
+            style={{ backgroundImage: `url(${restaurantData.img})` }}
+            className={classes.menuBackground}
+          ></Box>
+          <Box
+            id="nameContainer"
+            style={{ backgroundColor: `${menuColor}` }}
+            className={classes.restaurantNameContainer}
+          >
+            {isOwner ? (
+              <Box className={classes.addItemButton}>
+                <Button
+                  onClick={() => {
+                    setOpenSettings(!openSettings);
+                  }}
                 >
-                  <ShoppingCartOutlinedIcon htmlColor="#FFF" />
-                </Fab>
-              </Fade>
+                  <Tooltip title="Settings">
+                    <SettingsApplicationsRoundedIcon fontSize="large" />
+                  </Tooltip>
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  <Tooltip title="Add new">
+                    <AddIcon fontSize="large" />
+                  </Tooltip>
+                </Button>
+              </Box>
             ) : null}
-          </>
-        ) : null}
-      </Box>
-    );
-  }
+            <Box
+              display="flex"
+              alignItems="center"
+              color={restaurantNameColorBlack ? "#000" : "#FEFEFE"}
+              mt={isOwner ? 0 : 2}
+            >
+              <Typography className={classes.restaurantName} variant="h2">
+                {restaurantData.restaurantName}
+              </Typography>
+
+              {/* TODO: Send this state into database */}
+              {isOwner ? (
+                <Button size="small" onClick={handleNameColorChange}>
+                  <FiberManualRecordIcon
+                    htmlColor={restaurantNameColorBlack ? "#000" : "#FFF"}
+                  />
+                </Button>
+              ) : null}
+            </Box>
+
+            <Box className={classes.menuList}>
+              {!openSettings ? (
+                <>
+                  <Box className={classes.menuTabs}>
+                    <Tabs
+                      variant="scrollable"
+                      aria-label="scrollable prevent tabs example"
+                      value={value}
+                      indicatorColor="secondary"
+                      onChange={handleChange}
+                    >
+                      {restaurantData.categories.map((t: any) => (
+                        <Tab label={t} value={t} />
+                      ))}
+                    </Tabs>
+                  </Box>
+                  <hr />
+                  <Box className={classes.menuItemContainer}>
+                    {restaurantData.menu.map((i: any) => filterMenuItems(i))}
+                  </Box>
+                </>
+              ) : (
+                <AdminIndex setColor={setMenuColor} userInfo={userInfo} />
+              )}
+            </Box>
+          </Box>
+          {open ? (
+            <EditMenuModal
+              isNewItem={true}
+              menuItem={restaurantData.menu}
+              closeModal={() => setOpen(false)}
+              editOpen={open}
+            />
+          ) : null}
+          {!isOwner ? (
+            <Fade in={itemsInCart}>
+              <Fab
+                href="/checkout"
+                color="primary"
+                className={classes.cartButton}
+              >
+                <ShoppingCartOutlinedIcon htmlColor="#FFF" />
+              </Fab>
+            </Fade>
+          ) : null}
+        </>
+      ) : (
+        <Box className={classes.loader}>
+          <CircularProgress />
+        </Box>
+      )}
+    </Box>
+  );
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
