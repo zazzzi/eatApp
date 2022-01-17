@@ -34,6 +34,7 @@ function EditMenuModal(props: IProps) {
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [imgURL, setImgURL] = useState<string>("")
   const [alertPosition, setAlertPosition] = useState({
     vertical: "top",
     horizontal: "center",
