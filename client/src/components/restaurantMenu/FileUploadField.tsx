@@ -3,43 +3,43 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { storage } from "../../firebase";
 
-interface Iprops {}
+interface Iprops {
+  setUrl: (url: string) => void;
+  rId: string,
+}
 
 function FileUploadField(props: Iprops) {
-    const [image, setImage] = useState<any>(null)
-    const [imageURL, setImageURL] = useState<any>(null)
+  const [image, setImage] = useState<any>(null);
+  const [imageURL, setImageURL] = useState<any>(null);
+
+
+
   const onFileChange = (e: any) => {
-    if (e.target.files[0]){
-        setImage(e.target.files[0])
+    if (e.target.files[0] && e.target.files[0].size > 5242880) {
+      setImage(e.target.files[0]);
     }
   };
   const handleUpload = async () => {
-      const imgRef = ref(storage, `uploads/${image!.name}`)
-        await uploadBytes(imgRef, image).then((snapshot)=>{
-            console.log("File uploaded", snapshot);
-        })
+    const imgRef = ref(storage, `restaurantUploads/${props.rId}/${image!.name}`);
+    await uploadBytes(imgRef, image).then((snapshot) => {
+      console.log("File uploaded", snapshot);
+    });
 
-        getURL();
-
-
+    getURL();
   };
-  function getURL (){
-    const imgRef = ref(storage, `uploads/${image!.name}`)
+  function getURL() {
+    const imgRef = ref(storage, `restaurantUploads/${props.rId}/${image!.name}`);
     getDownloadURL(imgRef).then((url) => {
-        console.log(url);
-        
-     })
+      props.setUrl(url)
+    });
   }
 
   console.log(image);
-  
 
   return (
     <Box>
-        <input type="file" onChange={onFileChange} />
-        <Button onClick={handleUpload}>Upload</Button>
-        <Button onClick={getURL}>get url</Button>
-        <p>{imageURL}</p>
+      <input type="file" onChange={onFileChange} />
+      <Button onClick={handleUpload}>Upload</Button>
     </Box>
   );
 }

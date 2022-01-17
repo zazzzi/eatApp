@@ -20,7 +20,6 @@ import { MenuContext } from "../../context/MenusContext";
 import FileUploadField from "./FileUploadField";
 import CustomizedSnackbars from "../menu/Alert";
 
-
 interface IProps {
   closeModal: () => void;
   editOpen: boolean;
@@ -34,7 +33,7 @@ function EditMenuModal(props: IProps) {
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const [imgURL, setImgURL] = useState<string>("")
+  const [imgURL, setImgURL] = useState<string>("");
   const [alertPosition, setAlertPosition] = useState({
     vertical: "top",
     horizontal: "center",
@@ -90,6 +89,9 @@ function EditMenuModal(props: IProps) {
       createNew(event.target.id, event.target.value);
     }
   }
+ 
+    console.log(props.menuItem.img);
+    
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     setOpenAlert(true);
@@ -99,12 +101,16 @@ function EditMenuModal(props: IProps) {
       : updateItemData(props.menuItem.title, updatedMenuInfo);
   };
 
-  // const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  //   props,
-  //   ref
-  // ) {
-  //   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  // });
+  const setURL = (url: string) => {
+    setNewMenuItem({
+      ...newMenuItem,
+      img: url,
+    });
+    setUpdatedMenuInfo({
+      ...updatedMenuInfo,
+      img: url,
+    });
+  };
 
   const handleAlertClose = (
     event?: React.SyntheticEvent | Event,
@@ -116,14 +122,6 @@ function EditMenuModal(props: IProps) {
 
     setOpenAlert(false);
   };
-
-  // useEffect(() => {
-  //   if (props.editOpen === true || open === true) {
-  //     setFadeIn(true);
-  //     console.log(fadeIn);
-  //   }
-  // }, []);
-
 
   return (
     <Modal
@@ -200,7 +198,7 @@ function EditMenuModal(props: IProps) {
               label="Pris"
               defaultValue={props.isNewItem ? null : props.menuItem.price}
             />
-            <FileUploadField/>
+            <FileUploadField setUrl={setURL} rId={restaurantData.rID} />
             <Box mt={2} className={classes.modalButtonsContainer}>
               <Box p={2}>
                 <Button
