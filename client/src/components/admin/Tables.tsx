@@ -1,39 +1,47 @@
-import { Box, CircularProgress, makeStyles, Theme, Typography} from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  makeStyles,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { RestaurantTableData } from "../../types/types";
-import AddIcon from '@material-ui/icons/Add';
-import EditTableModal from './TableModal'
+import AddIcon from "@material-ui/icons/Add";
+import EditTableModal from "./TableModal";
 import { Link } from "react-router-dom";
 import { MenuContext } from "../../context/MenusContext";
 interface Iprops {
-  restaurantTable: RestaurantTableData
-  selectedTable: (table: any) => void
-  userInfo: any
+  restaurantTable: RestaurantTableData;
+  selectedTable: (table: any) => void;
+  userInfo: any;
 }
 
-function TablesEditor({ restaurantTable, userInfo, selectedTable}: Iprops) {
+function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const {restaurantData, fetchDatabaseWithId} = useContext(MenuContext)
+  const { restaurantData, fetchDatabaseWithId } = useContext(MenuContext);
 
-  useEffect(()=> {
-    if(!userInfo) return
-    fetchDatabaseWithId(userInfo.rID)
-  },[userInfo])
+  useEffect(() => {
+    if (!userInfo) return;
+    fetchDatabaseWithId(userInfo.rID);
+  }, [userInfo]);
 
-  if(!restaurantData) {
+  if (!restaurantData) {
     return (
-    <Box className={classes.loader}>
-      <CircularProgress/>
-    </Box>
-    )
+      <Box className={classes.loader}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
     <Box>
       <Box className={classes.header}>
-        <Typography variant="h2"><b>Bord</b></Typography>
-        <AddIcon 
+        <Typography variant="h2">
+          <b>Bord</b>
+        </Typography>
+        <AddIcon
           className={classes.icon}
           onClick={() => {
             setOpen(true);
@@ -45,22 +53,30 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable}: Iprops) {
           editOpen={Boolean(open)}
         />
       </Box>
-    <Box className={classes.container}>
-      {restaurantData.tables.map((table: number) => (
-        <Link to={`/tables/${table}`}>
-          <Box 
-            className={classes.boxContainer}
-            onClick={()=> selectedTable(table)}
-          >
-              <Typography variant="h3">{table}</Typography>
-          </Box>
-        </Link>
-      ))}
+      <Box className={classes.container}>
+        {restaurantData.tables.map((table: number) => (
+          <Link style={{ textDecoration: "none" }} to={`/tables/${table}`}>
+            <Box
+              sx={{
+                fontSize: "8rem",
+                fontFamily: "roboto",
+                color: "#000",
+                border: 0,
+              }}
+              className={classes.boxContainer}
+              onClick={() => selectedTable(table)}
+            >
+              <p>{table}</p>
+            </Box>
+          </Link>
+        ))}
+      </Box>
+      <Link
+        to={`/menu/${restaurantTable.restaurantId}?table=${restaurantTable.table}`}
+      >
+        <Typography>Tillbaks till menyn</Typography>
+      </Link>
     </Box>
-    <Link to={`/menu/${restaurantTable.restaurantId}?table=${restaurantTable.table}`}>
-      <Typography>Tillbaks till menyn</Typography>
-    </Link>
-   </Box> 
   );
 }
 
@@ -68,16 +84,17 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: 'center'
-  }, 
+    justifyContent: "center",
+  },
   boxContainer: {
     display: "flex",
-    justifyContent: 'center',
+    justifyContent: "center",
     alignItems: "center",
-    margin: '0.5rem',
+    margin: "0.5rem",
     height: "10rem",
     width: "10rem",
-    backgroundColor: "red",
+    background:
+      "linear-gradient(180deg, rgba(69, 64, 134, 0.16) -22.6%, rgba(255, 255, 255, 0) 100.74%);",
   },
   header: {
     margin: "0rem 1rem 0rem 1rem",
@@ -85,19 +102,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: 'center'
+    alignItems: "center",
   },
   icon: {
-    height: '4rem',
-    width: "4rem"
+    height: "4rem",
+    width: "4rem",
   },
   loader: {
     height: "100vh",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
-
-export default TablesEditor; 
+export default TablesEditor;
