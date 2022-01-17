@@ -28,6 +28,7 @@ interface ContextValue extends IState {
   fetchDatabaseWithId: (id: string) => void;
   addTable: (table: string) => void;
   deleteTable: (table: string) => void;
+  updateRestaurantColor: (hex: any) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
@@ -40,6 +41,7 @@ export const MenuContext = createContext<ContextValue>({
   fetchDatabaseWithId: () => {},
   addTable: () => {},
   deleteTable: () => {},
+  updateRestaurantColor: () => {},
 });
 
 interface Props {
@@ -50,6 +52,7 @@ function MenuProvider(props: Props) {
   const [id, setId] = useState<string>("");
   const [table, setTable] = useState<number>(0);
   const [restaurantData, setRestaurantdata] = useState<any>(null);
+  const [restaurantColor, setRestaurantColor] = useState<any>(null);
   const [currentTableAndRestaurant, setcurrentTableAndRestaurant] = useState<
     any | null
   >(null);
@@ -142,6 +145,18 @@ function MenuProvider(props: Props) {
     });
   };
 
+  async function updateRestaurantColor(hex: any) {
+    const docRef = doc(db, "restaurants", `${id}`);
+    console.log(hex.background);
+
+    const color = hex.background;
+    setRestaurantColor(color);
+    await updateDoc(docRef, {
+      color,
+    });
+    console.log("color set to", color);
+  }
+
   return (
     <MenuContext.Provider
       value={{
@@ -154,6 +169,7 @@ function MenuProvider(props: Props) {
         fetchDatabaseWithId: fetchDatabaseWithId,
         addTable: addTable,
         deleteTable: deleteTable,
+        updateRestaurantColor: updateRestaurantColor,
       }}
     >
       {props.children}

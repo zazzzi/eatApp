@@ -21,15 +21,16 @@ import { MenuContext } from "../../context/MenusContext";
 
 interface Iprops {
   userInfo: any;
-  setColor?(color: string): void;
+  setColor?: any;
 }
 
 function AdminIndex(props: Iprops) {
   const [colorSliderOpen, setColorSliderOpen] = useState(false);
   const [chosenColor, setChosenColor] = useState<string>("");
-  const { restaurantData, sendUrlParam } = useContext(MenuContext);
+  const { restaurantData, sendUrlParam, updateRestaurantColor } =
+    useContext(MenuContext);
   const [startingColor, setStartingColor] = useState({
-    background: "#333",
+    background: props.setColor,
   });
 
   const handleOpen = () => {
@@ -39,7 +40,6 @@ function AdminIndex(props: Iprops) {
       setColorSliderOpen(false);
     }
   };
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   const handleChange = (hex: any) => {
     if (props.setColor) {
       props.setColor(hex.hex);
@@ -47,6 +47,10 @@ function AdminIndex(props: Iprops) {
         background: hex.hex,
       });
     }
+  };
+
+  const handleChangeComplete = () => {
+    updateRestaurantColor(startingColor);
   };
 
   return (
@@ -76,6 +80,7 @@ function AdminIndex(props: Iprops) {
               <SliderPicker
                 color={startingColor.background}
                 onChange={handleChange}
+                onChangeComplete={handleChangeComplete}
               />
             </Box>
           ) : null}
