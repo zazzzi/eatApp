@@ -36,7 +36,7 @@ function OrderConfirmation({order, restaurantId}: Iprops) {
        ))}
       <Typography>Betallsätt: {order.paymentType}</Typography>
       {/* <Typography>Till: {order.table}</Typography> */}
-      <Typography>Totalpris: {order.priceTotal}</Typography>
+      <Typography>Totalpris: {order.priceTotal} kr</Typography>
      </Box>
    </Box>
   <Box>
