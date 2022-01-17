@@ -11,6 +11,7 @@ import {
   MenuItem,
   Tooltip,
   Link,
+  CircularProgress,
 } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import AddIcon from "@material-ui/icons/Add";
@@ -32,19 +33,20 @@ interface Iprops {
   userInfo: any | null;
 }
 
-const tabs: Array<string> = ["Dryck", "Mat", "Snacks", "Cocktails", "Beer"];
-
 const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const classes = useStyles();
-  const [value, setValue] = useState<string>("Dryck");
   const { restaurantData, sendUrlParam } = useContext(MenuContext);
+
+  // TODO: starting state needs to be restaurantData.color, but can't set it before it's loaded
+  const [menuColor, setMenuColor] = useState<string>("#333");
+
+  const [value, setValue] = useState<string>("Dryck");
   const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
   const [itemsInCart, setItemsInCart] = useState(false);
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [color, setColor] = useState<string>("#75A0F5");
   const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
     useState<boolean>(true);
 
@@ -73,6 +75,14 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   useEffect(() => {
     checkIfOwner();
   }, [userInfo]);
+
+  useEffect(() => {
+    if (!restaurantData) {
+      return;
+    }
+    const testColor = restaurantData.color;
+    setMenuColor(testColor);
+  }, []);
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
@@ -110,121 +120,129 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     }
   };
 
-  return (
-    <Box className={classes.menuPageContainer}>
-      <Box
-        sx={{ position: "absolute", top: "0", zIndex: 100 }}
-        display="flex"
-        justifyContent="center"
-      >
-        <Link href="/">
-          <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
-        </Link>
+  if (!restaurantData) {
+    return (
+      <Box className={classes.loader}>
+        <CircularProgress />
       </Box>
-      ¨
-      {restaurantData ? (
-        <>
-          <Box
-            style={{ backgroundImage: `url(${restaurantData.img})` }}
-            className={classes.menuBackground}
-          ></Box>
-          <Box
-            id="nameContainer"
-            style={{ backgroundColor: `${color}` }}
-            className={classes.restaurantNameContainer}
-          >
-            {isOwner ? (
-              <Box className={classes.addItemButton}>
-                <Button
-                  onClick={() => {
-                    setOpenSettings(!openSettings);
-                  }}
-                >
-                  <Tooltip title="Settings">
-                    <SettingsApplicationsRoundedIcon fontSize="large" />
-                  </Tooltip>
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    setOpen(true);
-                  }}
-                >
-                  <Tooltip title="Add new">
-                    <AddIcon fontSize="large" />
-                  </Tooltip>
-                </Button>
-              </Box>
-            ) : null}
+    );
+  } else {
+    return (
+      <Box className={classes.menuPageContainer}>
+        <Box
+          sx={{ position: "absolute", top: "0", zIndex: 100 }}
+          display="flex"
+          justifyContent="center"
+        >
+          <Link href="/">
+            <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
+          </Link>
+        </Box>
+        ¨
+        {restaurantData ? (
+          <>
             <Box
-              display="flex"
-              alignItems="center"
-              color={restaurantNameColorBlack ? "#000" : "#FEFEFE"}
-              mt={isOwner ? 0 : 2}
+              style={{ backgroundImage: `url(${restaurantData.img})` }}
+              className={classes.menuBackground}
+            ></Box>
+            <Box
+              id="nameContainer"
+              style={{ backgroundColor: `${menuColor}` }}
+              className={classes.restaurantNameContainer}
             >
-              <Typography className={classes.restaurantName} variant="h2">
-                {restaurantData.restaurantName}
-              </Typography>
-
-              {/* TODO: Send this state into database */}
               {isOwner ? (
-                <Button size="small" onClick={handleNameColorChange}>
-                  <FiberManualRecordIcon
-                    htmlColor={restaurantNameColorBlack ? "#000" : "#FFF"}
-                  />
-                </Button>
-              ) : null}
-            </Box>
+                <Box className={classes.addItemButton}>
+                  <Button
+                    onClick={() => {
+                      setOpenSettings(!openSettings);
+                    }}
+                  >
+                    <Tooltip title="Settings">
+                      <SettingsApplicationsRoundedIcon fontSize="large" />
+                    </Tooltip>
+                  </Button>
 
-            <Box className={classes.menuList}>
-              {!openSettings ? (
-                <>
-                  <Box className={classes.menuTabs}>
-                    <Tabs
-                      variant="scrollable"
-                      aria-label="scrollable prevent tabs example"
-                      value={value}
-                      indicatorColor="secondary"
-                      onChange={handleChange}
-                    >
-                      {restaurantData.categories.map((t: any) => (
-                        <Tab label={t} value={t} />
-                      ))}
-                    </Tabs>
-                  </Box>
-                  <hr />
-                  <Box className={classes.menuItemContainer}>
-                    {restaurantData.menu.map((i: any) => filterMenuItems(i))}
-                  </Box>
-                </>
-              ) : (
-                <AdminIndex setColor={setColor} userInfo={userInfo} />
-              )}
-            </Box>
-          </Box>
-          {open ? (
-            <EditMenuModal
-              isNewItem={true}
-              menuItem={restaurantData.menu}
-              closeModal={() => setOpen(false)}
-              editOpen={open}
-            />
-          ) : null}
-          {!isOwner ? (
-            <Fade in={itemsInCart}>
-              <Fab
-                href="/checkout"
-                color="primary"
-                className={classes.cartButton}
+                  <Button
+                    onClick={() => {
+                      setOpen(true);
+                    }}
+                  >
+                    <Tooltip title="Add new">
+                      <AddIcon fontSize="large" />
+                    </Tooltip>
+                  </Button>
+                </Box>
+              ) : null}
+              <Box
+                display="flex"
+                alignItems="center"
+                color={restaurantNameColorBlack ? "#000" : "#FEFEFE"}
+                mt={isOwner ? 0 : 2}
               >
-                <ShoppingCartOutlinedIcon htmlColor="#FFF" />
-              </Fab>
-            </Fade>
-          ) : null}
-        </>
-      ) : null}
-    </Box>
-  );
+                <Typography className={classes.restaurantName} variant="h2">
+                  {restaurantData.restaurantName}
+                </Typography>
+
+                {/* TODO: Send this state into database */}
+                {isOwner ? (
+                  <Button size="small" onClick={handleNameColorChange}>
+                    <FiberManualRecordIcon
+                      htmlColor={restaurantNameColorBlack ? "#000" : "#FFF"}
+                    />
+                  </Button>
+                ) : null}
+              </Box>
+
+              <Box className={classes.menuList}>
+                {!openSettings ? (
+                  <>
+                    <Box className={classes.menuTabs}>
+                      <Tabs
+                        variant="scrollable"
+                        aria-label="scrollable prevent tabs example"
+                        value={value}
+                        indicatorColor="secondary"
+                        onChange={handleChange}
+                      >
+                        {restaurantData.categories.map((t: any) => (
+                          <Tab label={t} value={t} />
+                        ))}
+                      </Tabs>
+                    </Box>
+                    <hr />
+                    <Box className={classes.menuItemContainer}>
+                      {restaurantData.menu.map((i: any) => filterMenuItems(i))}
+                    </Box>
+                  </>
+                ) : (
+                  <AdminIndex setColor={setMenuColor} userInfo={userInfo} />
+                )}
+              </Box>
+            </Box>
+            {open ? (
+              <EditMenuModal
+                isNewItem={true}
+                menuItem={restaurantData.menu}
+                closeModal={() => setOpen(false)}
+                editOpen={open}
+              />
+            ) : null}
+            {!isOwner ? (
+              <Fade in={itemsInCart}>
+                <Fab
+                  href="/checkout"
+                  color="primary"
+                  className={classes.cartButton}
+                >
+                  <ShoppingCartOutlinedIcon htmlColor="#FFF" />
+                </Fab>
+              </Fade>
+            ) : null}
+          </>
+        ) : null}
+      </Box>
+    );
+  }
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -300,6 +318,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     height: "100%",
     padding: "2rem",
+  },
+  loader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
