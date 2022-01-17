@@ -1,58 +1,42 @@
 {
   "name": "eatapp",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm-run-all --parallel start-client start-server",
+    "start-server": "cd server && npm start",
+    "start-client": "cd client && npm start",
+    "postinstall": "npm-run-all --parallel install-client install-server",
+    "install-server": "cd server && npm i",
+    "install-client": "cd client && npm i",
+    "setup": "cd server && npm run compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zazzzi/eatApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zazzzi/eatApp/issues"
+  },
+  "homepage": "https://github.com/zazzzi/eatApp#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.5",
+    "@types/react-color": "^2.17.1",
+    "@types/react-sticky": "^6.0.4",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.4"
+  },
   "dependencies": {
-    "@fontsource/roboto": "^4.5.1",
-    "@material-ui/core": "*",
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@material-ui/icons": "^4.11.2",
     "@mui/icons-material": "^5.2.5",
-    "@stripe/react-stripe-js": "^1.7.0",
-    "@stripe/stripe-js": "^1.22.0",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.17",
-    "@types/react": "^17.0.38",
-    "@types/react-credit-cards": "^0.8.1",
-    "@types/react-dom": "^17.0.11",
-    "@types/stripe-v3": "^3.1.26",
-    "axios": "^0.24.0",
-    "firebase": "^9.6.1",
-    "html2canvas": "^1.4.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-native-svg": "^12.1.1",
-    "react-qr-code": "^2.0.3",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "typescript": "^4.5.4",
-    "web-vitals": "^2.1.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "proxy": "http://localhost:6969"
+    "npm-run-all": "^4.1.5",
+    "react-color": "*"
+  }
 }
