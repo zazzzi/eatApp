@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, Button, CircularProgress, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { MenuItemType, Order, User } from "../../types/types";
 
@@ -36,19 +36,31 @@ function Orders({orders, userId, userInfo}: Iprops) {
 
   return (
    <Box className={classes.container}>
-     <Typography> Tidigare bestälningar </Typography>
+     <Typography> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
        {orders.map((order: Order) => 
-         order.id === userId ? (
+         order.id === userId || userInfo?.role === "owner" ? (
          <Box className={classes.containerStyle}>
           <Box className={classes.textBox}>
            <Typography> {order.restaurantData.restaurantName}: Bord {order.restaurantData.table} </Typography>
            <Typography> {order.priceTotal} kr</Typography>
           </Box>
-          <Divider className={classes.divider}/>
           <Box className={classes.textBox}>
            <Box>{listCart(order.cart)}</Box>
            <Typography> {order.orderDate} </Typography>
           </Box>
+          <Divider className={classes.divider}/>
+          {userInfo?.role === "owner" ? (
+            <Box className={classes.adminButton}>
+              <Typography className={classes.orderStatus}>Status:{" "}{order.delivered ? 
+              (<Typography style={{color: "green"}}> Levererat</Typography>) : 
+              (<Typography style={{color: "red"}}> Olevererat</Typography>)}
+              </Typography>
+              <Button
+                variant="outlined"
+                color="primary"
+              >Leverera</Button>
+            </Box>
+          ) : null}
         </Box>) : null
         )}
    </Box>
@@ -84,6 +96,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   divider: {
     margin: "auto"
+  },
+  adminButton: {
+    padding: '0.5rem 1.5rem 0.5rem 1.5rem',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  orderStatus: {
+    display: "flex",
   }
 }));
 
