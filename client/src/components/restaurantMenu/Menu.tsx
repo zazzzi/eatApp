@@ -259,10 +259,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   menuBackground: {
     zIndex: 1,
     position: "fixed",
-    height: "50%",
+    height: "100%",
     width: "100%",
     backgroundSize: "cover",
-    backgroundPosition: "top",
+    backgroundPosition: "center",
   },
   restaurantNameContainer: {
     position: "absolute",
@@ -286,6 +286,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     backgroundColor: "#FEFEFE",
     borderRadius: "6px 60px 6px 6px",
+    overflow: "scroll",
   },
   menuTabs: {
     display: "flex",
@@ -295,8 +296,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   menuItemContainer: {
     overflow: "scroll",
-    // backgroundColor: "blue",
-    height: "100%",
     width: "100%",
   },
   addItemButton: {

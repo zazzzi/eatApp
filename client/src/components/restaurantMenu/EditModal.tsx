@@ -19,6 +19,7 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { MenuContext } from "../../context/MenusContext";
 import FileUploadField from "./FileUploadField";
 import CustomizedSnackbars from "../menu/Alert";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 interface IProps {
   closeModal: () => void;
@@ -29,8 +30,6 @@ interface IProps {
 
 function EditMenuModal(props: IProps) {
   const classes = useStyles();
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [imgURL, setImgURL] = useState<string>("");
@@ -89,9 +88,6 @@ function EditMenuModal(props: IProps) {
       createNew(event.target.id, event.target.value);
     }
   }
- 
-    console.log(props.menuItem.img);
-    
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     setOpenAlert(true);
@@ -126,21 +122,18 @@ function EditMenuModal(props: IProps) {
   return (
     <Modal
       open={props.editOpen}
-      onClose={handleClose}
+      onClose={props.closeModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Box className={classes.modalFormContainer}>
         <Snackbar
-          // anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={openAlert}
           autoHideDuration={20000}
           message={props.isNewItem ? "Produkt skapad!" : "Produkt uppdaterad!"}
           onClose={handleAlertClose}
         />
         <Box sx={style}>
-          {/* <MuiAlert elevation={6} variant="filled" />; */}
-
           <form
             autoComplete={"off"}
             onSubmit={handleSubmit}
