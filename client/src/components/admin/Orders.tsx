@@ -1,4 +1,4 @@
-import { Box, CircularProgress, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, CircularProgress, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { MenuItemType, Order, User } from "../../types/types";
 
@@ -20,13 +20,15 @@ function Orders({orders, userId, userInfo}: Iprops) {
     </Box>
   )}
 
+  console.log(orders)
+
   const listCart = (cart: MenuItemType[]) => {
     return (
       <Box >
            {cart.map((item:MenuItemType) => (
-             <Box>
-               {item.title} x{item.quantity}
-             </Box>
+             <Typography className={classes.fontSize}>
+              {item.quantity}st  {item.title} - {item.price * item.quantity} kr
+             </Typography>
            ))}
       </Box>
     )
@@ -37,11 +39,15 @@ function Orders({orders, userId, userInfo}: Iprops) {
      <Typography> Tidigare bestälningar </Typography>
        {orders.map((order: Order) => (
          <Box className={classes.containerStyle}>
-           <Box>
-            <Typography> </Typography>
+           <Box className={classes.textBox}>
+            <Typography> {order.restaurantData.restaurantName}: Bord {order.restaurantData.table} </Typography>
+            <Typography> {order.priceTotal} kr</Typography>
            </Box>
-           {order.priceTotal}
-           {listCart(order.cart)}
+           <Divider className={classes.divider}/>
+           <Box className={classes.textBox}>
+            <Box>{listCart(order.cart)}</Box>
+            <Typography> {order.orderDate} </Typography>
+           </Box>
          </Box>
        ))}
    </Box>
@@ -54,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   container: {
     margin: "1rem",
@@ -62,10 +68,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   containerStyle: {
     borderRadius: "0.2rem",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     margin: "0.5rem 0rem 0.5rem 0rem",
-    boxShadow: "1px 2px 6px 1px rgba(0,0,0,0.12)"
+    boxShadow: "1px 2px 6px 1px rgba(0,0,0,0.12)",
+    flexDirection: "column"
+  },
+  textBox: {
+    padding: "1rem 1.5rem 1rem 1.5rem",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "end"
+  }, 
+  fontSize: {
+    fontSize: "0.7rem"
+  },
+  divider: {
+    margin: "auto"
   }
 }));
 
