@@ -57,7 +57,6 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     useState<boolean>(true);
   const [tableUrlVar, setTableUrlVar] = useState<any>("")
 
-  console.log(tableExists)
 
   useEffect(() => {
     if (!id) return;
@@ -132,11 +131,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   };
 
   //TO DO, figure out way for state to update faster? 
-  if(!tableExists){
+  /* if(!tableExists){
     return (
       <>Checking table</>
     )
-  }
+  } */
 
   return (
     <Box className={classes.menuPageContainer}>

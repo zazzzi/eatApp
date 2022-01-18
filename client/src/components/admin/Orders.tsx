@@ -38,7 +38,8 @@ function Orders({orders, userId, userInfo}: Iprops) {
    <Box className={classes.container}>
      <Typography> Tidigare bestälningar </Typography>
        {orders.map((order: Order) => 
-         order.id === userId ? (<Box className={classes.containerStyle}>
+         order.id === userId ? (
+         <Box className={classes.containerStyle}>
           <Box className={classes.textBox}>
            <Typography> {order.restaurantData.restaurantName}: Bord {order.restaurantData.table} </Typography>
            <Typography> {order.priceTotal} kr</Typography>
