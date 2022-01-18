@@ -147,6 +147,22 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
           ></Box>
           <Box
             id="nameContainer"
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "100%",
+                md: "100%",
+                lg: "50%",
+                xl: "50%",
+              },
+              position: {
+                xs: "absolute",
+                sm: "absolute",
+                md: "absolute",
+                lg: "fixed",
+                xl: "fixed",
+              },
+            }}
             style={{ backgroundColor: `${menuColor}` }}
             className={classes.restaurantNameContainer}
           >
@@ -269,11 +285,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   restaurantNameContainer: {
     display: "flex",
     flexDirection: "column",
-    position: "fixed",
     top: "20%",
     zIndex: 10,
     height: "100%",
-    width: "50%",
+    // width: "50%",
     borderRadius: "38px 38px 0px 0px",
   },
   restaurantName: {
