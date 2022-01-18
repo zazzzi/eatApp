@@ -48,52 +48,56 @@ function App() {
 
   //get it working so that if you are an owner and you navigate to /menu you come to the menu, as opposed to using an id
   return (
-    <ThemeProvider theme={theme}>
-      <ErrorBoundary>
-        <Router>
-          <Routes>
-            <Route
-              path="/"
-              element={<Hero restaurantId={currentTableAndRestaurant!} />}
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/create-user" element={<CreateUser />} />
-            <Route
-              path={`/menu/:id`}
-              element={
-                <RestaurantMenu
-                  restaurantId={currentTableAndRestaurant!}
-                  userInfo={userInformation}
-                />
-              }
-            />
-            <Route path={`/user/${userID}`} element={<UserPage />} />
-            <Route
-              path="/checkout/"
-              element={<Checkout restaurantId={currentTableAndRestaurant!} />}
-            />
-            <Route
-              path="/admin"
-              element={<AdminIndex userInfo={userInformation} />}
-            />
-            <Route
-              path="/tables"
-              element={
-                <TablesEditor
-                  selectedTable={selectedTable}
-                  restaurantTable={currentTableAndRestaurant!}
-                  userInfo={userInformation}
-                />
-              }
-            />
-            <Route
-              path="/tables/:id"
-              element={<QrGenerator table={table} userInfo={userInformation} />}
-            />
-          </Routes>
-        </Router>
-      </ErrorBoundary>
-    </ThemeProvider>
+    <div style={{ maxWidth: "50%", margin: "auto" }}>
+      <ThemeProvider theme={theme}>
+        <ErrorBoundary>
+          <Router>
+            <Routes>
+              <Route
+                path="/"
+                element={<Hero restaurantId={currentTableAndRestaurant!} />}
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/create-user" element={<CreateUser />} />
+              <Route
+                path={`/menu/:id`}
+                element={
+                  <RestaurantMenu
+                    restaurantId={currentTableAndRestaurant!}
+                    userInfo={userInformation}
+                  />
+                }
+              />
+              <Route path={`/user/${userID}`} element={<UserPage />} />
+              <Route
+                path="/checkout/"
+                element={<Checkout restaurantId={currentTableAndRestaurant!} />}
+              />
+              <Route
+                path="/admin"
+                element={<AdminIndex userInfo={userInformation} />}
+              />
+              <Route
+                path="/tables"
+                element={
+                  <TablesEditor
+                    selectedTable={selectedTable}
+                    restaurantTable={currentTableAndRestaurant!}
+                    userInfo={userInformation}
+                  />
+                }
+              />
+              <Route
+                path="/tables/:id"
+                element={
+                  <QrGenerator table={table} userInfo={userInformation} />
+                }
+              />
+            </Routes>
+          </Router>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </div>
   );
 }
 
