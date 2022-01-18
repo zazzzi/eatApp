@@ -40,6 +40,7 @@ export interface User {
 }
 export interface Order {
   id?: string;
+  extId?: string;
   orderDate: string;
   cart: MenuItem[];
   session: User | string;

@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {db} from '../firebase'
-import { collection, doc, setDoc, addDoc, getDocs} from "firebase/firestore";
+import { collection, doc, setDoc, addDoc, getDocs, updateDoc} from "firebase/firestore";
 import { Order, RestaurantTableData, User } from "../types/types";
 import  {  MenuItem } from "./CartContext";
 import { UserAuthContext } from "./UsersContext";
-import { MenuContext } from "./MenusContext";
+
 interface ContextValue{
   orders: any;
   order: any;
@@ -14,12 +14,14 @@ interface ContextValue{
     total: number, 
     restaurantData: RestaurantTableData
   ) => void;
+  confirmOrderDelivery: (order: Order) => void
 }
 
 export const OrderContext = createContext<ContextValue>({
   orders: [],
   order: {},
   createOrder: () => {},
+  confirmOrderDelivery: () => {}
 });
 
 interface Props {
@@ -29,9 +31,7 @@ interface Props {
 function OrderProvider(props: Props) {
   const [order, setorder] = useState<Order | null>(null);
   const { userInformation, userID } = useContext(UserAuthContext)
-  const {restaurantData} = useContext(MenuContext)
   const [orders, setOrders] = useState<any | null>(null)
-
 
   useEffect(()=> {
     if(!userInformation) return
@@ -40,19 +40,18 @@ function OrderProvider(props: Props) {
       const data = await getDocs(OrdersCollectionRef);
       if (data) {
         setOrders(data.docs.map((doc) => (
-          {...doc.data()}
+          {...doc.data(), id: doc.id}
         )));
       } else {
         console.log("No Orders!");
       }
     }
     getOrders();
-  },[userInformation])
+  },[userInformation, orders])
 
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
-
     const order: Order = {
-      id: !userID ? "guest" : userID,
+      extId: !userID ? "guest" : userID,
       orderDate: new Date().toLocaleDateString(),
       cart: cart,
       session: !userInformation ? "guest" : {...userInformation, id: userID} as User,
@@ -74,12 +73,25 @@ function OrderProvider(props: Props) {
     }
   }
 
+  const confirmOrderDelivery = async (order: Order) => {
+    const docRef = doc(db, "orders", `${order.id}`);
+    await updateDoc(docRef, {
+      "delivered": true,
+    });
+    orders.map((o: Order) => {
+      if(o.extId === order.id){
+        o.delivered = true
+      }
+    })
+  }
+
   return (
     <OrderContext.Provider
       value={{
         orders: orders,
         order: order,
-        createOrder: createOrder
+        createOrder: createOrder,
+        confirmOrderDelivery: confirmOrderDelivery
       }}
     >
       {props.children}

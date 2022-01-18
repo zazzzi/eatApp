@@ -1,5 +1,6 @@
 import { Box, Button, CircularProgress, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { OrderContext } from "../../context/OrdersContext";
 import { MenuItemType, Order, User } from "../../types/types";
 
 
@@ -12,6 +13,7 @@ interface Iprops {
 
 function Orders({orders, userId, userInfo}: Iprops) {
   const classes = useStyles(); 
+  const {confirmOrderDelivery} = useContext(OrderContext)
 
   if(!orders){
     return (
@@ -20,7 +22,9 @@ function Orders({orders, userId, userInfo}: Iprops) {
     </Box>
   )}
 
-  console.log(orders)
+  const handleConfirm = (order: Order) => {
+    confirmOrderDelivery(order)
+  }
 
   const listCart = (cart: MenuItemType[]) => {
     return (
@@ -38,7 +42,7 @@ function Orders({orders, userId, userInfo}: Iprops) {
    <Box className={classes.container}>
      <Typography> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
        {orders.map((order: Order) => 
-         order.id === userId || userInfo?.role === "owner" ? (
+         order.extId === userId || userInfo?.role === "owner" ? (
          <Box className={classes.containerStyle}>
           <Box className={classes.textBox}>
            <Typography> {order.restaurantData.restaurantName}: Bord {order.restaurantData.table} </Typography>
@@ -58,6 +62,8 @@ function Orders({orders, userId, userInfo}: Iprops) {
               <Button
                 variant="outlined"
                 color="primary"
+                onClick={()=> handleConfirm(order)}
+                disabled={order.delivered}
               >Leverera</Button>
             </Box>
           ) : null}
