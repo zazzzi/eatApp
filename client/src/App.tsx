@@ -15,6 +15,8 @@ import ErrorBoundary from "./components/errorboundary/ErrorBoundary";
 import TablesEditor from "./components/admin/Tables";
 import QrGenerator from "./components/admin/QrGenerator";
 import Orders from "./components/admin/Orders"
+import { Box } from "@material-ui/core";
+
 
 function App() {
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
@@ -39,6 +41,15 @@ function App() {
         dark: "#000",
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
   });
 
   useEffect(() => {
@@ -51,49 +62,69 @@ function App() {
 
   //get it working so that if you are an owner and you navigate to /menu you come to the menu, as opposed to using an id
   return (
-    <ThemeProvider theme={theme}>
-      <ErrorBoundary>
-        <Router>
-          <Routes>
-            <Route
-              path="/"
-              element={<Hero restaurantId={currentTableAndRestaurant!} />}
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/create-user" element={<CreateUser />} />
-            <Route
-              path={`/menu/:id`}
-              element={
-                <RestaurantMenu
-                  restaurantId={currentTableAndRestaurant!}
-                  userInfo={userInformation}
-                />
-              }
-            />
-            <Route path={`/user/${userID}`} element={<UserPage />} />
-            <Route
-              path="/checkout/"
-              element={<Checkout restaurantId={currentTableAndRestaurant!} />}
-            />
-            <Route
-              path="/admin"
-              element={<AdminIndex userInfo={userInformation} />}
-            />
-            <Route
-              path="/tables"
-              element={
-                <TablesEditor
-                  selectedTable={selectedTable}
-                  restaurantTable={currentTableAndRestaurant!}
-                  userInfo={userInformation}
-                />
-              }
-            />
-            <Route
-              path="/tables/:id"
-              element={<QrGenerator table={table} userInfo={userInformation} />}
-            />
-            <Route
+    <Box
+      sx={{
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: "100%",
+          lg: "50%",
+          xl: "50%",
+        },
+        margin: {
+          // xs: "100%",
+          // sm: "100%",
+          // md: "auto",
+          lg: "auto",
+          xl: "auto",
+        },
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <ErrorBoundary>
+          <Router>
+            <Routes>
+              <Route
+                path="/"
+                element={<Hero restaurantId={currentTableAndRestaurant!} />}
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/create-user" element={<CreateUser />} />
+              <Route
+                path={`/menu/:id`}
+                element={
+                  <RestaurantMenu
+                    restaurantId={currentTableAndRestaurant!}
+                    userInfo={userInformation}
+                  />
+                }
+              />
+              <Route path={`/user/${userID}`} element={<UserPage />} />
+              <Route
+                path="/checkout/"
+                element={<Checkout restaurantId={currentTableAndRestaurant!} />}
+              />
+              <Route
+                path="/admin"
+                element={<AdminIndex userInfo={userInformation} />}
+              />
+              <Route
+                path="/tables"
+                element={
+                  <TablesEditor
+                    selectedTable={selectedTable}
+                    restaurantTable={currentTableAndRestaurant!}
+                    userInfo={userInformation}
+                  />
+                }
+              />
+              <Route
+                path="/tables/:id"
+                element={
+                  <QrGenerator table={table} userInfo={userInformation} />
+                }
+              />
+              <Route
               path="/orders"
               element={<Orders 
                 orders={orders}
@@ -101,10 +132,11 @@ function App() {
                 userInfo={userInformation}
                 />}
             />
-          </Routes>
-        </Router>
-      </ErrorBoundary>
-    </ThemeProvider>
+            </Routes>
+          </Router>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </Box>
   );
 }
 

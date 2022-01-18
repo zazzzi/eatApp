@@ -41,3 +41,17 @@ hr {
   transform: translateY(-48%) !important;
   /* transform: translateX(-50%) !important; */
 }
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+#root {
+  background-color: darkslategrey;
+}
+
+.inputButton {
+  display: flex;
+  text-align: center;
+  margin: auto;
+}

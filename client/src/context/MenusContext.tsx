@@ -32,6 +32,7 @@ interface ContextValue extends IState {
   deleteTable: (table: string) => void;
   updateRestaurantColor: (hex: any) => void;
   updateRestaurantNameColor: (value: boolean) => void;
+  updateRestaurantImg: (value: boolean) => void;
 }
 
 export const MenuContext = createContext<ContextValue>({
@@ -48,6 +49,7 @@ export const MenuContext = createContext<ContextValue>({
   deleteTable: () => {},
   updateRestaurantColor: () => {},
   updateRestaurantNameColor: () => {},
+  updateRestaurantImg: () => {},
 });
 
 interface Props {
@@ -191,6 +193,17 @@ function MenuProvider(props: Props) {
     console.log("name is black", isNameBlack);
   }
 
+  async function updateRestaurantImg(value: any) {
+    const docRef = doc(db, "restaurants", `${id}`);
+
+    const img = value;
+    await updateDoc(docRef, {
+      img,
+    });
+    setRestaruantTitleIsBlack(value);
+    console.log("Image updated", img);
+  }
+
   return (
     <MenuContext.Provider
       value={{
@@ -207,6 +220,7 @@ function MenuProvider(props: Props) {
         restaruantTitleIsBlack: restaruantTitleIsBlack,
         updateRestaurantColor: updateRestaurantColor,
         updateRestaurantNameColor: updateRestaurantNameColor,
+        updateRestaurantImg: updateRestaurantImg,
       }}
     >
       {props.children}

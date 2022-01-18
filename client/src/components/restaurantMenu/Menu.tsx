@@ -11,9 +11,10 @@ import {
   MenuItem,
   Tooltip,
   Link,
+  Slide,
   CircularProgress,
 } from "@material-ui/core";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuItems from "../menu/MenuItem";
@@ -148,7 +149,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
           <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
         </Link>
       </Box>
-      ¨
+
       {restaurantData ? (
         <>
           <Box
@@ -157,6 +158,22 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
           ></Box>
           <Box
             id="nameContainer"
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "100%",
+                md: "100%",
+                lg: "50%",
+                xl: "50%",
+              },
+              position: {
+                xs: "absolute",
+                sm: "absolute",
+                md: "absolute",
+                lg: "fixed",
+                xl: "fixed",
+              },
+            }}
             style={{ backgroundColor: `${menuColor}` }}
             className={classes.restaurantNameContainer}
           >
@@ -261,6 +278,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
 
 const useStyles = makeStyles((theme: Theme) => ({
   menuPageContainer: {
+    minHeight: "70vh",
     height: "100vh",
     display: "flex",
     flexDirection: "column",
@@ -268,22 +286,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   menuBackground: {
     zIndex: 1,
-    position: "fixed",
-    height: "100%",
-    width: "100%",
+    // position: "absolute",
+    height: "30%",
+    minWidth: "100%",
     backgroundSize: "cover",
     backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
   },
   restaurantNameContainer: {
-    position: "absolute",
     display: "flex",
     flexDirection: "column",
-    marginTop: "40%",
+    top: "20%",
     zIndex: 10,
     height: "100%",
-    width: "100%",
+    // width: "50%",
     borderRadius: "38px 38px 0px 0px",
-    // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
   restaurantName: {
     fontSize: "26px",

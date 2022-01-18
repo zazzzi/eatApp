@@ -15,11 +15,11 @@ import { forwardRef, useContext, useEffect, useState } from "react";
 import { MenuItemType } from "../../types/types";
 
 import DeleteIcon from "@material-ui/icons/Delete";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { MenuContext } from "../../context/MenusContext";
 import FileUploadField from "./FileUploadField";
 import CustomizedSnackbars from "../menu/Alert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { Skeleton } from "@mui/material";
 
 interface IProps {
   closeModal: () => void;
@@ -39,6 +39,7 @@ function EditMenuModal(props: IProps) {
   });
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
   const [newMenuItem, setNewMenuItem] = useState<any>({});
+  const [imageIsUploaded, setImageIsUploaded] = useState<boolean>(false);
 
   const { restaurantData, updateItemData, createNewMenuItem } =
     useContext(MenuContext);
@@ -52,9 +53,7 @@ function EditMenuModal(props: IProps) {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "70vw",
     bgcolor: "#FEFEFE",
-    border: "2px solid #000",
     borderRadius: "30px",
     boxShadow: 12,
     p: 4,
@@ -118,6 +117,12 @@ function EditMenuModal(props: IProps) {
 
     setOpenAlert(false);
   };
+
+  useEffect(() => {
+    if (newMenuItem || updatedMenuInfo) {
+      setImageIsUploaded(true);
+    } else setImageIsUploaded(false);
+  });
 
   return (
     <Modal
@@ -192,6 +197,18 @@ function EditMenuModal(props: IProps) {
               defaultValue={props.isNewItem ? null : props.menuItem.price}
             />
             <FileUploadField setUrl={setURL} rId={restaurantData.rID} />
+            {imageIsUploaded ? (
+              <Box display="flex" justifyContent="center">
+                <img
+                  className={classes.backgroundImage}
+                  src={
+                    imageIsUploaded && props.isNewItem
+                      ? newMenuItem.img
+                      : props.menuItem.img
+                  }
+                />
+              </Box>
+            ) : null}
             <Box mt={2} className={classes.modalButtonsContainer}>
               <Box p={2}>
                 <Button
@@ -235,6 +252,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   formStyle: {
     display: "flex",
     flexDirection: "column",
+  },
+  backgroundImage: {
+    maxHeight: "10rem",
   },
 }));
 
