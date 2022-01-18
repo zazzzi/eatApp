@@ -13,6 +13,7 @@ import AdminIndex from "./components/admin";
 import ErrorBoundary from "./components/errorboundary/ErrorBoundary";
 import TablesEditor from "./components/admin/Tables";
 import QrGenerator from "./components/admin/QrGenerator";
+import Orders from "./components/admin/Orders"
 
 function App() {
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
@@ -89,6 +90,10 @@ function App() {
             <Route
               path="/tables/:id"
               element={<QrGenerator table={table} userInfo={userInformation} />}
+            />
+            <Route
+              path="/orders"
+              element={<Orders />}
             />
           </Routes>
         </Router>

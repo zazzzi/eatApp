@@ -102,6 +102,17 @@ function AdminIndex(props: Iprops) {
               <ArrowForwardIosRoundedIcon />
             </Box>
           </Link>
+          <Link to="/orders">
+            <Box
+              className="classes.settingsListItem"
+              display="flex"
+              justifyContent="space-between"
+              p={1}
+            >
+              <Typography variant="h5">Ordrar</Typography>
+              <ArrowForwardIosRoundedIcon />
+            </Box>
+          </Link>
         </Box>
       </Box>
     </Box>
