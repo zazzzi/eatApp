@@ -6,6 +6,7 @@ import RestaurantMenu from "./components/restaurantMenu/Menu";
 import CreateUser from "./components/login/CreateUser";
 import Checkout from "./components/checkout/Checkout";
 import { UserAuthContext } from "./context/UsersContext";
+import { OrderContext } from "./context/OrdersContext";
 import UserPage from "./components/users/UserPage";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { RestaurantTableData } from "./types/types";
@@ -17,6 +18,7 @@ import Orders from "./components/admin/Orders"
 
 function App() {
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
+  const { orders } = useContext(OrderContext);
   const [currentTableAndRestaurant, setcurrentTableAndRestaurant] =
     useState<RestaurantTableData | null>(null);
   const [table, setTable] = useState<any>("");
@@ -93,7 +95,11 @@ function App() {
             />
             <Route
               path="/orders"
-              element={<Orders />}
+              element={<Orders 
+                orders={orders}
+                userId={userID}
+                userInfo={userInformation}
+                />}
             />
           </Routes>
         </Router>
