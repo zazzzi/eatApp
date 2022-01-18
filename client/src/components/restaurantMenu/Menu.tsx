@@ -41,11 +41,12 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     sendUrlParam,
     updateRestaurantNameColor,
     restaruantTitleIsBlack,
+    tableExists
   } = useContext(MenuContext);
 
   // TODO: starting state needs to be restaurantData.color, but can't set it before it's loaded
+  // TODO: if table variable from url does not match restaurant tables, redirect to no tables screen
   const [menuColor, setMenuColor] = useState<string>();
-
   const [value, setValue] = useState<string>("Dryck");
   const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -55,6 +56,8 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
     useState<boolean>(true);
+  const [tableUrlVar, setTableUrlVar] = useState<any>("")
+
 
   useEffect(() => {
     if (!id) return;
@@ -127,6 +130,13 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
 
     updateRestaurantNameColor(restaurantNameColorBlack);
   };
+
+  //TO DO, figure out way for state to update faster? 
+  /* if(!tableExists){
+    return (
+      <>Checking table</>
+    )
+  } */
 
   return (
     <Box className={classes.menuPageContainer}>

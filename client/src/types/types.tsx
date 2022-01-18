@@ -10,6 +10,7 @@ export interface MenuItemType {
 }
 
 export interface RestaurantTableData {
+  restaurantName: string,
   restaurantId: string,
   table: number
 }
@@ -39,6 +40,7 @@ export interface User {
 }
 export interface Order {
   id?: string;
+  extId?: string;
   orderDate: string;
   cart: MenuItem[];
   session: User | string;

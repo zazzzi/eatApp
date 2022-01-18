@@ -19,6 +19,7 @@ interface IState {
   restaurantId: any;
   restaurantData: any;
   restaruantTitleIsBlack: boolean;
+  tableExists: boolean;
 }
 
 interface ContextValue extends IState {
@@ -38,6 +39,7 @@ export const MenuContext = createContext<ContextValue>({
   restaurantId: {},
   restaurantData: {},
   restaruantTitleIsBlack: true,
+  tableExists: false,
   sendUrlParam: () => {},
   updateItemData: () => {},
   createNewMenuItem: () => {},
@@ -65,7 +67,10 @@ function MenuProvider(props: Props) {
     any | null
   >(null);
   const { userInformation } = useContext(UserAuthContext);
+  const [tableExists, setTableExists] = useState<boolean>(false)
 
+  
+  
   useEffect(() => {
     if (!id) return;
     const getRestaurantData = async () => {
@@ -85,14 +90,26 @@ function MenuProvider(props: Props) {
     setcurrentTableAndRestaurant(restaurant);
   }, []);
 
-  const urlParam = (param: string, table: string) => {
+  useEffect(() => {
+    if(!restaurantData) return
     const currentRestaurant = {
-      restaurantId: param,
+      restaurantId: id,
       table: table,
+      restaurantName: restaurantData.restaurantName
     };
+    localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
+  }, [restaurantData])
+
+  useEffect(() => {
+    if(!restaurantData) return
+    if(restaurantData.tables.includes(String(table))){
+      setTableExists(true)
+    }
+  },[restaurantData])
+
+  const urlParam = (param: string, table: string) => {
     setTable(Number(table));
     setId(param);
-    localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
   };
 
   const fetchDatabaseWithId = (id: string) => {
@@ -190,6 +207,7 @@ function MenuProvider(props: Props) {
   return (
     <MenuContext.Provider
       value={{
+        tableExists: tableExists,
         restaurantId: currentTableAndRestaurant,
         restaurantData: restaurantData,
         sendUrlParam: urlParam,
