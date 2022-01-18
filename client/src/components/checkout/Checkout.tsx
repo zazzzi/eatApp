@@ -34,7 +34,7 @@ function Checkout({restaurantId}:Iprops) {
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
   const [order, setOrder] = useState<Order | null>(null)
   const [totalPrice, setTotalPrice] = useState<number>(0)
-  const { cart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
   const { createOrder } = useContext(OrderContext);
 
   useEffect(()=>{
@@ -66,6 +66,7 @@ function Checkout({restaurantId}:Iprops) {
       const order = createOrder(response, cart, totalPrice, restaurantId)
       setOrder(order!)
       setActiveStep(3)
+      clearCart()
     }
   }
 

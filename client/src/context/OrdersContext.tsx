@@ -25,23 +25,20 @@ interface Props {
 
 function OrderProvider(props: Props) {
   const [order, setorder] = useState<Order | null>(null);
-  const { userInformation } = useContext(UserAuthContext)
+  const { userInformation, userID } = useContext(UserAuthContext)
   const {clearCart} = useContext(CartContext)
 
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
-
     const order: Order = {
       orderDate: Date(),
       cart: cart,
-      session: userInformation as User,
+      session: !userInformation ? "guest" : {...userInformation, id: userID} as User,
       priceTotal: total,
       restaurantData: restaurantData,
       payment: paymentData.body,
       paymentType: paymentData.paymentType,
     }
-
     logOrderToDatabase(order)
-    clearCart()
     return order
   }
 

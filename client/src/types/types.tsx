@@ -41,7 +41,7 @@ export interface Order {
   id?: string;
   orderDate: string;
   cart: MenuItem[];
-  session: User;
+  session: User | string;
   priceTotal: number;
   restaurantData: RestaurantTableData;
   payment: any;

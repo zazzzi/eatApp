@@ -1,7 +1,7 @@
 import { Box, makeStyles, Theme, Typography, Button} from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { MenuItem } from "../../context/CartContext";
+import { MenuItem, CartContext } from "../../context/CartContext";
 import { Order, RestaurantTableData } from "../../types/types";
 
 
@@ -12,7 +12,7 @@ interface Iprops {
 
 function OrderConfirmation({order, restaurantId}: Iprops) {
   const classes = useStyles();
-
+ 
   if(!order || !restaurantId){
     return (
       <Box>
