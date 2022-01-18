@@ -18,6 +18,7 @@ function FileUploadField(props: Iprops) {
       setImage(e.target.files[0]);
     }
   };
+
   const handleUpload = async () => {
     const imgRef = ref(
       storage,
@@ -29,6 +30,7 @@ function FileUploadField(props: Iprops) {
 
     getURL();
   };
+
   function getURL() {
     const imgRef = ref(
       storage,
@@ -42,9 +44,17 @@ function FileUploadField(props: Iprops) {
   console.log(image);
 
   return (
-    <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+    <Box
+      mt={2}
+      mb={2}
+      display={"flex"}
+      flexDirection={"column"}
+      alignItems={"center"}
+    >
       <input className="inputButton" type="file" onChange={onFileChange} />
-      <Button onClick={handleUpload}>Upload</Button>
+      <Button variant="outlined" onClick={handleUpload}>
+        Upload
+      </Button>
     </Box>
   );
 }
