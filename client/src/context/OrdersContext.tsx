@@ -32,6 +32,7 @@ function OrderProvider(props: Props) {
   const {restaurantData} = useContext(MenuContext)
   const [orders, setOrders] = useState<any | null>(null)
 
+
   useEffect(()=> {
     if(!userInformation) return
     const getOrders = async () => {
@@ -39,8 +40,7 @@ function OrderProvider(props: Props) {
       const data = await getDocs(OrdersCollectionRef);
       if (data) {
         setOrders(data.docs.map((doc) => (
-          {...doc.data(), 
-            id: !userID ? doc.id : userID}
+          {...doc.data()}
         )));
       } else {
         console.log("No Orders!");
@@ -52,6 +52,7 @@ function OrderProvider(props: Props) {
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
 
     const order: Order = {
+      id: !userID ? "guest" : userID,
       orderDate: new Date().toLocaleDateString(),
       cart: cart,
       session: !userInformation ? "guest" : {...userInformation, id: userID} as User,

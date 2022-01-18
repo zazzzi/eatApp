@@ -19,6 +19,7 @@ interface IState {
   restaurantId: any;
   restaurantData: any;
   restaruantTitleIsBlack: boolean;
+  tableExists: boolean;
 }
 
 interface ContextValue extends IState {
@@ -37,6 +38,7 @@ export const MenuContext = createContext<ContextValue>({
   restaurantId: {},
   restaurantData: {},
   restaruantTitleIsBlack: true,
+  tableExists: false,
   sendUrlParam: () => {},
   updateItemData: () => {},
   createNewMenuItem: () => {},
@@ -63,10 +65,10 @@ function MenuProvider(props: Props) {
     any | null
   >(null);
   const { userInformation } = useContext(UserAuthContext);
-  const [currentRestaurant, setCurrentRestaurant] = useState<any | null>(null)
+  const [tableExists, setTableExists] = useState<boolean>(false)
 
-  console.log(restaurantData)
-
+  
+  
   useEffect(() => {
     if (!id) return;
     const getRestaurantData = async () => {
@@ -95,6 +97,13 @@ function MenuProvider(props: Props) {
     };
     localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
   }, [restaurantData])
+
+  useEffect(() => {
+    if(!restaurantData) return
+    if(restaurantData.tables.includes(String(table))){
+      setTableExists(true)
+    }
+  },[restaurantData])
 
   const urlParam = (param: string, table: string) => {
     setTable(Number(table));
@@ -185,6 +194,7 @@ function MenuProvider(props: Props) {
   return (
     <MenuContext.Provider
       value={{
+        tableExists: tableExists,
         restaurantId: currentTableAndRestaurant,
         restaurantData: restaurantData,
         sendUrlParam: urlParam,

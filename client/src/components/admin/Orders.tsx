@@ -37,19 +37,19 @@ function Orders({orders, userId, userInfo}: Iprops) {
   return (
    <Box className={classes.container}>
      <Typography> Tidigare bestälningar </Typography>
-       {orders.map((order: Order) => (
-         <Box className={classes.containerStyle}>
-           <Box className={classes.textBox}>
-            <Typography> {order.restaurantData.restaurantName}: Bord {order.restaurantData.table} </Typography>
-            <Typography> {order.priceTotal} kr</Typography>
-           </Box>
-           <Divider className={classes.divider}/>
-           <Box className={classes.textBox}>
-            <Box>{listCart(order.cart)}</Box>
-            <Typography> {order.orderDate} </Typography>
-           </Box>
-         </Box>
-       ))}
+       {orders.map((order: Order) => 
+         order.id === userId ? (<Box className={classes.containerStyle}>
+          <Box className={classes.textBox}>
+           <Typography> {order.restaurantData.restaurantName}: Bord {order.restaurantData.table} </Typography>
+           <Typography> {order.priceTotal} kr</Typography>
+          </Box>
+          <Divider className={classes.divider}/>
+          <Box className={classes.textBox}>
+           <Box>{listCart(order.cart)}</Box>
+           <Typography> {order.orderDate} </Typography>
+          </Box>
+        </Box>) : null
+        )}
    </Box>
   );
 }
