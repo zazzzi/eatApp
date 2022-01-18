@@ -55,6 +55,8 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
     useState<boolean>(true);
 
+  console.log(restaurantData)
+
   useEffect(() => {
     if (!id) return;
     if (!isOwner) {

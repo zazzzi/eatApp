@@ -4,6 +4,7 @@ import { collection, doc, setDoc, addDoc, getDocs} from "firebase/firestore";
 import { Order, RestaurantTableData, User } from "../types/types";
 import  {  MenuItem } from "./CartContext";
 import { UserAuthContext } from "./UsersContext";
+import { MenuContext } from "./MenusContext";
 interface ContextValue{
   orders: any;
   order: any;
@@ -28,6 +29,7 @@ interface Props {
 function OrderProvider(props: Props) {
   const [order, setorder] = useState<Order | null>(null);
   const { userInformation, userID } = useContext(UserAuthContext)
+  const {restaurantData} = useContext(MenuContext)
   const [orders, setOrders] = useState<any | null>(null)
 
   useEffect(()=> {
@@ -48,6 +50,7 @@ function OrderProvider(props: Props) {
   },[userInformation])
 
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
+
     const order: Order = {
       orderDate: Date(),
       cart: cart,

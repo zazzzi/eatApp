@@ -64,6 +64,8 @@ function MenuProvider(props: Props) {
   >(null);
   const { userInformation } = useContext(UserAuthContext);
 
+  console.log(restaurantData)
+
   useEffect(() => {
     if (!id) return;
     const getRestaurantData = async () => {
@@ -87,6 +89,7 @@ function MenuProvider(props: Props) {
     const currentRestaurant = {
       restaurantId: param,
       table: table,
+      restaurantName: "hi"
     };
     setTable(Number(table));
     setId(param);

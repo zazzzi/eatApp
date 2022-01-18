@@ -1,6 +1,7 @@
-import { Box, CircularProgress, makeStyles, Theme} from "@material-ui/core";
+import { Box, CircularProgress, makeStyles, Theme, Typography} from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { Order, User } from "../../types/types";
+import { MenuItemType, Order, User } from "../../types/types";
+
 
 interface Iprops {
   orders: Order[];
@@ -9,13 +10,8 @@ interface Iprops {
 }
 
 
-
 function Orders({orders, userId, userInfo}: Iprops) {
   const classes = useStyles(); 
-
-  console.log(userId)
-  console.log(userInfo)
-console.log(orders)
 
   if(!orders){
     return (
@@ -24,14 +20,30 @@ console.log(orders)
     </Box>
   )}
 
+  const listCart = (cart: MenuItemType[]) => {
+    return (
+      <Box >
+           {cart.map((item:MenuItemType) => (
+             <Box>
+               {item.title} x{item.quantity}
+             </Box>
+           ))}
+      </Box>
+    )
+  }
+
   return (
-   <Box>
-       TEST
+   <Box className={classes.container}>
+     <Typography> Tidigare bestälningar </Typography>
+       {orders.map((order: Order) => (
+         <Box className={classes.containerStyle}>
+           {order.priceTotal}
+           {listCart(order.cart)}
+         </Box>
+       ))}
    </Box>
   );
 }
-
-
 
 const useStyles = makeStyles((theme: Theme) => ({
   loader: {
@@ -40,6 +52,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column"
+  },
+  container: {
+    margin: "1rem",
+  },
+  containerStyle: {
+    borderRadius: "0.2rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0.5rem 0rem 0.5rem 0rem",
+    boxShadow: "1px 2px 6px 1px rgba(0,0,0,0.12)"
   }
 }));
 
