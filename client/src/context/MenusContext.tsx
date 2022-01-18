@@ -63,6 +63,7 @@ function MenuProvider(props: Props) {
     any | null
   >(null);
   const { userInformation } = useContext(UserAuthContext);
+  const [currentRestaurant, setCurrentRestaurant] = useState<any | null>(null)
 
   console.log(restaurantData)
 
@@ -85,15 +86,19 @@ function MenuProvider(props: Props) {
     setcurrentTableAndRestaurant(restaurant);
   }, []);
 
-  const urlParam = (param: string, table: string) => {
+  useEffect(() => {
+    if(!restaurantData) return
     const currentRestaurant = {
-      restaurantId: param,
+      restaurantId: id,
       table: table,
-      restaurantName: "hi"
+      restaurantName: restaurantData.restaurantName
     };
+    localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
+  }, [restaurantData])
+
+  const urlParam = (param: string, table: string) => {
     setTable(Number(table));
     setId(param);
-    localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
   };
 
   const fetchDatabaseWithId = (id: string) => {

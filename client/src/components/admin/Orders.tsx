@@ -37,6 +37,9 @@ function Orders({orders, userId, userInfo}: Iprops) {
      <Typography> Tidigare bestälningar </Typography>
        {orders.map((order: Order) => (
          <Box className={classes.containerStyle}>
+           <Box>
+            <Typography> </Typography>
+           </Box>
            {order.priceTotal}
            {listCart(order.cart)}
          </Box>
