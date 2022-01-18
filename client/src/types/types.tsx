@@ -28,7 +28,6 @@ export interface UserInfoToUpdate {
   rID: string,
 }
 
-
 export interface User {
   firstName: string;
   lastName: string;
@@ -38,22 +37,16 @@ export interface User {
   role: string;
   rID?: string;
 }
-
-export interface UserDb {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: number;
-}
 export interface Order {
   id?: string;
   orderDate: string;
   cart: MenuItem[];
-  session: UserDb;
+  session: User | string;
   priceTotal: number;
   restaurantData: RestaurantTableData;
   payment: any;
   paymentType: string;
+  delivered: boolean;
 }
 export interface IncomingUser {
   email: string;
