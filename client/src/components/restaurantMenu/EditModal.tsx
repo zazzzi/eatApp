@@ -122,7 +122,6 @@ function EditMenuModal(props: IProps) {
     if (newMenuItem || updatedMenuInfo) {
       setImageIsUploaded(true);
     } else setImageIsUploaded(false);
-    console.log(imageIsUploaded);
   });
 
   return (
