@@ -37,6 +37,7 @@ function OrderProvider(props: Props) {
       restaurantData: restaurantData,
       payment: paymentData.body,
       paymentType: paymentData.paymentType,
+      delivered: false
     }
     logOrderToDatabase(order)
     return order
@@ -49,7 +50,6 @@ function OrderProvider(props: Props) {
       console.log(err)
     }
   }
-
 
   return (
     <OrderContext.Provider

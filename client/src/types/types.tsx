@@ -46,6 +46,7 @@ export interface Order {
   restaurantData: RestaurantTableData;
   payment: any;
   paymentType: string;
+  delivered: boolean;
 }
 export interface IncomingUser {
   email: string;
