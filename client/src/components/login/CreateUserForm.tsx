@@ -37,7 +37,7 @@ function CreateUserForm(props: Iprops) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password1, setPassword1] = useState<string>();
   const [password2, setPassword2] = useState<string>();
-  const [passwordTooShort, setPasswordTooShort] = useState(false)
+  const [passwordTooShort, setPasswordTooShort] = useState(false);
 
   const [userToCreate, setUserToCreate] = useState<User>({
     firstName: "",
@@ -52,9 +52,9 @@ function CreateUserForm(props: Iprops) {
     if (id === "password1") {
       if (value.length >= 6) {
         setPassword1(value);
-        setPasswordTooShort(false)
+        setPasswordTooShort(false);
       } else {
-        setPasswordTooShort(true)
+        setPasswordTooShort(true);
       }
     } else {
       setPassword2(value);
@@ -104,7 +104,7 @@ function CreateUserForm(props: Iprops) {
   }
 
   return (
-    <Box>
+    <Box style={{ backgroundColor: "#FEFEFE" }}>
       <form className={classes.formStyling} onSubmit={handleSubmit}>
         <TextField
           className={classes.inputField}
@@ -186,7 +186,9 @@ function CreateUserForm(props: Iprops) {
         />
         <FormHelperText id="password2">
           {!matching ? "Lösenorden matchar inte." : ""}
-          {passwordTooShort ? "Lösenordet måste vara längre än 6 karaktärer." : ""}
+          {passwordTooShort
+            ? "Lösenordet måste vara längre än 6 karaktärer."
+            : ""}
         </FormHelperText>
 
         <Box className={classes.submitBtnStyling}>

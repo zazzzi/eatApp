@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Link,
   makeStyles,
   TextField,
   Theme,
@@ -13,6 +14,7 @@ import { UserAuthContext } from "../../context/UsersContext";
 import { auth } from "../../firebase";
 import { User, UserInfoToUpdate } from "../../types/types";
 import LogOutBtn from "../login/LogOutBtn";
+import HomeIcon from "@material-ui/icons/Home";
 import PasswordModal from "./PasswordModal";
 
 interface Iprops {}
@@ -23,12 +25,14 @@ function UserPage(props: Iprops) {
   const classes = useStyles();
   const [userInfoState, setUserInfoState] = useState<User | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [updatedInfo, setUpdatedInfo] = useState<UserInfoToUpdate>({} as UserInfoToUpdate);
+  const [updatedInfo, setUpdatedInfo] = useState<UserInfoToUpdate>(
+    {} as UserInfoToUpdate
+  );
 
   useEffect(() => {
     setUserInfoState(userInformation);
   });
-  
+
   function updateInfoState(id: string, value: string) {
     setUpdatedInfo({
       ...updatedInfo,
@@ -36,8 +40,8 @@ function UserPage(props: Iprops) {
     });
   }
 
-  function openModal(){
-    setIsOpen(true)
+  function openModal() {
+    setIsOpen(true);
   }
 
   function handleChange(
@@ -51,12 +55,18 @@ function UserPage(props: Iprops) {
     event.preventDefault();
     const user = {
       email: updatedInfo.email ? updatedInfo.email : userInfoState!.email,
-      firstName: updatedInfo.firstName ? updatedInfo.firstName : userInfoState!.firstName,
-      lastName: updatedInfo.lastName ? updatedInfo.lastName : userInfoState!.lastName,
-      phoneNumber: updatedInfo.phoneNumber ? updatedInfo.phoneNumber : userInfoState!.phoneNumber,
+      firstName: updatedInfo.firstName
+        ? updatedInfo.firstName
+        : userInfoState!.firstName,
+      lastName: updatedInfo.lastName
+        ? updatedInfo.lastName
+        : userInfoState!.lastName,
+      phoneNumber: updatedInfo.phoneNumber
+        ? updatedInfo.phoneNumber
+        : userInfoState!.phoneNumber,
       role: userInfoState!.role,
-      rID: userInfoState!.rID ? userInformation!.rID! : "" ,
-    }
+      rID: userInfoState!.rID ? userInformation!.rID! : "",
+    };
     if (updatedInfo && userID) {
       updateUserInformation(userID, user);
       console.log(updatedInfo);
@@ -64,7 +74,16 @@ function UserPage(props: Iprops) {
   }
 
   return (
-    <Box>
+    <Box style={{ backgroundColor: "#FEFEFE" }}>
+       <Box
+        sx={{ position: "absolute", top: "0", zIndex: 100 }}
+        display="flex"
+        justifyContent="center"
+      >
+        <Link href="/">
+          <HomeIcon htmlColor="#00000" fontSize="large" />
+        </Link>
+      </Box>
       <Box className={classes.welcomeMessageContainer}>
         {userInfoState ? (
           <Typography variant="h4">
@@ -131,10 +150,12 @@ function UserPage(props: Iprops) {
       ) : null}
       <Box className={classes.buttonContainer}>
         <Button onClick={openModal}>Byt lösenord</Button>
-        {isOpen ? <PasswordModal
-          closeModal={() => setIsOpen(false)}
-          editOpen={isOpen}
-        /> : null}
+        {isOpen ? (
+          <PasswordModal
+            closeModal={() => setIsOpen(false)}
+            editOpen={isOpen}
+          />
+        ) : null}
         {userInfoState && userInfoState.role === "owner" ? (
           <Button href={`/menu/${userInfoState.rID}?table=0`}>
             Redigera din restaurang

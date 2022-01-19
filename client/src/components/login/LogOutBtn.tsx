@@ -5,6 +5,8 @@ import { auth } from "../../firebase";
 interface Iprops {}
 
 function LogOutBtn(props: Iprops) {
+  const classes = useStyles();
+
   async function logOut() {
     await auth.signOut().then(() => {
       console.log("User logged out");
@@ -13,13 +15,25 @@ function LogOutBtn(props: Iprops) {
 
   return (
     <Box>
-      <Button onClick={logOut}>
-        <a href="/login">Logga ut</a>
+      <Button
+        size="small"
+        color="secondary"
+        variant="contained"
+        onClick={logOut}
+      >
+        <a className={classes.logOutText} href="/login">
+          Logga ut
+        </a>
       </Button>
     </Box>
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({}));
+const useStyles = makeStyles((theme: Theme) => ({
+  logOutText: {
+    color: "#FFF",
+    textDecoration: "none",
+  },
+}));
 
 export default LogOutBtn;
