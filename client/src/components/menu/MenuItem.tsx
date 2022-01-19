@@ -17,6 +17,7 @@ import { MenuContext } from "../../context/MenusContext";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import EditMenuModal from "../restaurantMenu/EditModal";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { Skeleton } from "@mui/material";
 
 interface Iprops {
   menuItems: any;
@@ -59,7 +60,11 @@ function MenuItems({ menuItems }: Iprops) {
         <Box className={classes.menuitemContainer}>
           <Box className={classes.menuItem}>
             <Container className={classes.imageColumn}>
-              <img className={classes.image} src={item.img} />
+              {item.img ? (
+                <img className={classes.image} src={item.img} />
+              ) : (
+                <Skeleton variant="circular" width={80} height={80} />
+              )}
             </Container>
             <Container className={classes.itemColumn}>
               <Typography
