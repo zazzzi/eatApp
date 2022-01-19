@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, Button, CircularProgress, Divider, makeStyles, Tab, Tabs, Theme, Typography} from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../../context/OrdersContext";
 import { MenuItemType, Order, User } from "../../types/types";
@@ -14,6 +14,24 @@ interface Iprops {
 function Orders({orders, userId, userInfo}: Iprops) {
   const classes = useStyles(); 
   const {confirmOrderDelivery} = useContext(OrderContext)
+  const [value, setValue] = useState('one');
+  const [filteredOrders, setFilteredOrders] = useState<Array<Order> | null>(null)
+
+  useEffect(() => {
+    if(!userInfo || !orders) return
+    if(userInfo!.role === "owner"){
+      const filtered = orders.filter((order:Order)=>{
+        if(!order.delivered && value === "one"){
+          return order
+        } else if (order.delivered && value === "two"){
+          return order
+        }
+      })
+      setFilteredOrders(filtered)
+    } else {
+      setFilteredOrders(orders)
+    }
+  },[value, userInfo, orders])
 
   if(!orders){
     return (
@@ -25,6 +43,15 @@ function Orders({orders, userId, userInfo}: Iprops) {
   const handleConfirm = (order: Order) => {
     confirmOrderDelivery(order)
   }
+
+  const handleChange = (event: any, newValue: string) => {
+    setValue(newValue);
+  };
+
+  //TODO: orderconfirmation styling and menu link
+  //TODO: link back to main page from orders
+  //TODO: no orders when customer
+  //TODO: links from admin and customer to orders page 
 
   const listCart = (cart: MenuItemType[]) => {
     return (
@@ -38,10 +65,29 @@ function Orders({orders, userId, userInfo}: Iprops) {
     )
   }
 
+  if(!filteredOrders){
+    return (
+      <></>
+    )
+  }
+
   return (
    <Box className={classes.container}>
-     <Typography> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
-       {orders.map((order: Order) => 
+     {userInfo?.role === "owner" ? (
+      <Box sx={{ width: '100%' }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="wrapped label tabs example"
+          variant="fullWidth"
+        >
+          <Tab value="one" label="Olevererat" />
+          <Tab value="two" label="Levererat" />
+        </Tabs>
+      </Box>) : null
+      }
+     <Typography variant="h5" className={classes.header}> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
+       {filteredOrders!.map((order: Order) => 
          order.extId === userId || userInfo?.role === "owner" ? (
          <Box className={classes.containerStyle}>
           <Box className={classes.textBox}>
@@ -82,6 +128,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
   },
   container: {
+    height: "100vh",
+    backgroundColor: "white",
     margin: "1rem",
   },
   containerStyle: {
@@ -111,6 +159,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   orderStatus: {
     display: "flex",
+  }, 
+  header: {
+    padding: "1rem 0rem 0rem 0rem"
   }
 }));
 
