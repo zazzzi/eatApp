@@ -17,6 +17,8 @@ function Orders({orders, userId, userInfo}: Iprops) {
   const [value, setValue] = useState('one');
   const [filteredOrders, setFilteredOrders] = useState<Array<Order> | null>(null)
 
+  console.log(filteredOrders)
+
   useEffect(() => {
     if(!userInfo || !orders) return
     if(userInfo!.role === "owner"){
@@ -28,6 +30,8 @@ function Orders({orders, userId, userInfo}: Iprops) {
         }
       })
       setFilteredOrders(filtered)
+    } else {
+      setFilteredOrders(orders)
     }
   },[value, userInfo, orders])
 
@@ -45,6 +49,11 @@ function Orders({orders, userId, userInfo}: Iprops) {
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
+
+  //TODO: orderconfirmation styling and menu link
+  //TODO: link back to main page from orders
+  //TODO: no orders when customer
+  //TODO: links from admin and customer to orders page 
 
   const listCart = (cart: MenuItemType[]) => {
     return (
@@ -66,17 +75,19 @@ function Orders({orders, userId, userInfo}: Iprops) {
 
   return (
    <Box className={classes.container}>
-     <Box sx={{ width: '100%' }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="wrapped label tabs example"
-        variant="fullWidth"
-      >
-        <Tab value="one" label="Olevererat" />
-        <Tab value="two" label="Levererat" />
-      </Tabs>
-    </Box>
+     {userInfo?.role === "owner" ? (
+      <Box sx={{ width: '100%' }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="wrapped label tabs example"
+          variant="fullWidth"
+        >
+          <Tab value="one" label="Olevererat" />
+          <Tab value="two" label="Levererat" />
+        </Tabs>
+      </Box>) : null
+      }
      <Typography> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
        {filteredOrders!.map((order: Order) => 
          order.extId === userId || userInfo?.role === "owner" ? (
