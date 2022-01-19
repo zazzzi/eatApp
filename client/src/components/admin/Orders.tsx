@@ -17,8 +17,6 @@ function Orders({orders, userId, userInfo}: Iprops) {
   const [value, setValue] = useState('one');
   const [filteredOrders, setFilteredOrders] = useState<Array<Order> | null>(null)
 
-  console.log(filteredOrders)
-
   useEffect(() => {
     if(!userInfo || !orders) return
     if(userInfo!.role === "owner"){
