@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, Button, CircularProgress, Divider, makeStyles, Tab, Tabs, Theme, Typography} from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../../context/OrdersContext";
 import { MenuItemType, Order, User } from "../../types/types";
@@ -14,6 +14,24 @@ interface Iprops {
 function Orders({orders, userId, userInfo}: Iprops) {
   const classes = useStyles(); 
   const {confirmOrderDelivery} = useContext(OrderContext)
+  const [value, setValue] = useState('one');
+  const [filteredOrders, setFilteredOrders] = useState<Array<Order> | null>(null)
+
+  useEffect(() => {
+    if(!userInfo || !orders) return
+    if(userInfo!.role === "owner"){
+      const filtered = orders.filter((order:Order)=>{
+        if(!order.delivered && value === "one"){
+          return order
+        } else if (order.delivered && value === "two"){
+          return order
+        }
+      })
+      setFilteredOrders(filtered)
+    }
+  },[value])
+
+  console.log(filteredOrders)
 
   if(!orders){
     return (
@@ -25,6 +43,10 @@ function Orders({orders, userId, userInfo}: Iprops) {
   const handleConfirm = (order: Order) => {
     confirmOrderDelivery(order)
   }
+
+  const handleChange = (event: any, newValue: string) => {
+    setValue(newValue);
+  };
 
   const listCart = (cart: MenuItemType[]) => {
     return (
@@ -40,8 +62,19 @@ function Orders({orders, userId, userInfo}: Iprops) {
 
   return (
    <Box className={classes.container}>
+     <Box sx={{ width: '100%' }}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="wrapped label tabs example"
+        variant="fullWidth"
+      >
+        <Tab value="one" label="Olevererat" />
+        <Tab value="two" label="Levererat" />
+      </Tabs>
+    </Box>
      <Typography> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
-       {orders.map((order: Order) => 
+       {filteredOrders!.map((order: Order) => 
          order.extId === userId || userInfo?.role === "owner" ? (
          <Box className={classes.containerStyle}>
           <Box className={classes.textBox}>
