@@ -117,13 +117,7 @@ function AdminIndex(props: Iprops) {
           >
             <Typography variant="h5">Färgtema</Typography>
             <Button onClick={handleOpen}>
-              {colorSliderOpen ? (
-                <ArrowForwardIosRoundedIcon
-                  style={{ transform: `rotate(${90}deg)` }}
-                />
-              ) : (
-                <ArrowForwardIosRoundedIcon />
-              )}
+              <ArrowForwardIosRoundedIcon />
             </Button>
           </Box>
 
@@ -144,13 +138,7 @@ function AdminIndex(props: Iprops) {
         >
           <Typography variant="h5">Bakgrundsbild</Typography>
           <Button onClick={handleBackgroundOpen}>
-            {uploadBackgroundOpen ? (
-              <ArrowForwardIosRoundedIcon
-                style={{ transform: `rotate(${90}deg)` }}
-              />
-            ) : (
-              <ArrowForwardIosRoundedIcon />
-            )}
+            <ArrowForwardIosRoundedIcon />
           </Button>
         </Box>
         {uploadBackgroundOpen ? (
@@ -179,7 +167,7 @@ function AdminIndex(props: Iprops) {
               <form onSubmit={handleSubmit} className={classes.uploadForm}>
                 <FileUploadField setUrl={setURL} rId={restaurantData.rID} />
                 <Button type="submit" variant="outlined" color="primary">
-                  Spara
+                  Submit
                 </Button>
               </form>
             </Box>
