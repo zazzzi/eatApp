@@ -36,7 +36,7 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
   }
 
   return (
-    <Box>
+    <Box style={{ backgroundColor: "#FEFEFE" }}>
       <Box className={classes.header}>
         <Typography variant="h2">
           <b>Bord</b>
@@ -74,7 +74,9 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
       <Link
         to={`/menu/${restaurantTable.restaurantId}?table=${restaurantTable.table}`}
       >
-        <Typography>Tillbaks till menyn</Typography>
+        <Box display="flex" justifyContent="center">
+          <Typography>Tillbaka till menyn</Typography>
+        </Box>
       </Link>
     </Box>
   );

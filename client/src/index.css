@@ -45,3 +45,13 @@ hr {
 *::-webkit-scrollbar {
   display: none;
 }
+
+#root {
+  background-color: darkslategrey;
+}
+
+.inputButton {
+  display: flex;
+  text-align: center;
+  margin: auto;
+}

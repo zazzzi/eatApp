@@ -117,7 +117,13 @@ function AdminIndex(props: Iprops) {
           >
             <Typography variant="h5">Färgtema</Typography>
             <Button onClick={handleOpen}>
-              <ArrowForwardIosRoundedIcon />
+              {colorSliderOpen ? (
+                <ArrowForwardIosRoundedIcon
+                  style={{ transform: `rotate(${90}deg)` }}
+                />
+              ) : (
+                <ArrowForwardIosRoundedIcon />
+              )}
             </Button>
           </Box>
 
@@ -138,7 +144,13 @@ function AdminIndex(props: Iprops) {
         >
           <Typography variant="h5">Bakgrundsbild</Typography>
           <Button onClick={handleBackgroundOpen}>
-            <ArrowForwardIosRoundedIcon />
+            {uploadBackgroundOpen ? (
+              <ArrowForwardIosRoundedIcon
+                style={{ transform: `rotate(${90}deg)` }}
+              />
+            ) : (
+              <ArrowForwardIosRoundedIcon />
+            )}
           </Button>
         </Box>
         {uploadBackgroundOpen ? (
@@ -167,7 +179,7 @@ function AdminIndex(props: Iprops) {
               <form onSubmit={handleSubmit} className={classes.uploadForm}>
                 <FileUploadField setUrl={setURL} rId={restaurantData.rID} />
                 <Button type="submit" variant="outlined" color="primary">
-                  Submit
+                  Spara
                 </Button>
               </form>
             </Box>
@@ -185,17 +197,6 @@ function AdminIndex(props: Iprops) {
               <Button>
                 <ArrowForwardIosRoundedIcon />
               </Button>
-            </Box>
-          </Link>
-          <Link to="/orders">
-            <Box
-              className="classes.settingsListItem"
-              display="flex"
-              justifyContent="space-between"
-              p={1}
-            >
-              <Typography variant="h5">Ordrar</Typography>
-              <ArrowForwardIosRoundedIcon />
             </Box>
           </Link>
         </Box>
