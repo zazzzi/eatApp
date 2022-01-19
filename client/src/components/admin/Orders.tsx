@@ -29,9 +29,7 @@ function Orders({orders, userId, userInfo}: Iprops) {
       })
       setFilteredOrders(filtered)
     }
-  },[value])
-
-  console.log(filteredOrders)
+  },[value, userInfo, orders])
 
   if(!orders){
     return (
@@ -57,6 +55,12 @@ function Orders({orders, userId, userInfo}: Iprops) {
              </Typography>
            ))}
       </Box>
+    )
+  }
+
+  if(!filteredOrders){
+    return (
+      <></>
     )
   }
 

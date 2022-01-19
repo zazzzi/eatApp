@@ -78,11 +78,10 @@ function OrderProvider(props: Props) {
     await updateDoc(docRef, {
       "delivered": true,
     });
-    orders.map((o: Order) => {
-      if(o.extId === order.id){
-        o.delivered = true
-      }
-    })
+    const deliveredOrders = orders.map((o: Order) => 
+      o.id === order.id ? {...o, delivered: true} : o
+    )
+    setOrders(deliveredOrders)
   }
 
   return (
