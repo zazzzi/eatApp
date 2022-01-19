@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import SendIcon from "@material-ui/icons/Send";
 import { IncomingUser, User } from "../../types/types";
+import { backgroundClip } from "html2canvas/dist/types/css/property-descriptors/background-clip";
 
 interface Iprops {
   loginDataCallback(user: IncomingUser): void;
@@ -34,7 +35,7 @@ function LoginInputForm(props: Iprops) {
   }
 
   return (
-    <Box>
+    <Box style={{ backgroundColor: "#FEFEFE" }}>
       <Box>
         <form className={classes.formStyling} onSubmit={handleSubmit}>
           <TextField
