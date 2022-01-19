@@ -86,7 +86,7 @@ function Orders({orders, userId, userInfo}: Iprops) {
         </Tabs>
       </Box>) : null
       }
-     <Typography> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
+     <Typography variant="h5" className={classes.header}> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
        {filteredOrders!.map((order: Order) => 
          order.extId === userId || userInfo?.role === "owner" ? (
          <Box className={classes.containerStyle}>
@@ -128,6 +128,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
   },
   container: {
+    height: "100vh",
+    backgroundColor: "white",
     margin: "1rem",
   },
   containerStyle: {
@@ -157,6 +159,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   orderStatus: {
     display: "flex",
+  }, 
+  header: {
+    padding: "1rem 0rem 0rem 0rem"
   }
 }));
 
