@@ -15,11 +15,11 @@ import { forwardRef, useContext, useEffect, useState } from "react";
 import { MenuItemType } from "../../types/types";
 
 import DeleteIcon from "@material-ui/icons/Delete";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { MenuContext } from "../../context/MenusContext";
 import FileUploadField from "./FileUploadField";
 import CustomizedSnackbars from "../menu/Alert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { Skeleton } from "@mui/material";
 
 interface IProps {
   closeModal: () => void;
@@ -106,6 +106,7 @@ function EditMenuModal(props: IProps) {
       img: url,
     });
   };
+  console.log(MenuItem);
 
   const handleAlertClose = (
     event?: React.SyntheticEvent | Event,
@@ -122,6 +123,7 @@ function EditMenuModal(props: IProps) {
     if (newMenuItem || updatedMenuInfo) {
       setImageIsUploaded(true);
     } else setImageIsUploaded(false);
+    console.log(imageIsUploaded);
   });
 
   return (

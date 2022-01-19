@@ -11,10 +11,9 @@ import {
   MenuItem,
   Tooltip,
   Link,
-  Slide,
   CircularProgress,
 } from "@material-ui/core";
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuItems from "../menu/MenuItem";
