@@ -35,8 +35,6 @@ function CreateUser(props: Iprops) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [uid, setUid] = useState<string>();
 
-
-
   // CREATES NEW USER WITH DATA FROM CHILD
   async function userDataCallback(user: User) {
     await createUserWithEmailAndPassword(auth, user.email, user.password).then(
@@ -46,9 +44,11 @@ function CreateUser(props: Iprops) {
           lastName: user.lastName,
           email: user.email,
           phoneNumber: user.phoneNumber,
-          role: "customer"
-        }
-        return await setDoc(doc(db, "users", cred.user.uid), { userInformation });
+          role: "customer",
+        };
+        return await setDoc(doc(db, "users", cred.user.uid), {
+          userInformation,
+        });
       }
     );
   }
@@ -66,7 +66,7 @@ function CreateUser(props: Iprops) {
   });
 
   return (
-    <Box>
+    <Box className={classes.rootContainer}>
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
       <Box>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "100vw",
-    marginTop: "2rem"
+    marginTop: "2rem",
   },
   welcomeTextContainer: {
     display: "flex",
@@ -102,8 +102,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%"
-  }
+    width: "100%",
+  },
+  rootContainer: {
+    backgroundColor: "#FEFEFE",
+  },
 }));
 
 export default CreateUser;
