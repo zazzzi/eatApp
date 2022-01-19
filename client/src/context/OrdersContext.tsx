@@ -47,7 +47,7 @@ function OrderProvider(props: Props) {
       }
     }
     getOrders();
-  },[userInformation, orders])
+  },[])
 
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
     const order: Order = {
