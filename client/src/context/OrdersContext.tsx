@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {db} from '../firebase'
-import { collection, doc, setDoc, addDoc, getDocs, updateDoc} from "firebase/firestore";
+import { collection, doc, setDoc, addDoc, getDocs, updateDoc, onSnapshot} from "firebase/firestore";
 import { Order, RestaurantTableData, User } from "../types/types";
 import  {  MenuItem } from "./CartContext";
 import { UserAuthContext } from "./UsersContext";
@@ -49,6 +49,16 @@ function OrderProvider(props: Props) {
     getOrders();
   },[userInformation])
 
+  useEffect(()=>{
+    const unsubscribe = () => {
+      const OrdersCollectionRef = collection(db, 'orders')
+      onSnapshot(OrdersCollectionRef, (snapshot) => 
+        setOrders(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))
+      ))
+    }
+    return () => unsubscribe()
+  },[userInformation])
+ 
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
     const order: Order = {
       extId: !userID ? "guest" : userID,
