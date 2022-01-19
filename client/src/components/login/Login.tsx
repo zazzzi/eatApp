@@ -16,6 +16,8 @@ import {
 import LogOutBtn from "./LogOutBtn";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from "react-router-dom";
+import HomeIcon from "@material-ui/icons/Home";
+
 
 interface Iprops {}
 
@@ -53,6 +55,15 @@ function Login(props: Iprops) {
   return (
     <Box>
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
+      <Box
+        sx={{ position: "absolute", top: "0", zIndex: 100 }}
+        display="flex"
+        justifyContent="center"
+      >
+        <Link href="/">
+          <HomeIcon htmlColor="#000000" fontSize="large" />
+        </Link>
+      </Box>
       <Box className={classes.logoContainer}>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </Box>
@@ -63,10 +74,7 @@ function Login(props: Iprops) {
       <Box>
         <LoginInputForm loginDataCallback={loginDataCallback} />
       </Box>
-      <Box>
-        <LogOutBtn />
-        <a href="/">Home</a>
-      </Box>
+ 
       <Box className={classes.noAccountOuterContainer}>
         <Box className={classes.noAccountInnerContainer}>
           <Typography>
@@ -105,8 +113,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   noAccountInnerContainer: {
     border: "1px solid grey",
     padding: "0.3rem .8rem",
-    borderRadius: "10px"
-  }
+    borderRadius: "10px",
+  },
 }));
 
 export default Login;

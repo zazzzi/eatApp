@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Link,
   makeStyles,
   TextField,
   Theme,
@@ -13,6 +14,7 @@ import { UserAuthContext } from "../../context/UsersContext";
 import { auth } from "../../firebase";
 import { User, UserInfoToUpdate } from "../../types/types";
 import LogOutBtn from "../login/LogOutBtn";
+import HomeIcon from "@material-ui/icons/Home";
 import PasswordModal from "./PasswordModal";
 
 interface Iprops {}
@@ -73,6 +75,15 @@ function UserPage(props: Iprops) {
 
   return (
     <Box style={{ backgroundColor: "#FEFEFE" }}>
+       <Box
+        sx={{ position: "absolute", top: "0", zIndex: 100 }}
+        display="flex"
+        justifyContent="center"
+      >
+        <Link href="/">
+          <HomeIcon htmlColor="#00000" fontSize="large" />
+        </Link>
+      </Box>
       <Box className={classes.welcomeMessageContainer}>
         {userInfoState ? (
           <Typography variant="h4">
