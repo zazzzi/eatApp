@@ -34,9 +34,6 @@ function Hero({ restaurantId }: Iprops) {
         </Box>
       </Box>
       <Box className={classes.signUpContainer}>
-        <Link to={"login"}>
-          <Typography variant="body1">Logga in</Typography>
-        </Link>
         <Link to="/checkout">
           <Typography variant="body1">cart</Typography>
         </Link>
@@ -48,6 +45,16 @@ function Hero({ restaurantId }: Iprops) {
         <Link to="/admin">
           <Typography variant="body1">Admin</Typography>
         </Link>
+      </Box>
+      <Box className={classes.noAccountOuterContainer}>
+        <Box className={classes.noAccountInnerContainer}>
+          <Typography>
+            Har du ett konto? &nbsp;
+            <Link to="/login">
+              Logga in här!
+            </Link>
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
@@ -83,6 +90,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
     justifyContent: "space-around",
     background: "linear-gradient(to right, #83a4d4, #b6fbff)",
+  },
+  noAccountOuterContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    position: "fixed",
+    left: "50%",
+    bottom: "20px",
+    transform: "translate(-50%, -50%)",
+    margin: "0 auto",
+  },
+  noAccountInnerContainer: {
+    border: "1px solid grey",
+    padding: "0.3rem .8rem",
+    borderRadius: "10px",
   },
 }));
 

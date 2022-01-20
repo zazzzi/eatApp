@@ -101,10 +101,14 @@ function ResetPassword(props: Iprops) {
             Om epost-adressen existerar så har vi skickat ett email med
             instruktioner om hur du återställer ditt lösenord.
           </Typography>
-          <Button className={classes.backToLoginBtn}>Tillbaka till login</Button>
+          <Link href="/login" underline="none" className={classes.backToLoginBtn}>
+            <Button >
+              Tillbaka till login
+            </Button>
+          </Link>
         </Box>
       ) : (
-        <Box >
+        <Box>
           <form className={classes.formStyling} onSubmit={sendResetEmail}>
             <TextField
               className={classes.inputField}
@@ -117,7 +121,7 @@ function ResetPassword(props: Iprops) {
               onChange={handleChange}
             ></TextField>
             <Box className={classes.loginBtnContainer}>
-              <Button endIcon={<SendIcon />} size="large" type="submit">
+              <Button variant="outlined" endIcon={<SendIcon />} size="large" type="submit">
                 Skicka{" "}
               </Button>
             </Box>
@@ -191,14 +195,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   resetMessageSent: {
     display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     flexDirection: "column",
     margin: "1rem 0 1rem 0",
-    
-  }, 
-  backToLoginBtn: {
-    margin: "2rem 0"
   },
-  
+  backToLoginBtn: {
+    margin: "2rem 0",
+  },
 }));
 
 export default ResetPassword;

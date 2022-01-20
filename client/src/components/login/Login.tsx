@@ -109,6 +109,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+    position: "fixed",
+    left: "50%",
+    bottom: "20px",
+    transform: "translate(-50%, -50%)",
+    margin: "0 auto",
   },
   noAccountInnerContainer: {
     border: "1px solid grey",
