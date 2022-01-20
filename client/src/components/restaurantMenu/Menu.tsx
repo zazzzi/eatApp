@@ -28,6 +28,9 @@ import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounde
 import AdminIndex from "../admin/index";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import HomeIcon from "@material-ui/icons/Home";
+import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import Badge, { BadgeProps } from '@mui/material/Badge';
 
 interface Iprops {
   restaurantId: RestaurantTableData;
@@ -124,9 +127,13 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     } else {
       setRestaurantNameColorBlack(true);
     }
-
     updateRestaurantNameColor(restaurantNameColorBlack);
   };
+
+  const cartQuantity = () => {
+    if(!cart.length) return
+    return cart.map(item => item.quantity).reduce((prev, next) => prev + next);
+  }
 
   return (
     <Box className={classes.menuPageContainer}>
@@ -252,7 +259,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                 color="primary"
                 className={classes.cartButton}
               >
-                <ShoppingCartOutlinedIcon htmlColor="#FFF" />
+                <IconButton aria-label="cart">
+                  <StyledBadge badgeContent={cartQuantity()} color="secondary">
+                    <ShoppingCartOutlinedIcon htmlColor="#FFF" />
+                  </StyledBadge>
+                </IconButton>
               </Fab>
             </Fade>
           ) : null}
@@ -265,6 +276,15 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     </Box>
   );
 };
+
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: -10,
+    top: 30,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}));
 
 const useStyles = makeStyles((theme: Theme) => ({
   menuPageContainer: {
