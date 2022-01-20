@@ -51,11 +51,6 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
     setValue(newValue);
   };
 
-  //TODO: orderconfirmation styling and menu link
-  //TODO: link back to main page from orders
-  //TODO: no orders when customer
-  //TODO: links from admin and customer to orders page 
-
   const listCart = (cart: MenuItemType[]) => {
     return (
       <Box >
