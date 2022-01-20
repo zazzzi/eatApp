@@ -1,17 +1,20 @@
 import { Box, Button, CircularProgress, Divider, makeStyles, Tab, Tabs, Theme, Typography} from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../../context/OrdersContext";
-import { MenuItemType, Order, User } from "../../types/types";
+import { MenuItemType, Order, RestaurantTableData, User } from "../../types/types";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { Link } from "react-router-dom";
 
 
 interface Iprops {
   orders: Order[];
   userId: string | null;
   userInfo: User | null
+  restaurantId: RestaurantTableData
 }
 
 
-function Orders({orders, userId, userInfo}: Iprops) {
+function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
   const classes = useStyles(); 
   const {confirmOrderDelivery} = useContext(OrderContext)
   const [value, setValue] = useState('one');
@@ -48,11 +51,6 @@ function Orders({orders, userId, userInfo}: Iprops) {
     setValue(newValue);
   };
 
-  //TODO: orderconfirmation styling and menu link
-  //TODO: link back to main page from orders
-  //TODO: no orders when customer
-  //TODO: links from admin and customer to orders page 
-
   const listCart = (cart: MenuItemType[]) => {
     return (
       <Box >
@@ -73,6 +71,12 @@ function Orders({orders, userId, userInfo}: Iprops) {
 
   return (
    <Box className={classes.container}>
+     <Box className={classes.title}>
+        <Link style={{ textDecoration: "none" }} to={`/menu/${restaurantId.restaurantId}?table=${restaurantId.table}`}>
+          <ArrowBackIosIcon/>
+        </Link>
+        <Typography variant="h5"> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
+      </Box>
      {userInfo?.role === "owner" ? (
       <Box sx={{ width: '100%' }}>
         <Tabs
@@ -86,7 +90,7 @@ function Orders({orders, userId, userInfo}: Iprops) {
         </Tabs>
       </Box>) : null
       }
-     <Typography variant="h5" className={classes.header}> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
+      
        {filteredOrders!.map((order: Order) => 
          order.extId === userId || userInfo?.role === "owner" ? (
          <Box className={classes.containerStyle}>
@@ -130,7 +134,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     height: "100vh",
     backgroundColor: "white",
-    margin: "1rem",
+    padding: "1rem",
   },
   containerStyle: {
     borderRadius: "0.2rem",
@@ -161,7 +165,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
   }, 
   header: {
-    padding: "1rem 0rem 0rem 0rem"
+    
+  }, 
+  title: {
+    padding: "0rem 0rem 0.5rem 0rem",
+    display: "flex",
+    alignItems: "center",
   }
 }));
 
