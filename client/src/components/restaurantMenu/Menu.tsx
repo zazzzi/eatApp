@@ -14,7 +14,7 @@ import {
   Slide,
   CircularProgress,
 } from "@material-ui/core";
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext, useRef, useReducer } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuItems from "../menu/MenuItem";
@@ -55,6 +55,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
     useState<boolean>(true);
+  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
     if (!id) return;
@@ -103,7 +104,12 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     const filterUndefined = filtered.filter(function (x: any) {
       return x !== undefined;
     });
-    return <MenuItems menuItems={filterUndefined} />;
+    return (
+      <MenuItems
+        menuItems={filterUndefined}
+        deletedItemCallback={forceUpdate}
+      />
+    );
   };
 
   function checkIfOwner() {

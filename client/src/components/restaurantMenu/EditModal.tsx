@@ -94,6 +94,7 @@ function EditMenuModal(props: IProps) {
     props.isNewItem
       ? createNewMenuItem(newMenuItem)
       : updateItemData(props.menuItem.title, updatedMenuInfo);
+    props.closeModal();
   };
 
   const setURL = (url: string) => {

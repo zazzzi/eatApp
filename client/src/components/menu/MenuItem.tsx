@@ -8,7 +8,7 @@ import {
   Button,
   Tooltip,
 } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { MenuItemType } from "../../types/types";
 import Incrementer from "../incrementer/Incrementer";
 import { MenuItem } from "../../context/CartContext";
@@ -20,16 +20,17 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { Skeleton } from "@mui/material";
 
 interface Iprops {
+  deletedItemCallback?(): void;
   menuItems: any;
 }
 
-function MenuItems({ menuItems }: Iprops) {
+function MenuItems(props: Iprops) {
   const classes = useStyles();
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
   const { restaurantId, deleteMenuItem } = useContext(MenuContext);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const [deletedItemArray, setDeletedItemArray] = useState(menuItems);
+  const [deletedItemArray, setDeletedItemArray] = useState(props.menuItems);
 
   useEffect(() => {
     checkIfOwner();
@@ -46,17 +47,16 @@ function MenuItems({ menuItems }: Iprops) {
   }
 
   function handleDelete(index: any, id: any) {
-    const currentMenu = menuItems[index];
+    const currentMenu = props.menuItems[index];
 
-    console.log(currentMenu.id);
     setDeletedItemArray(currentMenu);
-    console.log(deletedItemArray);
     deleteMenuItem(deletedItemArray, currentMenu.id);
+    props.deletedItemCallback!();
   }
 
   return (
     <>
-      {menuItems.map((item: MenuItemType | MenuItem, index: any) => (
+      {props.menuItems.map((item: MenuItemType | MenuItem, index: any) => (
         <Box className={classes.menuitemContainer}>
           <Box className={classes.menuItem}>
             <Container className={classes.imageColumn}>
@@ -83,14 +83,16 @@ function MenuItems({ menuItems }: Iprops) {
             <Box className={classes.incrementerContainer}>
               {isOwner ? (
                 <>
-                  <Box mr={2}>
+                  <Box mr={2} style={{ cursor: "pointer" }}>
                     <Tooltip title="Delete">
                       <DeleteIcon
-                        onClick={() => handleDelete(index, menuItems.id)}
+                        onClick={() => [
+                          handleDelete(index, props.menuItems.id),
+                        ]}
                       />
                     </Tooltip>
                   </Box>
-                  <Box>
+                  <Box style={{ cursor: "pointer" }}>
                     <Tooltip title="Edit">
                       <EditRoundedIcon onClick={() => setOpen(true)} />
                     </Tooltip>

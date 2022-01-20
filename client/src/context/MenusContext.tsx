@@ -67,10 +67,8 @@ function MenuProvider(props: Props) {
     any | null
   >(null);
   const { userInformation } = useContext(UserAuthContext);
-  const [tableExists, setTableExists] = useState<boolean>(false)
+  const [tableExists, setTableExists] = useState<boolean>(false);
 
-  
-  
   useEffect(() => {
     if (!id) return;
     const getRestaurantData = async () => {
@@ -91,21 +89,21 @@ function MenuProvider(props: Props) {
   }, []);
 
   useEffect(() => {
-    if(!restaurantData) return
+    if (!restaurantData) return;
     const currentRestaurant = {
       restaurantId: id,
       table: table,
-      restaurantName: restaurantData.restaurantName
+      restaurantName: restaurantData.restaurantName,
     };
     localStorage.setItem("restaurant", JSON.stringify(currentRestaurant));
-  }, [restaurantData])
+  }, [restaurantData]);
 
   useEffect(() => {
-    if(!restaurantData) return
-    if(restaurantData.tables.includes(String(table))){
-      setTableExists(true)
+    if (!restaurantData) return;
+    if (restaurantData.tables.includes(String(table))) {
+      setTableExists(true);
     }
-  },[restaurantData])
+  }, [restaurantData]);
 
   const urlParam = (param: string, table: string) => {
     setTable(Number(table));
@@ -150,6 +148,9 @@ function MenuProvider(props: Props) {
     await updateDoc(docRef, {
       menu,
     });
+
+    // setRestaurantdata();
+    console.log(restaurantData);
   }
 
   const addTable = async (table: string) => {
