@@ -1,16 +1,36 @@
 import { Box, Button, makeStyles, Theme, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import qrBtn from "../../assets/img/qrBtn.png";
 import { RestaurantTableData } from "../../types/types";
-
+import QrReader from "react-qr-reader";
 interface Iprops {
   restaurantId: RestaurantTableData;
 }
 
 function Hero({ restaurantId }: Iprops) {
   const classes = useStyles();
+  const [incomingScan, setIncomingScan] = useState({ result: "None" });
+  const [cameraActive, setCameraActive] = useState(false);
+  let navigate = useNavigate();
+
+  const handleScan = (data: any) => {
+    if (data) {
+      setIncomingScan({
+        result: data,
+      });
+      window.location.replace(data);
+    }
+  };
+
+  const handleError = (err: Error) => {
+    console.error(err);
+  };
+
+  const activateCamera = () => {
+    setCameraActive(true);
+  };
 
   if (!restaurantId) {
     return <>hi</>;
@@ -22,23 +42,25 @@ function Hero({ restaurantId }: Iprops) {
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </a>
       <Box className={classes.qrBtnContainer}>
-        <label className={classes.qrBtnLabel} htmlFor="putput">
-          <input
-            className={classes.cameraFileInput}
-            id="putput"
-            type="file"
-            accept="image/*"
-            capture="environment"
-          />
+        {cameraActive ? (
           <Box>
-            <img src={qrBtn} alt="qrCode.png" />
+            <QrReader
+              delay={300}
+              onError={handleError}
+              onScan={handleScan}
+              style={{ width: "15rem" }}
+            />
           </Box>
-          <Box className={classes.ctaTextContainer}>
-            <Typography variant="body1">
-              Scanna restaurangens QR-kod för att komma igång.
-            </Typography>
-          </Box>
-        </label>
+        ) : (
+          <Button onClick={activateCamera} className={classes.ctaBtn}>
+            <Box className={classes.ctaTextContainer}>
+              <img src={qrBtn} alt="qrCode.png" />
+              <Typography variant="body2">
+                Klicka här för att scanna en QR-kod!{" "}
+              </Typography>
+            </Box>
+          </Button>
+        )}
       </Box>
       <Box className={classes.signUpContainer}>
         <Link to="/checkout">
@@ -118,8 +140,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "0.3rem .8rem",
     borderRadius: "10px",
   },
-  cameraFileInput: {
-    display: "none",
+  ctaBtn: {
+    display: "flex",
+    flexDirection: "column",
+    textTransform: "none",
   },
 }));
 
