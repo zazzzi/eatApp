@@ -57,7 +57,6 @@ function CartProvider(props: Props) {
   }
 
   function clearCart() {
-    console.log('test')
     setCartItems([]);
     localStorage.setItem("cart", JSON.stringify([]));
   }

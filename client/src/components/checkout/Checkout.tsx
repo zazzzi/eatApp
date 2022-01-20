@@ -66,7 +66,7 @@ function Checkout({restaurantId}:Iprops) {
       const order = createOrder(response, cart, totalPrice, restaurantId)
       setOrder(order!)
       setActiveStep(3)
-      clearCart()
+      /* clearCart() */
     }
   }
 

@@ -27,7 +27,7 @@ function OrderConfirmation({order, restaurantId}: Iprops) {
      <Box>
       <Typography>Tack för din beställning, din order är på väg!</Typography>
      </Box>
-     <Box className={classes.box}>
+     <Box className={classes.containerStyle}>
       <Typography>Din Order:</Typography>
        {order.cart.map((item: MenuItem) => (
          <Box>
@@ -47,9 +47,6 @@ function OrderConfirmation({order, restaurantId}: Iprops) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  box: {
-    outline: "0.01rem solid"
-  }, 
   height: {
     height: "100%"
   },
@@ -57,6 +54,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: "0.2rem",
     color: "black",
     textDecoration: "none"
+  },
+  container: {
+    height: "100vh",
+    backgroundColor: "white",
+    margin: "1rem",
+  },
+  containerStyle: {
+    borderRadius: "0.2rem",
+    display: "flex",
+    margin: "0.5rem 0rem 0.5rem 0rem",
+    boxShadow: "1px 2px 6px 1px rgba(0,0,0,0.12)",
+    flexDirection: "column"
   },
 }));
 
