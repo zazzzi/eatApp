@@ -130,7 +130,8 @@ function App() {
                 orders={orders}
                 userId={userID}
                 userInfo={userInformation}
-                />}
+                restaurantId={currentTableAndRestaurant!}
+              />}
             />
             </Routes>
           </Router>

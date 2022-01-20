@@ -200,6 +200,21 @@ function AdminIndex(props: Iprops) {
             </Box>
           </Link>
         </Box>
+        <Box>
+          <Link style={{ textDecoration: "none" }} to="/orders">
+            <Box
+              className="classes.settingsListItem"
+              display="flex"
+              justifyContent="space-between"
+              p={1}
+            >
+              <Typography variant="h5">Orders</Typography>
+              <Button>
+                <ArrowForwardIosRoundedIcon />
+              </Button>
+            </Box>
+          </Link>
+        </Box>
       </Box>
     </Box>
   );

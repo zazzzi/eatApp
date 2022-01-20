@@ -1,9 +1,9 @@
 import {
   Box,
   Button,
-  Link,
   makeStyles,
   TextField,
+  Link,
   Theme,
   Typography,
 } from "@material-ui/core";
@@ -145,10 +145,12 @@ function UserPage(props: Iprops) {
           </form>
         ) : null}
       </Box>
-      {userInfoState && userInfoState.role === "customer" ? (
-        <Box>ORDERS HÄR</Box>
-      ) : null}
       <Box className={classes.buttonContainer}>
+        {userInfoState && userInfoState.role === "customer" ? (
+          <Link href="/orders">
+            <Button>Orders</Button>
+          </Link>
+        ) : null}
         <Button onClick={openModal}>Byt lösenord</Button>
         {isOpen ? (
           <PasswordModal

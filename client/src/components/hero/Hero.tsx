@@ -45,9 +45,6 @@ function Hero({ restaurantId }: Iprops) {
         >
           <Typography variant="body1">Menu</Typography>
         </Link>
-        <Link to="/admin">
-          <Typography variant="body1">Admin</Typography>
-        </Link>
       </Box>
     </Box>
   );
