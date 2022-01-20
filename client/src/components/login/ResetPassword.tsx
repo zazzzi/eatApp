@@ -50,6 +50,10 @@ function ResetPassword(props: Iprops) {
     });
   }, []);
 
+  useEffect(() => {
+    document.title = "Återställ lösenord";
+  }, []);
+
   function sendResetEmail(event: React.SyntheticEvent) {
     event.preventDefault();
     const auth = getAuth();

@@ -37,6 +37,10 @@ function Login(props: Iprops) {
     });
   }, []);
 
+  useEffect(() => {
+    document.title = "Logga in!"
+ }, []);
+
   //async funtion to log the user in
   async function loginDataCallback(user: IncomingUser) {
     await signInWithEmailAndPassword(auth, user.email, user.password)

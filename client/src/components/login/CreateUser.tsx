@@ -54,6 +54,10 @@ function CreateUser(props: Iprops) {
   }
 
   useEffect(() => {
+    document.title = "Skapa ny användare";
+  }, []);
+
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user.email, " Logged in");
@@ -79,7 +83,9 @@ function CreateUser(props: Iprops) {
         <CreateUserForm userDataCallback={userDataCallback} />
       </Box>
       <Box>
-        <LogOutBtn />
+        <Link href="/login">
+          <Button>Tillbaka</Button>
+        </Link>
       </Box>
     </Box>
   );
