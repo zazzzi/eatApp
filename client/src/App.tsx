@@ -16,6 +16,7 @@ import TablesEditor from "./components/admin/Tables";
 import QrGenerator from "./components/admin/QrGenerator";
 import Orders from "./components/admin/Orders"
 import { Box } from "@material-ui/core";
+import ResetPassword from "./components/login/ResetPassword";
 
 
 function App() {
@@ -90,6 +91,7 @@ function App() {
               />
               <Route path="/login" element={<Login />} />
               <Route path="/create-user" element={<CreateUser />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route
                 path={`/menu/:id`}
                 element={
