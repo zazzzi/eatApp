@@ -24,7 +24,8 @@ function Login(props: Iprops) {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [uid, setUid] = useState<string>();
-  const [wrongPasswordOrEmail, setWrongPasswordOrEmail] = useState<boolean>(false);
+  const [wrongPasswordOrEmail, setWrongPasswordOrEmail] =
+    useState<boolean>(false);
 
   console.log(uid, isLoggedIn);
 
@@ -38,14 +39,13 @@ function Login(props: Iprops) {
   }, []);
 
   useEffect(() => {
-    document.title = "Logga in!"
- }, []);
+    document.title = "Logga in!";
+  }, []);
 
   //async funtion to log the user in
   async function loginDataCallback(user: IncomingUser) {
     await signInWithEmailAndPassword(auth, user.email, user.password)
-      .then(async (cred) => {
-      })
+      .then(async (cred) => {})
       .catch((err) => {
         if (err) {
           setWrongPasswordOrEmail(true);
@@ -54,26 +54,22 @@ function Login(props: Iprops) {
   }
 
   return (
-    <Box>
+    <Box className={classes.backgroundColor}>
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
-      <Box
-        sx={{ position: "absolute", top: "0", zIndex: 100 }}
-        display="flex"
-        justifyContent="center"
-      >
-        <Link href="/">
-          <HomeIcon htmlColor="#000000" fontSize="large" />
-        </Link>
-      </Box>
       <Box className={classes.logoContainer}>
-        <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
+        <Link href="/">
+          <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
+        </Link>
       </Box>
       <Box className={classes.welcomeTextContainer}>
         <Typography variant="h4">Välkommen</Typography>
         <Typography variant="body2">Logga in på ditt konto här.</Typography>
       </Box>
       <Box>
-        <LoginInputForm incorrectInfo={wrongPasswordOrEmail} loginDataCallback={loginDataCallback} />
+        <LoginInputForm
+          incorrectInfo={wrongPasswordOrEmail}
+          loginDataCallback={loginDataCallback}
+        />
       </Box>
 
       <Box className={classes.noAccountOuterContainer}>
@@ -93,11 +89,18 @@ function Login(props: Iprops) {
 const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
-    width: "100vw",
+    width: "20rem",
+  },
+  backgroundColor: {
+    backgroundColor: "#FEFEFE",
+    height: "100vh",
   },
   logoContainer: {
     display: "flex",
-    marginTop: "5rem",
+    paddingTop: "5rem",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FEFEFE",
   },
   welcomeTextContainer: {
     display: "flex",
@@ -105,6 +108,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     flexDirection: "column",
     marginTop: "2rem",
+    backgroundColor: "#FEFEFE",
   },
   noAccountOuterContainer: {
     width: "100%",

@@ -72,7 +72,7 @@ function CreateUser(props: Iprops) {
   return (
     <Box className={classes.rootContainer}>
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
-      <Box>
+      <Box className={classes.logoContainer}>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </Box>
       <Box className={classes.welcomeTextContainer}>
@@ -82,7 +82,7 @@ function CreateUser(props: Iprops) {
       <Box className={classes.formContainer}>
         <CreateUserForm userDataCallback={userDataCallback} />
       </Box>
-      <Box>
+      <Box className={classes.formContainer}>
         <Link href="/login">
           <Button>Tillbaka</Button>
         </Link>
@@ -94,15 +94,25 @@ function CreateUser(props: Iprops) {
 const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
-    width: "100vw",
-    marginTop: "2rem",
+    width: "20rem",
+  },
+  backgroundColor: {
+    backgroundColor: "#FEFEFE",
+    height: "100vh"
+  },
+  logoContainer: {
+    display: "flex",
+    paddedTop: "5rem",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FEFEFE",
   },
   welcomeTextContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    margin: "2rem 0 1rem 0",
+    margin: "1rem 0 1rem 0",
   },
   formContainer: {
     display: "flex",
