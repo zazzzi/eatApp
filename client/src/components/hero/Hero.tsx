@@ -22,16 +22,23 @@ function Hero({ restaurantId }: Iprops) {
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </a>
       <Box className={classes.qrBtnContainer}>
-        <Box>
-          <Button>
+        <label className={classes.qrBtnLabel} htmlFor="putput">
+          <input
+            className={classes.cameraFileInput}
+            id="putput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+          />
+          <Box>
             <img src={qrBtn} alt="qrCode.png" />
-          </Button>
-        </Box>
-        <Box className={classes.ctaTextContainer}>
-          <Typography variant="body1">
-            Scanna restaurangens QR-kod för att komma igång.
-          </Typography>
-        </Box>
+          </Box>
+          <Box className={classes.ctaTextContainer}>
+            <Typography variant="body1">
+              Scanna restaurangens QR-kod för att komma igång.
+            </Typography>
+          </Box>
+        </label>
       </Box>
       <Box className={classes.signUpContainer}>
         <Link to="/checkout">
@@ -50,9 +57,7 @@ function Hero({ restaurantId }: Iprops) {
         <Box className={classes.noAccountInnerContainer}>
           <Typography>
             Har du ett konto? &nbsp;
-            <Link to="/login">
-              Logga in här!
-            </Link>
+            <Link to="/login">Logga in här!</Link>
           </Typography>
         </Box>
       </Box>
@@ -70,7 +75,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    marginTop: "4rem",
+    marginTop: "1.5rem",
+    flexDirection: "column",
+  },
+  qrBtnLabel: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "1.5rem",
     flexDirection: "column",
   },
   ctaTextContainer: {
@@ -105,6 +117,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     border: "1px solid grey",
     padding: "0.3rem .8rem",
     borderRadius: "10px",
+  },
+  cameraFileInput: {
+    display: "none",
   },
 }));
 
