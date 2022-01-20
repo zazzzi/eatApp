@@ -21,14 +21,15 @@ import Cart from '../cart/Cart'
 import Swish from "./Swish";
 import { CartContext } from "../../context/CartContext";
 import { OrderContext } from "../../context/OrdersContext";
-import { Order, RestaurantTableData } from "../../types/types";
+import { Order, RestaurantTableData, User } from "../../types/types";
 
 
 interface Iprops {
  restaurantId: RestaurantTableData;
+ userInformation: User;
 }
 
-function Checkout({restaurantId}:Iprops) {
+function Checkout({restaurantId, userInformation}:Iprops) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
@@ -104,6 +105,7 @@ function Checkout({restaurantId}:Iprops) {
             <Swish 
               paymentResponse={paymentResponse}
               priceTotal={totalPrice}
+              userInformation={userInformation}
             /> 
             : 
             <StripeContainer 

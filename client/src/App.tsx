@@ -104,7 +104,10 @@ function App() {
               <Route path={`/user/${userID}`} element={<UserPage />} />
               <Route
                 path="/checkout/"
-                element={<Checkout restaurantId={currentTableAndRestaurant!} />}
+                element={<Checkout 
+                  restaurantId={currentTableAndRestaurant!} 
+                  userInformation={userInformation!}
+                />}
               />
               <Route
                 path="/admin"

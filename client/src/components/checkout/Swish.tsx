@@ -1,23 +1,25 @@
 import {
   Box,
   Button,
-  FormControl,
   makeStyles,
   TextField,
   Theme,
-  Typography,
 } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import swish from "../../assets/img/swish.png";
+import { User } from "../../types/types";
 
 interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void;
   priceTotal: number;
+  userInformation: User;
 }
 
-function SwishPayment({ paymentResponse, priceTotal }: Iprops) {
+function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) {
   const classes = useStyles();
   const [number, setNumber] = useState<any>(0);
+
+  console.log(userInformation)
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNumber(event.target.value);
@@ -84,6 +86,7 @@ function SwishPayment({ paymentResponse, priceTotal }: Iprops) {
               InputLabelProps={{ shrink: true }}
               className={classes.textField}
               onChange={handleInput}
+              value={userInformation ? userInformation.phoneNumber : null}
             />
             <Button
               className={classes.button}
