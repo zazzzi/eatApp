@@ -76,7 +76,7 @@ function ResetPassword(props: Iprops) {
   }
 
   return (
-    <Box>
+    <Box className={classes.backgroundColor}>
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
       <Box
         sx={{ position: "absolute", top: "0", zIndex: 100 }}
@@ -87,10 +87,10 @@ function ResetPassword(props: Iprops) {
           <HomeIcon htmlColor="#000000" fontSize="large" />
         </Link>
       </Box>
-      <Box className={classes.logoContainer}>
+      <Box className={`${classes.logoContainer} ${classes.backgroundColor}`}>
         <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
       </Box>
-      <Box className={classes.welcomeTextContainer}>
+      <Box className={`${classes.welcomeTextContainer} ${classes.backgroundColor}`}>
         <Typography variant="h4">Återställ lösenord</Typography>
         {resetSent ? null : (
           <Typography className={classes.textAlignCenter} variant="body2">
@@ -150,14 +150,20 @@ function ResetPassword(props: Iprops) {
 const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
-    width: "100vw",
+    width: "20rem"
   },
   textAlignCenter: {
     textAlign: "center",
   },
+  backgroundColor:{
+    backgroundColor:"#FEFEFE"
+  },
   logoContainer: {
     display: "flex",
     marginTop: "5rem",
+    justifyContent: "center",
+    alignItems:"center",
+    backgroundColor: "#FEFEFE"
   },
   welcomeTextContainer: {
     display: "flex",
