@@ -29,9 +29,15 @@ function SwishPayment({ paymentResponse, priceTotal }: Iprops) {
       payerAlias: number,
       amount: priceTotal,
       message: `Order to table`,
+      paymentType: "swish",
+      body: {
+        nothing: 'here'
+      }
     };
 
-    fetch(
+    paymentResponse("Successful swish payment", payment);
+
+    /* fetch(
       "https://us-central1-eatapp-5f84b.cloudfunctions.net/app/api/paymentrequests",
       {
         method: "POST",
@@ -57,7 +63,7 @@ function SwishPayment({ paymentResponse, priceTotal }: Iprops) {
       })
       .catch(function (error) {
         paymentResponse("Request failure: " + error);
-      });
+      }); */
   };
 
   return (

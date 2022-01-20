@@ -26,7 +26,19 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    const {error, paymentMethod} = await stripe!.createPaymentMethod({
+    const cardPayment = {  
+      message: "Payment successful",
+      success: true,
+      body: {
+        priceTotal,
+        currency: "SEK",
+        description: "Food",
+        confirm: true},
+      paymentType: "card"
+    }
+
+    paymentResponse("Successful card payment", cardPayment)
+    /* const {error, paymentMethod} = await stripe!.createPaymentMethod({
       type: "card",
       card: elements!.getElement(CardNumberElement)!
     })
@@ -45,7 +57,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
       }
     } else {
       paymentResponse(error.message)
-    }
+    } */
   } 
 
   return (

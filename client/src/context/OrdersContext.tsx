@@ -61,6 +61,9 @@ function OrderProvider(props: Props) {
   },[userInformation])
  
   const createOrder = (paymentData: any, cart: MenuItem[], total: number, restaurantData: RestaurantTableData) => {
+
+    console.log(paymentData)
+    
     const order: Order = {
       extId: !userID ? "guest" : userID,
       orderDate: new Date().toLocaleDateString(),
