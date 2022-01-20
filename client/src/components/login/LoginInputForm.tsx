@@ -13,6 +13,7 @@ import { backgroundClip } from "html2canvas/dist/types/css/property-descriptors/
 
 interface Iprops {
   loginDataCallback(user: IncomingUser): void;
+  incorrectInfo: boolean;
 }
 
 function LoginInputForm(props: Iprops) {
@@ -56,6 +57,8 @@ function LoginInputForm(props: Iprops) {
             variant="outlined"
             type="password"
             autoComplete="current-password"
+            error={props.incorrectInfo}
+            helperText={props.incorrectInfo ? "Fel epost eller lösenord" : null}
             onChange={handleChange}
           />
           <Box className={classes.loginHelperContainer}>

@@ -44,6 +44,10 @@ function UserPage(props: Iprops) {
     setIsOpen(true);
   }
 
+  useEffect(() => {
+    document.title = `Välkommen, ${userInfoState?.firstName}`;
+  }, [userInfoState]);
+
   function handleChange(
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) {

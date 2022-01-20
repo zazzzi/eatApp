@@ -18,13 +18,13 @@ import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 
-
 interface Iprops {}
 
 function Login(props: Iprops) {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [uid, setUid] = useState<string>();
+  const [wrongPasswordOrEmail, setWrongPasswordOrEmail] = useState<boolean>(false);
 
   console.log(uid, isLoggedIn);
 
@@ -37,19 +37,20 @@ function Login(props: Iprops) {
     });
   }, []);
 
+  useEffect(() => {
+    document.title = "Logga in!"
+ }, []);
+
   //async funtion to log the user in
   async function loginDataCallback(user: IncomingUser) {
-    console.log(user);
-
-    await signInWithEmailAndPassword(auth, user.email, user.password).then(
-      async (cred) => {
-        if (cred) {
-          console.log("redirect");
-        } else {
-          console.log("dont redirect");
+    await signInWithEmailAndPassword(auth, user.email, user.password)
+      .then(async (cred) => {
+      })
+      .catch((err) => {
+        if (err) {
+          setWrongPasswordOrEmail(true);
         }
-      }
-    );
+      });
   }
 
   return (
@@ -72,9 +73,9 @@ function Login(props: Iprops) {
         <Typography variant="body2">Logga in på ditt konto här.</Typography>
       </Box>
       <Box>
-        <LoginInputForm loginDataCallback={loginDataCallback} />
+        <LoginInputForm incorrectInfo={wrongPasswordOrEmail} loginDataCallback={loginDataCallback} />
       </Box>
- 
+
       <Box className={classes.noAccountOuterContainer}>
         <Box className={classes.noAccountInnerContainer}>
           <Typography>
@@ -109,6 +110,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+    position: "fixed",
+    left: "50%",
+    bottom: "20px",
+    transform: "translate(-50%, -50%)",
+    margin: "0 auto",
   },
   noAccountInnerContainer: {
     border: "1px solid grey",
