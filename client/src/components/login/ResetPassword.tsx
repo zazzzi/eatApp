@@ -39,6 +39,7 @@ function ResetPassword(props: Iprops) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [uid, setUid] = useState<string>();
   const [resetEmail, setResetEmail] = useState<string | null>();
+  const [resetSent, setResetSent] = useState<boolean>(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -56,13 +57,12 @@ function ResetPassword(props: Iprops) {
     if (resetEmail) {
       sendPasswordResetEmail(auth, resetEmail)
         .then(() => {
-          // Password reset email sent!
-          // ..
+          setResetSent(true);
+          console.clear();
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
+          setResetSent(true);
+          console.clear();
         });
     }
   }
@@ -88,30 +88,42 @@ function ResetPassword(props: Iprops) {
       </Box>
       <Box className={classes.welcomeTextContainer}>
         <Typography variant="h4">Återställ lösenord</Typography>
-        <Typography className={classes.textAlignCenter} variant="body2">
-          Skriv in din email så skickar vi <br />
-          ett mail med instructioner!
-        </Typography>
+        {resetSent ? null : (
+          <Typography className={classes.textAlignCenter} variant="body2">
+            Skriv in din email så skickar vi <br />
+            ett mail med instructioner!
+          </Typography>
+        )}
       </Box>
-      <Box>
-        <form className={classes.formStyling} onSubmit={sendResetEmail}>
-          <TextField
-            className={classes.inputField}
-            id="email"
-            label="E-mail"
-            variant="outlined"
-            size="small"
-            type="email"
-            autoComplete="current-email"
-            onChange={handleChange}
-          ></TextField>
-          <Box className={classes.loginBtnContainer}>
-            <Button endIcon={<SendIcon />} size="large" type="submit">
-              Skicka{" "}
-            </Button>
-          </Box>
-        </form>
-      </Box>
+      {resetSent ? (
+        <Box className={classes.resetMessageSent}>
+          <Typography className={classes.textAlignCenter}>
+            Om epost-adressen existerar så har vi skickat ett email med
+            instruktioner om hur du återställer ditt lösenord.
+          </Typography>
+          <Button className={classes.backToLoginBtn}>Tillbaka till login</Button>
+        </Box>
+      ) : (
+        <Box >
+          <form className={classes.formStyling} onSubmit={sendResetEmail}>
+            <TextField
+              className={classes.inputField}
+              id="email"
+              label="E-mail"
+              variant="outlined"
+              size="small"
+              type="email"
+              autoComplete="current-email"
+              onChange={handleChange}
+            ></TextField>
+            <Box className={classes.loginBtnContainer}>
+              <Button endIcon={<SendIcon />} size="large" type="submit">
+                Skicka{" "}
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      )}
 
       <Box className={classes.noAccountOuterContainer}>
         <Box className={classes.noAccountInnerContainer}>
@@ -150,6 +162,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+    position: "fixed",
+    left: "50%",
+    bottom: "20px",
+    transform: "translate(-50%, -50%)",
+    margin: "0 auto",
   },
   noAccountInnerContainer: {
     border: "1px solid grey",
@@ -172,6 +189,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "15rem",
     margin: "4rem 0 2rem 0",
   },
+  resetMessageSent: {
+    display: "flex",
+    flexDirection: "column",
+    margin: "1rem 0 1rem 0",
+    
+  }, 
+  backToLoginBtn: {
+    margin: "2rem 0"
+  },
+  
 }));
 
 export default ResetPassword;
