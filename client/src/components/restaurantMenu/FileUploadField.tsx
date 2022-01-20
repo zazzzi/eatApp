@@ -56,8 +56,6 @@ function FileUploadField(props: Iprops) {
     });
   }
 
-  console.log(image);
-
   return (
     <Box
       mt={2}
