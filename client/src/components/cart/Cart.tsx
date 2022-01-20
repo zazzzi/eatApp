@@ -5,38 +5,39 @@ import { Link } from "react-router-dom";
 import food from "../../food"
 import MenuItems from "../menu/MenuItem"
 import { CartContext } from "../../context/CartContext";
+import { RestaurantTableData } from "../../types/types";
 
 interface Iprops {
- 
+  restaurantData: RestaurantTableData
 }
 
-function Cart(props: Iprops) {
+function Cart({restaurantData}: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
 
   return (
    <Box>
-     <Typography 
-      className={classes.cartText}
-      variant="h5" 
-      gutterBottom component="div"
-     >
-        Cart
-      </Typography>
-      {!cart.length ? 
-        <Box className={classes.boxContainer}>
-        <Typography variant="h4" gutterBottom component="div">
-          Your cart is empty
-        </Typography> 
-        <Link to="/menu">
+      <Typography 
+        className={classes.cartText}
+        variant="h5" 
+        gutterBottom component="div"
+      >
+          Cart
+        </Typography>
+        {!cart.length ? 
+          <Box className={classes.boxContainer}>
           <Typography variant="h4" gutterBottom component="div">
-            Back to the menu yooo
+            Din vagn är tom.
           </Typography> 
-        </Link>
-        </Box>
-        :
-        <MenuItems menuItems = {cart}/>
-      }
+          <Link to={`/menu/${restaurantData.restaurantId}?table=${restaurantData.table}`}>
+            <Typography variant="h6" gutterBottom component="div">
+              Tillbaka till menyn
+            </Typography> 
+          </Link>
+          </Box>
+          :
+          <MenuItems menuItems = {cart}/>
+        }
    </Box>
   );
 }
@@ -62,8 +63,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "1rem 0rem 0rem 1rem"
   },
   boxContainer: {
+    padding: "5rem 0rem 5rem 0rem",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center"
   }

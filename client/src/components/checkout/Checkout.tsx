@@ -66,7 +66,7 @@ function Checkout({restaurantId}:Iprops) {
       const order = createOrder(response, cart, totalPrice, restaurantId)
       setOrder(order!)
       setActiveStep(3)
-      /* clearCart() */
+      clearCart()
     }
   }
 
@@ -87,7 +87,7 @@ function Checkout({restaurantId}:Iprops) {
       case 0:
         return(
           <Box>
-            <Cart/>
+            <Cart restaurantData={restaurantId}/>
           </Box>
         );
       case 1:
@@ -172,18 +172,20 @@ function Checkout({restaurantId}:Iprops) {
               {getStepContent(activeStep)}
             </Box>
             <Box className={classes.align}>
-            <Divider className={classes.divider}/>
-            { activeStep === 3 ? 
+            
+            { activeStep === 3 || !cart.length ? 
               null
               :
               <Box className={classes.priceTotal}>
-                <Typography>
-                  Summa
-                </Typography>
-                <Typography>
-                  {totalPrice} kr
-                </Typography>
-              
+                <Divider className={classes.divider}/>
+                <Box className={classes.spacing}>
+                  <Typography>
+                    Summa
+                  </Typography>
+                  <Typography>
+                    {totalPrice} kr
+                  </Typography>
+                </Box>
               </Box>
             }
             </Box>
@@ -196,7 +198,7 @@ function Checkout({restaurantId}:Iprops) {
 const useStyles = makeStyles(() => ({
   divider: {
     margin: "auto",
-    width: "90%"
+    width: "100%"
   },
   icon: {
     paddingRight: "0.4rem"
@@ -227,6 +229,7 @@ const useStyles = makeStyles(() => ({
   priceTotal: {
     display: "flex",
     justifyContent: "space-between",
+    flexDirection: "column",
     padding: "1rem 1rem 1rem 1rem"
   },
   align: {
@@ -240,6 +243,11 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "space-evenly",
   },
+  spacing: {
+    padding: '1rem 0rem 1rem 0rem',
+    display: "flex",
+    justifyContent: "space-between",
+  }
 }));
 
 export default Checkout; 
