@@ -56,6 +56,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [table, setTable] = useState<string>("")
   const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
     useState<boolean>(true);
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -65,6 +66,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     if (!isOwner) {
       const queryParams = new URLSearchParams(window.location.search);
       const table = queryParams.get("table");
+      setTable(table!)
       if (!table) return;
       sendUrlParam(id, table);
     }
@@ -140,6 +142,25 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     if(!cart.length) return
     return cart.map(item => item.quantity).reduce((prev, next) => prev + next);
   }
+
+  if(restaurantData && !restaurantData.tables.includes(table)){
+      return (
+        <Box className={classes.noDataloader}>
+          <Typography variant="h2">404</Typography>
+          <Typography variant="h6">Bordet du söker finns inte</Typography>
+          <Typography variant="h6">kontakta personallen eller</Typography>
+          <Link href="/"><Typography>Skanna en QR kod</Typography></Link>
+        </Box>
+      )
+    } else if (!restaurantData){
+      return (
+        <Box className={classes.noDataloader}>
+          <CircularProgress/>
+        </Box>
+      )
+    }
+    
+  
 
   return (
     <Box className={classes.menuPageContainer}>
@@ -370,6 +391,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  },
+  noDataloader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
 }));
 
