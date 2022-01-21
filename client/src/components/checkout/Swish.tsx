@@ -94,6 +94,7 @@ function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) 
               variant="contained"
               color="primary"
               loading={loading}
+              disabled={number === ""}
             >
               Betala
             </LoadingButton>
