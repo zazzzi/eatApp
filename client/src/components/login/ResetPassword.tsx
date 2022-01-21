@@ -31,6 +31,9 @@ import {
 import { Navigate } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import SendIcon from "@material-ui/icons/Send";
+import mainBackground from "../../assets/img/front_page_background.png";
+import blobTurned from "../../assets/img/blob_vriden.png";
+import logoStanced from "../../assets/logos/EatApp_stansad.png";
 
 interface Iprops {}
 
@@ -76,71 +79,130 @@ function ResetPassword(props: Iprops) {
   }
 
   return (
-    <Box className={classes.backgroundColor}>
+    <Box
+      sx={{
+        position: "relative",
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: "24rem",
+          lg: "24rem",
+          xl: "24rem",
+        },
+        margin: {
+          md: "2rem auto",
+          lg: "2rem auto",
+          xl: "2rem auto",
+        },
+        maxHeight: {
+          xs: "100%",
+          sm: "100%",
+          md: "50rem",
+          lg: "50rem",
+          xl: "50rem",
+        },
+      }}
+      className={classes.backgroundColor}
+    >
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
-      <Box
-        sx={{ position: "absolute", top: "0", zIndex: 100 }}
-        display="flex"
-        justifyContent="center"
-      >
-        <Link href="/">
-          <HomeIcon htmlColor="#000000" fontSize="large" />
-        </Link>
-      </Box>
-      <Box className={`${classes.logoContainer} ${classes.backgroundColor}`}>
-        <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
-      </Box>
-      <Box className={`${classes.welcomeTextContainer} ${classes.backgroundColor}`}>
-        <Typography variant="h4">Återställ lösenord</Typography>
-        {resetSent ? null : (
-          <Typography className={classes.textAlignCenter} variant="body2">
-            Skriv in din email så skickar vi <br />
-            ett mail med instructioner!
-          </Typography>
+      <Box className={classes.paperBackgroundImgStyling}>
+        <Box className={`${classes.welcomeTextContainer}`}>
+          {resetSent ? null : (
+            <Box>
+              <Box className={`${classes.logoContainer}`}>
+                <img
+                  className={classes.logo}
+                  src={logoStanced}
+                  alt="eatAppLogo.png"
+                />
+              </Box>
+              <Box className={classes.textAlignCenter}>
+                <p className={`${classes.fontSizeL} ${classes.welcomeText}`}>
+                  Återställ lösenord
+                </p>
+                <p
+                  className={`${classes.textAlignCenter} ${classes.welcomeText}`}
+                >
+                  Skriv in din email så skickar vi <br />
+                  ett mail med instructioner!
+                </p>
+              </Box>
+            </Box>
+          )}
+        </Box>
+        {resetSent ? (
+          <Box className={classes.resetMessageSent}>
+            <Box className={`${classes.logoContainerSent}`}>
+              <img
+                className={classes.logo}
+                src={logoStanced}
+                alt="eatAppLogo.png"
+              />
+            </Box>
+            <p style={{width: "18rem"}} className={`${classes.textAlignCenter} ${classes.welcomeText}`}>
+              Om epost-adressen existerar så har vi skickat ett email med
+              instruktioner om hur du återställer ditt lösenord.
+            </p>
+            <Link
+              href="/login"
+              underline="none"
+              className={classes.backToLoginBtn}
+            >
+              <Button
+              className={classes.buttonStyling}
+              variant="contained"
+              >Tillbaka till login</Button>
+            </Link>
+          </Box>
+        ) : (
+          <Box>
+            <form className={classes.formStyling} onSubmit={sendResetEmail}>
+              <TextField
+                className={classes.inputField}
+                id="email"
+                label="E-mail"
+                variant="outlined"
+                size="small"
+                type="email"
+                autoComplete="current-email"
+                onChange={handleChange}
+              ></TextField>
+              <Box className={classes.loginBtnContainer}>
+                <Button
+                  className={classes.buttonStyling}
+                  endIcon={<SendIcon />}
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  Skicka{" "}
+                </Button>
+              </Box>
+            </form>
+          </Box>
         )}
       </Box>
-      {resetSent ? (
-        <Box className={classes.resetMessageSent}>
-          <Typography className={classes.textAlignCenter}>
-            Om epost-adressen existerar så har vi skickat ett email med
-            instruktioner om hur du återställer ditt lösenord.
-          </Typography>
-          <Link href="/login" underline="none" className={classes.backToLoginBtn}>
-            <Button >
-              Tillbaka till login
-            </Button>
-          </Link>
-        </Box>
-      ) : (
-        <Box>
-          <form className={classes.formStyling} onSubmit={sendResetEmail}>
-            <TextField
-              className={classes.inputField}
-              id="email"
-              label="E-mail"
-              variant="outlined"
-              size="small"
-              type="email"
-              autoComplete="current-email"
-              onChange={handleChange}
-            ></TextField>
-            <Box className={classes.loginBtnContainer}>
-              <Button variant="outlined" endIcon={<SendIcon />} size="large" type="submit">
-                Skicka{" "}
-              </Button>
-            </Box>
-          </form>
-        </Box>
-      )}
 
       <Box className={classes.noAccountOuterContainer}>
         <Box className={classes.noAccountInnerContainer}>
-          <Typography>
-            Inget konto?&nbsp;
-            <Link href="/create-user" underline="always">
-              Skapa ett här!
+          <p
+            style={{
+              fontFamily: "Roboto",
+              fontSize: "15px",
+              fontWeight: 400,
+              margin: 0,
+              padding: ".2rem",
+              color: "#F9F9F9",
+            }}
+          >
+            <Link
+              style={{ textDecoration: "none", color: "#F9F9F9" }}
+              href="/create-user"
+              underline="always"
+            >
+              Inget konto? Skapa ett här!
             </Link>
-          </Typography>
+          </p>
         </Box>
       </Box>
     </Box>
@@ -150,46 +212,79 @@ function ResetPassword(props: Iprops) {
 const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
-    width: "20rem"
+    width: "20rem",
   },
   textAlignCenter: {
     textAlign: "center",
   },
-  backgroundColor:{
-    backgroundColor:"#FEFEFE"
+  backgroundColor: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundImage: `url(${mainBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
   },
   logoContainer: {
     display: "flex",
     marginTop: "5rem",
     justifyContent: "center",
-    alignItems:"center",
-    backgroundColor: "#FEFEFE"
+    alignItems: "center",
+  },
+  logoContainerSent: {
+    display: "flex",
+    marginTop: "2rem",
+    justifyContent: "center",
+    alignItems: "center",
   },
   welcomeTextContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    marginTop: "2rem",
+  },
+  welcomeText: {
+    fontFamily: "Roboto",
+    fontSize: "18px",
+    fontWeight: 500,
+    background:
+      "-webkit-linear-gradient(90.63deg, #989082 15.88%, rgba(81, 77, 71, 0.70) 78.06%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    margin: ".5rem 0 .4rem",
+  },
+  paperBackgroundImgStyling: {
+    backgroundImage: `url(${blobTurned})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
   },
   noAccountOuterContainer: {
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    position: "fixed",
+    position: "absolute",
     left: "50%",
-    bottom: "20px",
+    bottom: "-18px",
     transform: "translate(-50%, -50%)",
     margin: "0 auto",
   },
   noAccountInnerContainer: {
-    border: "1px solid grey",
+    backgroundColor: "#C7C0AE",
+    backgroundPosition: "center",
+    backgroundSize: "fill",
+    backgroundRepeat: "no-repeat",
+    border: "1px solid transparent",
     padding: "0.3rem .8rem",
-    borderRadius: "10px",
+    borderRadius: "18px 18px 0 0",
   },
   inputField: {
     width: "15rem",
     marginTop: "1rem",
+    backgroundColor: "#F9F9F9",
+    borderRadius: "8px",
   },
   formStyling: {
     display: "flex",
@@ -201,7 +296,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "end",
     width: "15rem",
-    margin: "4rem 0 2rem 0",
+    margin: "1.5rem 0 5rem 0",
+  },
+  fontSizeL: {
+    fontSize: "28px",
   },
   resetMessageSent: {
     display: "flex",
@@ -209,9 +307,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     flexDirection: "column",
     margin: "1rem 0 1rem 0",
+    padding: "3rem 0"
   },
   backToLoginBtn: {
     margin: "2rem 0",
+  },
+  buttonStyling: {
+    display: "flex",
+    alignItems: "center",
+    height: "2rem",
+    padding: "0 .5rem",
+    textTransform: "none",
   },
 }));
 
