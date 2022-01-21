@@ -63,12 +63,14 @@ function Checkout({restaurantId, userInformation}:Iprops) {
   }
 
   const paymentResponse = (status: string | undefined, response?: any) => {
-    if(status === "Successful card payment" || status === "Successful swish payment"){
-      const order = createOrder(response, cart, totalPrice, restaurantId)
-      setOrder(order!)
-      setActiveStep(3)
-      clearCart()
-    }
+    setTimeout(() => {
+      if(status === "Successful card payment" || status === "Successful swish payment"){
+        const order = createOrder(response, cart, totalPrice, restaurantId)
+        setOrder(order!)
+        setActiveStep(3)
+        clearCart()
+      }
+    }, 3000)
   }
 
   if(!restaurantId){

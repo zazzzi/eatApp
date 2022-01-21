@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   makeStyles,
   TextField,
   Theme,
@@ -8,6 +7,7 @@ import {
 import { useState } from "react";
 import swish from "../../assets/img/swish.png";
 import { User } from "../../types/types";
+import LoadingButton from '@mui/lab/LoadingButton';
 
 interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void;
@@ -17,10 +17,9 @@ interface Iprops {
 
 function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) {
   const classes = useStyles();
-  const [number, setNumber] = useState<any>(0);
-
-  console.log(userInformation)
-
+  const [number, setNumber] = useState<any>(userInformation.phoneNumber);
+  const [loading, setLoading] = useState<boolean>(false);
+ 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNumber(event.target.value);
   };
@@ -38,6 +37,7 @@ function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) 
     };
 
     paymentResponse("Successful swish payment", payment);
+    setLoading(true)
 
     /* fetch(
       "https://us-central1-eatapp-5f84b.cloudfunctions.net/app/api/paymentrequests",
@@ -86,16 +86,17 @@ function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) 
               InputLabelProps={{ shrink: true }}
               className={classes.textField}
               onChange={handleInput}
-              value={userInformation ? userInformation.phoneNumber : null}
+              value={userInformation ? number : null}
             />
-            <Button
+            <LoadingButton
               className={classes.button}
               type="submit"
               variant="contained"
               color="primary"
+              loading={loading}
             >
               Betala
-            </Button>
+            </LoadingButton>
           </Box>
         </form>
       </Box>

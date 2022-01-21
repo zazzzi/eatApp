@@ -1,18 +1,19 @@
-import { Box, Button, Divider, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import { Box, Divider, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {
   CardNumberElement,
   CardExpiryElement,
   CardCvcElement, 
-  useElements, 
-  useStripe
+ /*  useElements, 
+  useStripe */
 } from "@stripe/react-stripe-js"
-import axios from "axios"
+/* import axios from "axios" */
 import StripeInput from "./StripeInput"
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import mastercard from "../../assets/img/mastercard.png"
 import visa from "../../assets/img/visa.png"
 import maestro from "../../assets/img/maestro.png"
-import { classicNameResolver } from "typescript";
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useState } from "react";
 
 interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void;
@@ -21,8 +22,9 @@ interface Iprops {
 
 function PaymentForm({paymentResponse, priceTotal}: Iprops) {
   const classes = useStyles();
-  const stripe = useStripe()
-  const elements = useElements()
+  /* const stripe = useStripe()
+  const elements = useElements() */
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -37,6 +39,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
       paymentType: "card"
     }
 
+    setLoading(true)
     paymentResponse("Successful card payment", cardPayment)
     /* const {error, paymentMethod} = await stripe!.createPaymentMethod({
       type: "card",
@@ -124,13 +127,14 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
               </Box>
         </Box>
         <Box className={classes.payButton}>
-          <Button
+          <LoadingButton
             className={classes.submitButton}
             type="submit"
             variant="contained"
             color="primary"
+            loading={loading}
           >Betala
-          </Button>
+          </LoadingButton>
         </Box>
        </form>
    </Box>
@@ -180,6 +184,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: '0.5rem 0.5rem 1rem 1rem'
   },
   payButton: {
+    marginRight: '0.5rem',
     display: 'flex',
     justifyContent: 'flex-end'
   }
