@@ -14,7 +14,7 @@ function LogOutBtn(props: Iprops) {
   }
 
   return (
-    <Box>
+    <Box style={{margin: "1.5rem 0 0 0"}}>
       <Button
         size="small"
         color="secondary"
@@ -31,8 +31,14 @@ function LogOutBtn(props: Iprops) {
 
 const useStyles = makeStyles((theme: Theme) => ({
   logOutText: {
+    fontSize: "18px",
     color: "#FFF",
     textDecoration: "none",
+    display: "flex",
+    alignItems: "center",
+    height: "2rem",
+    padding: "0 2rem",
+    textTransform: "none",
   },
 }));
 

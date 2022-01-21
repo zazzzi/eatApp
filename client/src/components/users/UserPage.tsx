@@ -16,6 +16,8 @@ import { User, UserInfoToUpdate } from "../../types/types";
 import LogOutBtn from "../login/LogOutBtn";
 import HomeIcon from "@material-ui/icons/Home";
 import PasswordModal from "./PasswordModal";
+import mainBackground from "../../assets/img/front_page_background.png";
+import logoStanced from "../../assets/logos/EatApp_stansad.png";
 
 interface Iprops {}
 
@@ -78,16 +80,34 @@ function UserPage(props: Iprops) {
   }
 
   return (
-    <Box style={{ backgroundColor: "#FEFEFE" }}>
-       <Box
-        sx={{ position: "absolute", top: "0", zIndex: 100 }}
-        display="flex"
-        justifyContent="center"
-      >
-        <Link href="/">
-          <HomeIcon htmlColor="#00000" fontSize="large" />
-        </Link>
-      </Box>
+    <Box
+      sx={{
+        position: "relative",
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: "24rem",
+          lg: "24rem",
+          xl: "24rem",
+        },
+        margin: {
+          md: "2rem auto",
+          lg: "2rem auto",
+          xl: "2rem auto",
+        },
+        maxHeight: {
+          xs: "100%",
+          sm: "100%",
+          md: "50rem",
+          lg: "50rem",
+          xl: "50rem",
+        },
+      }}
+      className={classes.backgroundColor}
+    >
+      <Link href="/">
+        <img className={classes.logo} src={logoStanced} alt="eatAppLogo.png" />
+      </Link>
       <Box className={classes.welcomeMessageContainer}>
         {userInfoState ? (
           <Typography variant="h4">
@@ -150,12 +170,14 @@ function UserPage(props: Iprops) {
         ) : null}
       </Box>
       <Box className={classes.buttonContainer}>
+        <Button className={classes.buttonStyling} variant="contained" onClick={openModal}>Byt lösenord</Button>
         {userInfoState && userInfoState.role === "customer" ? (
-          <Link href="/orders">
-            <Button>Orders</Button>
+          <Link style={{ textDecoration: "none" }} href="/orders">
+            <Button className={classes.buttonStyling} variant="contained">
+              Tidigare beställnigar
+            </Button>
           </Link>
         ) : null}
-        <Button onClick={openModal}>Byt lösenord</Button>
         {isOpen ? (
           <PasswordModal
             closeModal={() => setIsOpen(false)}
@@ -174,8 +196,13 @@ function UserPage(props: Iprops) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  logo: {
+    display: "flex",
+    width: "20rem",
+    padding: "1rem 0 0 0",
+  },
   welcomeMessageContainer: {
-    marginTop: "5rem",
+    marginTop: "1rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -199,17 +226,44 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   formSubmitBtn: {
     marginTop: "1rem",
+    display: "flex",
+    alignItems: "center",
+    height: "2rem",
+    padding: "0 .5rem",
+    textTransform: "none",
+    width: "10rem",
   },
   textFieldStyling: {
     width: "15rem",
     margin: ".5rem 0",
+    backgroundColor: "#F9F9F9",
+    borderRadius: "8px",
   },
   buttonContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "2rem",
+    marginTop: "1rem",
+  },
+  backgroundColor: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems:"center",
+    backgroundImage: `url(${mainBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
+  },
+  buttonStyling: {
+    margin: ".5rem 0 ",
+    display: "flex",
+    alignItems: "center",
+    height: "2rem",
+    padding: "0 .5rem",
+    textTransform: "none",
   },
 }));
 
