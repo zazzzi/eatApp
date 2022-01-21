@@ -21,7 +21,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-import { SliderPicker } from "react-color";
+import { SliderPicker, TwitterPicker } from "react-color";
 import FileUploadField from "../restaurantMenu/FileUploadField";
 
 import { Link } from "react-router-dom";
@@ -129,7 +129,7 @@ function AdminIndex(props: Iprops) {
 
           {colorSliderOpen ? (
             <Box mt={2} p={2}>
-              <SliderPicker
+              <TwitterPicker
                 color={startingColor.background}
                 onChange={handleChange}
               />

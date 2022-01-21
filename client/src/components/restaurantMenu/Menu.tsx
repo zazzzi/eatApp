@@ -13,6 +13,7 @@ import {
   Link,
   Slide,
   CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
 import { useEffect, useState, useContext, useRef, useReducer } from "react";
 import AddIcon from "@material-ui/icons/Add";
@@ -57,9 +58,12 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const { cart } = useContext(CartContext);
   const { id } = useParams();
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [table, setTable] = useState<string>("")
-  const [restaurantNameColorBlack, setRestaurantNameColorBlack] =
-    useState<boolean>(true);
+  const [table, setTable] = useState<string>("");
+  const [restaurantNameColorBlack, setRestaurantNameColorBlack] = useState<
+    boolean | null
+  >(null);
+  const [openAlert, setOpenAlert] = useState(false);
+
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
@@ -67,7 +71,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     if (!isOwner) {
       const queryParams = new URLSearchParams(window.location.search);
       const table = queryParams.get("table");
-      setTable(table!)
+      setTable(table!);
       if (!table) return;
       sendUrlParam(id, table);
     }
@@ -90,6 +94,13 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   }, [userInfo]);
 
   useEffect(() => {
+    if (restaurantNameColorBlack === null && restaurantData) {
+      setRestaurantNameColorBlack(!restaurantData.isNameBlack);
+      console.log(restaurantNameColorBlack);
+    }
+  }, [restaurantData]);
+
+  useEffect(() => {
     if (!restaurantData) {
       return;
     }
@@ -100,6 +111,24 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
+
+  const handleAlertClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+  function fireAlert() {
+    setOpenAlert(true);
+    setTimeout(() => {
+      setOpenAlert(false);
+    }, 3000);
+  }
 
   const filterMenuItems = (item: MenuItemType) => {
     const filtered = item.category.map((i: string) => {
@@ -138,7 +167,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     } else {
       setRestaurantNameColorBlack(true);
     }
-    updateRestaurantNameColor(restaurantNameColorBlack);
+    updateRestaurantNameColor(restaurantNameColorBlack!);
   };
 
   const cartQuantity = () => {
@@ -148,27 +177,32 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
       .reduce((prev, next) => prev + next);
   };
 
-  if(restaurantData && !restaurantData.tables.includes(table)){
-      return (
-        <Box className={classes.noDataloader}>
-          <Typography variant="h2">404</Typography>
-          <Typography variant="h6">Bordet du söker finns inte</Typography>
-          <Typography variant="h6">kontakta personallen eller</Typography>
-          <Link href="/"><Typography>Skanna en QR kod</Typography></Link>
-        </Box>
-      )
-    } else if (!restaurantData){
-      return (
-        <Box className={classes.noDataloader}>
-          <CircularProgress/>
-        </Box>
-      )
-    }
-    
-  
+  if (restaurantData && !restaurantData.tables.includes(table)) {
+    return (
+      <Box className={classes.noDataloader}>
+        <Typography variant="h2">404</Typography>
+        <Typography variant="h6">Bordet du söker finns inte</Typography>
+        <Typography variant="h6">kontakta personallen eller</Typography>
+        <Link href="/">
+          <Typography>Skanna en QR kod</Typography>
+        </Link>
+      </Box>
+    );
+  } else if (!restaurantData) {
+    return (
+      <Box className={classes.noDataloader}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box className={classes.menuPageContainer}>
+      <Snackbar
+        open={openAlert}
+        message={"Produkt uppdaterad!"}
+        onClose={handleAlertClose}
+      />
       <Box
         sx={{ position: "absolute", top: "0", zIndex: 100, width: "100%" }}
         display="flex"
@@ -237,7 +271,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
             <Box
               display="flex"
               alignItems="center"
-              color={restaurantData.isNameBlack ? "#000" : "#FEFEFE"}
+              color={!restaurantNameColorBlack ? "#000" : "#FEFEFE"}
               mt={isOwner ? 0 : 2}
             >
               <Typography className={classes.restaurantName} variant="h2">
@@ -248,7 +282,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
               {isOwner ? (
                 <Button size="small" onClick={handleNameColorChange}>
                   <FiberManualRecordIcon
-                    htmlColor={restaurantData.isNameBlack ? "#FFF" : "#000"}
+                    htmlColor={!restaurantNameColorBlack ? "#FFF" : "#000"}
                   />
                 </Button>
               ) : null}
@@ -284,7 +318,10 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
             <EditMenuModal
               isNewItem={true}
               menuItem={restaurantData.menu}
-              closeModal={() => setOpen(false)}
+              closeModal={() => {
+                setOpen(false);
+                fireAlert();
+              }}
               editOpen={open}
             />
           ) : null}
