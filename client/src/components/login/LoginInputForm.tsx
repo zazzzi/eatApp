@@ -36,7 +36,7 @@ function LoginInputForm(props: Iprops) {
   }
 
   return (
-    <Box style={{ backgroundColor: "#FEFEFE" }}>
+    <Box>
       <Box>
         <form className={classes.formStyling} onSubmit={handleSubmit}>
           <TextField
@@ -62,12 +62,12 @@ function LoginInputForm(props: Iprops) {
             onChange={handleChange}
           />
           <Box className={classes.loginHelperContainer}>
-            <a href="/reset-password">
-              <Typography variant="body2">Problem med att logga in?</Typography>
+            <a className={classes.linkStyle} href="/reset-password">
+              <p className={classes.problems}>Problem med att logga in?</p>
             </a>
           </Box>
           <Box className={classes.loginBtnContainer}>
-            <Button endIcon={<SendIcon />} size="large" type="submit">
+            <Button className={classes.buttonStyling} variant="contained" endIcon={<SendIcon />} size="large" type="submit">
               Logga in{" "}
             </Button>
           </Box>
@@ -87,6 +87,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   inputField: {
     width: "15rem",
     marginTop: "1rem",
+    backgroundColor: "#F9F9F9",
+    borderRadius: "8px"
   },
   loginHelperContainer: {
     width: "15rem",
@@ -97,8 +99,27 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "end",
     width: "15rem",
-    marginTop: "4rem",
+    margin: "2rem",
+    padding: "0 0 2rem 0"
   },
+  problems: {
+    fontFamily: "Roboto",
+    fontSize: "12px",
+    fontWeight: 500,
+    margin: ".2rem 0 0 0",
+    padding: "0 .5rem 0 0"
+    },
+    linkStyle: {
+      textDecoration: "none",
+      color: "#F9F9F9"
+    },
+    buttonStyling: {
+      display: "flex",
+      alignItems: "center",
+      height: "2rem",
+      padding: "0 .5rem",
+      textTransform: "none"
+    }
 }));
 
 export default LoginInputForm;

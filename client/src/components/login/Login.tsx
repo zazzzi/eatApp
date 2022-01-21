@@ -17,6 +17,11 @@ import LogOutBtn from "./LogOutBtn";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
+import blob from "../../assets/img/blob.png";
+import blobTurned from "../../assets/img/blob_vriden.png";
+import mainBackground from "../../assets/img/front_page_background.png";
+import logoStanced from "../../assets/logos/EatApp_stansad.png";
+import { text } from "stream/consumers";
 
 interface Iprops {}
 
@@ -54,32 +59,72 @@ function Login(props: Iprops) {
   }
 
   return (
-    <Box className={classes.backgroundColor}>
+    <Box
+      sx={{
+        position: "relative",
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: "24rem",
+          lg: "24rem",
+          xl: "24rem",
+        },
+        margin: {
+          md: "2rem auto",
+          lg: "2rem auto",
+          xl: "2rem auto",
+        },
+        maxHeight: {
+          xs: "100%",
+          sm: "100%",
+          md: "50rem",
+          lg: "50rem",
+          xl: "50rem",
+        },
+      }}
+      className={classes.backgroundColor}
+    >
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
-      <Box className={classes.logoContainer}>
-        <Link href="/">
-          <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
-        </Link>
-      </Box>
-      <Box className={classes.welcomeTextContainer}>
-        <Typography variant="h4">Välkommen</Typography>
-        <Typography variant="body2">Logga in på ditt konto här.</Typography>
-      </Box>
-      <Box>
-        <LoginInputForm
-          incorrectInfo={wrongPasswordOrEmail}
-          loginDataCallback={loginDataCallback}
-        />
+      <Box className={classes.logoContainer}></Box>
+      <Box className={classes.paperBackgroundImgStyling}>
+        <Box className={classes.welcomeTextContainer}>
+          <Link href="/">
+            <img
+              className={classes.logo}
+              src={logoStanced}
+              alt="eatAppLogo.png"
+            />
+          </Link>
+          <p className={classes.welcomeText}>Logga in på ditt konto här.</p>
+        </Box>
+        <Box>
+          <LoginInputForm
+            incorrectInfo={wrongPasswordOrEmail}
+            loginDataCallback={loginDataCallback}
+          />
+        </Box>
       </Box>
 
       <Box className={classes.noAccountOuterContainer}>
         <Box className={classes.noAccountInnerContainer}>
-          <Typography>
-            Inget konto?&nbsp;
-            <Link href="/create-user" underline="always">
-              Skapa ett här!
+          <p
+            style={{
+              fontFamily: "Roboto",
+              fontSize: "15px",
+              fontWeight: 400,
+              margin: 0,
+              padding: ".2rem",
+              color: "#F9F9F9",
+            }}
+          >
+            <Link
+              style={{ textDecoration: "none", color: "#F9F9F9" }}
+              href="/create-user"
+              underline="always"
+            >
+              Inget konto? Skapa ett här!
             </Link>
-          </Typography>
+          </p>
         </Box>
       </Box>
     </Box>
@@ -90,9 +135,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     display: "flex",
     width: "20rem",
+    padding: "0 0 0 0",
   },
   backgroundColor: {
-    backgroundColor: "#FEFEFE",
+    backgroundImage: `url(${mainBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
     height: "100vh",
   },
   logoContainer: {
@@ -100,7 +149,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: "5rem",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FEFEFE",
+    // backgroundColor: "#FEFEFE",
   },
   welcomeTextContainer: {
     display: "flex",
@@ -108,22 +157,43 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     flexDirection: "column",
     marginTop: "2rem",
-    backgroundColor: "#FEFEFE",
+    paddingTop: "5rem",
+    // backgroundColor: "#FEFEFE",
+  },
+  welcomeText: {
+    fontFamily: "Roboto",
+    fontSize: "18px",
+    fontWeight: 500,
+    background:
+      "-webkit-linear-gradient(90.63deg, #989082 15.88%, rgba(81, 77, 71, 0.70) 78.06%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    margin: ".5rem 0 .4rem",
   },
   noAccountOuterContainer: {
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    position: "fixed",
+    position: "absolute",
     left: "50%",
-    bottom: "20px",
+    bottom: "-18px",
     transform: "translate(-50%, -50%)",
     margin: "0 auto",
   },
   noAccountInnerContainer: {
-    border: "1px solid grey",
+    backgroundColor: "#C7C0AE",
+    backgroundPosition: "center",
+    backgroundSize: "fill",
+    backgroundRepeat: "no-repeat",
+    border: "1px solid transparent",
     padding: "0.3rem .8rem",
-    borderRadius: "10px",
+    borderRadius: "18px 18px 0 0",
+  },
+  paperBackgroundImgStyling: {
+    backgroundImage: `url(${blobTurned})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
   },
 }));
 
