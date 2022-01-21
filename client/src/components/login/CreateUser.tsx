@@ -9,24 +9,24 @@ import {
 import { auth, db } from "../../firebase";
 import {
   collection,
-  getDocs,
-  addDoc,
-  updateDoc,
   doc,
   setDoc,
-  deleteDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import { User } from "../../types/types";
 import CreateUserForm from "./CreateUserForm";
-import LoginInputForm from "./LoginInputForm";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
 import LogOutBtn from "./LogOutBtn";
 import { Navigate } from "react-router-dom";
+import mainBackground from "../../assets/img/front_page_background.png";
+import logoStanced from "../../assets/logos/EatApp_stansad.png";
+
+
+
 interface Iprops {}
 
 function CreateUser(props: Iprops) {
@@ -73,7 +73,7 @@ function CreateUser(props: Iprops) {
     <Box className={classes.rootContainer}>
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
       <Box className={classes.logoContainer}>
-        <img className={classes.logo} src={eatAppLogo} alt="eatAppLogo.png" />
+        <img className={classes.logo} src={logoStanced} alt="eatAppLogo.png" />
       </Box>
       <Box className={classes.welcomeTextContainer}>
         <Typography variant="h4">Skapa nytt konto</Typography>
@@ -84,7 +84,7 @@ function CreateUser(props: Iprops) {
       </Box>
       <Box className={classes.formContainer}>
         <Link href="/login">
-          <Button>Tillbaka</Button>
+          <Button style={{margin: ".4rem 0"}}>Tillbaka</Button>
         </Link>
       </Box>
     </Box>
@@ -97,7 +97,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "20rem",
   },
   backgroundColor: {
-    backgroundColor: "#FEFEFE",
     height: "100vh"
   },
   logoContainer: {
@@ -105,7 +104,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddedTop: "5rem",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FEFEFE",
   },
   welcomeTextContainer: {
     display: "flex",
@@ -121,8 +119,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
   },
   rootContainer: {
-    backgroundColor: "#FEFEFE",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundImage: `url(${mainBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
   },
+
 }));
 
 export default CreateUser;

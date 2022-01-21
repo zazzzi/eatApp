@@ -85,7 +85,6 @@ function Login(props: Iprops) {
       className={classes.backgroundColor}
     >
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
-      <Box className={classes.logoContainer}></Box>
       <Box className={classes.paperBackgroundImgStyling}>
         <Box className={classes.welcomeTextContainer}>
           <Link href="/">
@@ -138,6 +137,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "0 0 0 0",
   },
   backgroundColor: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     backgroundImage: `url(${mainBackground})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
@@ -156,7 +158,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    marginTop: "2rem",
+    // marginTop: "2rem",
     paddingTop: "5rem",
     // backgroundColor: "#FEFEFE",
   },

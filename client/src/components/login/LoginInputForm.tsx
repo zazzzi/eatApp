@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       height: "2rem",
       padding: "0 .5rem",
       textTransform: "none"
-    }
+    },
 }));
 
 export default LoginInputForm;
