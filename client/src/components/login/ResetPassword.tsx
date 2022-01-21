@@ -110,11 +110,13 @@ function ResetPassword(props: Iprops) {
           {resetSent ? null : (
             <Box>
               <Box className={`${classes.logoContainer}`}>
-                <img
-                  className={classes.logo}
-                  src={logoStanced}
-                  alt="eatAppLogo.png"
-                />
+                <Link href="/">
+                  <img
+                    className={classes.logo}
+                    src={logoStanced}
+                    alt="eatAppLogo.png"
+                  />
+                </Link>
               </Box>
               <Box className={classes.textAlignCenter}>
                 <p className={`${classes.fontSizeL} ${classes.welcomeText}`}>
@@ -133,13 +135,18 @@ function ResetPassword(props: Iprops) {
         {resetSent ? (
           <Box className={classes.resetMessageSent}>
             <Box className={`${classes.logoContainerSent}`}>
-              <img
-                className={classes.logo}
-                src={logoStanced}
-                alt="eatAppLogo.png"
-              />
+              <Link href="/">
+                <img
+                  className={classes.logo}
+                  src={logoStanced}
+                  alt="eatAppLogo.png"
+                />
+              </Link>
             </Box>
-            <p style={{width: "18rem"}} className={`${classes.textAlignCenter} ${classes.welcomeText}`}>
+            <p
+              style={{ width: "18rem" }}
+              className={`${classes.textAlignCenter} ${classes.welcomeText}`}
+            >
               Om epost-adressen existerar så har vi skickat ett email med
               instruktioner om hur du återställer ditt lösenord.
             </p>
@@ -148,10 +155,9 @@ function ResetPassword(props: Iprops) {
               underline="none"
               className={classes.backToLoginBtn}
             >
-              <Button
-              className={classes.buttonStyling}
-              variant="contained"
-              >Tillbaka till login</Button>
+              <Button className={classes.buttonStyling} variant="contained">
+                Tillbaka till login
+              </Button>
             </Link>
           </Box>
         ) : (
@@ -307,7 +313,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     flexDirection: "column",
     margin: "1rem 0 1rem 0",
-    padding: "3rem 0"
+    padding: "3rem 0",
   },
   backToLoginBtn: {
     margin: "2rem 0",
