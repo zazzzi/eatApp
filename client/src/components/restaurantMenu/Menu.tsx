@@ -28,9 +28,10 @@ import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounde
 import AdminIndex from "../admin/index";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import HomeIcon from "@material-ui/icons/Home";
-import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
-import Badge, { BadgeProps } from '@mui/material/Badge';
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import Badge, { BadgeProps } from "@mui/material/Badge";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 interface Iprops {
   restaurantId: RestaurantTableData;
@@ -102,6 +103,8 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     const filtered = item.category.map((i: string) => {
       if (i === value) {
         return item;
+      } else if (value === "Alla") {
+        return item;
       }
     });
     const filterUndefined = filtered.filter(function (x: any) {
@@ -137,19 +140,25 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   };
 
   const cartQuantity = () => {
-    if(!cart.length) return
-    return cart.map(item => item.quantity).reduce((prev, next) => prev + next);
-  }
+    if (!cart.length) return;
+    return cart
+      .map((item) => item.quantity)
+      .reduce((prev, next) => prev + next);
+  };
 
   return (
     <Box className={classes.menuPageContainer}>
       <Box
-        sx={{ position: "absolute", top: "0", zIndex: 100 }}
+        sx={{ position: "absolute", top: "0", zIndex: 100, width: "100%" }}
         display="flex"
-        justifyContent="center"
+        justifyContent="space-between"
+        alignItems="center"
       >
         <Link href="/">
           <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
+        </Link>
+        <Link>
+          <AccountCircleIcon htmlColor="#FEFEFE" fontSize="large" />
         </Link>
       </Box>
 
@@ -284,11 +293,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
 };
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-  '& .MuiBadge-badge': {
+  "& .MuiBadge-badge": {
     right: -10,
     top: 30,
     border: `2px solid ${theme.palette.background.paper}`,
-    padding: '0 4px',
+    padding: "0 4px",
   },
 }));
 
