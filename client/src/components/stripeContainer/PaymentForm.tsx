@@ -25,9 +25,35 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
   /* const stripe = useStripe()
   const elements = useElements() */
   const [loading, setLoading] = useState<boolean>(false);
+  const [card, setCard] = useState<boolean>(true)
+  const [date, setDate] = useState<boolean>(true)
+  const [cvc, setCvc] = useState<boolean>(true)
+ 
+  const validateCard = (e: any) => {
+    e.complete ? setCard(true) : setCard(false)
+  }
+
+  const validateDate = (e: any) => {
+    e.complete ? setDate(true) : setDate(false)
+  }
+
+  const validateCvc = (e: any) => {
+    e.complete ? setCvc(true) : setCvc(false)
+  }
+
+  const toggleButton = () => {
+    if(card && cvc && date){
+      return true
+    } else {
+      return false
+    }
+  }
+
+  console.log(toggleButton())
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    console.log(e)
     const cardPayment = {  
       message: "Payment successful",
       success: true,
@@ -86,6 +112,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
                 variant="outlined"
                 required
                 InputLabelProps={{ shrink: true }}
+                onChange={validateCard}
                 InputProps={{ 
                   inputComponent: StripeInput,
                   inputProps: {
@@ -101,6 +128,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
                     variant="outlined"
                     required
                     fullWidth
+                    onChange={validateDate}
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
                         inputComponent: StripeInput,
@@ -116,6 +144,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
                     variant="outlined"
                     required
                     fullWidth
+                    onChange={validateCvc}
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
                         inputComponent: StripeInput,
@@ -133,6 +162,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
             variant="contained"
             color="primary"
             loading={loading}
+            disabled={!toggleButton()}
           >Betala
           </LoadingButton>
         </Box>
