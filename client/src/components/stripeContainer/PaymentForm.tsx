@@ -25,10 +25,13 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
   /* const stripe = useStripe()
   const elements = useElements() */
   const [loading, setLoading] = useState<boolean>(false);
-  const [card, setCard] = useState<boolean>(true)
-  const [date, setDate] = useState<boolean>(true)
-  const [cvc, setCvc] = useState<boolean>(true)
- 
+
+
+  const [card, setCard] = useState<boolean>(false)
+  const [date, setDate] = useState<boolean>(false)
+  const [cvc, setCvc] = useState<boolean>(false)
+
+  
   const validateCard = (e: any) => {
     e.complete ? setCard(true) : setCard(false)
   }
@@ -43,9 +46,11 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
 
   const toggleButton = () => {
     if(card && cvc && date){
+      return false
+    } else if (!card ||!cvc || !date){
       return true
     } else {
-      return false
+      return true
     }
   }
 
@@ -162,7 +167,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
             variant="contained"
             color="primary"
             loading={loading}
-            disabled={!toggleButton()}
+            disabled={toggleButton()}
           >Betala
           </LoadingButton>
         </Box>
