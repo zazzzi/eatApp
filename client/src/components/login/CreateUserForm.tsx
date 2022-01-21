@@ -104,7 +104,7 @@ function CreateUserForm(props: Iprops) {
   }
 
   return (
-    <Box style={{ backgroundColor: "#FEFEFE" }}>
+    <Box>
       <form className={classes.formStyling} onSubmit={handleSubmit}>
         <TextField
           className={classes.inputField}
@@ -192,7 +192,12 @@ function CreateUserForm(props: Iprops) {
         </FormHelperText>
 
         <Box className={classes.submitBtnStyling}>
-          <Button variant="contained" endIcon={<AddIcon />} type="submit">
+          <Button
+            className={classes.buttonStyling}
+            variant="contained"
+            endIcon={<AddIcon />}
+            type="submit"
+          >
             Skapa användare
           </Button>
         </Box>
@@ -211,13 +216,22 @@ const useStyles = makeStyles((theme: Theme) => ({
   inputField: {
     width: "15rem",
     margin: "0.5rem",
+    backgroundColor: "#F9F9F9",
+    borderRadius: "8px",
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "center",
   },
   submitBtnStyling: {
-    marginTop: "1rem",
+    marginTop: ".2rem",
+  },
+  buttonStyling: {
+    display: "flex",
+    alignItems: "center",
+    height: "2rem",
+    padding: "0 .5rem",
+    textTransform: "none",
   },
 }));
 
