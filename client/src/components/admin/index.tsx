@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import { useContext, useEffect, useState } from "react";
-import { SliderPicker } from "react-color";
+import { SliderPicker, TwitterPicker } from "react-color";
 import FileUploadField from "../restaurantMenu/FileUploadField";
 import { Link } from "react-router-dom";
 import { MenuContext } from "../../context/MenusContext";
@@ -114,7 +114,7 @@ function AdminIndex(props: Iprops) {
 
           {colorSliderOpen ? (
             <Box mt={2} p={2}>
-              <SliderPicker
+              <TwitterPicker
                 color={startingColor.background}
                 onChange={handleChange}
               />
