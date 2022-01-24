@@ -56,7 +56,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log(e)
+
     const cardPayment = {  
       message: "Payment successful",
       success: true,

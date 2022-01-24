@@ -10,14 +10,15 @@ import {
   FormControl,
   Typography,
 } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { MenuContext } from "../../context/MenusContext";
+import { RestaurantData } from "../../types/types";
 
 interface Iprops {
   closeModal: () => void;
   editOpen: boolean;
-  restaurantData: any
+  restaurantData: RestaurantData;
 }
 
 function EditTableModal(props: Iprops) {
@@ -46,19 +47,17 @@ function EditTableModal(props: Iprops) {
     p: 4,
   };
 
-  const handleInput = (event: any) => {
-    props.restaurantData.tables.includes(event.target.value) ? 
+  const handleInput = (event: { target: { value: SetStateAction<string>; }; }) => {
+    props.restaurantData.tables.includes(event.target.value as string) ? 
     setTableValueTaken(true) : setTableValueTaken(false)
     setTableValue(event.target.value)
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault()
     addTable(tableValue)
   };
 
-  //check if table already exists 
- 
   return (  
     <Modal
       open={props.editOpen}

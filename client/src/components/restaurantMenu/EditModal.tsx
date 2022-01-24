@@ -1,26 +1,17 @@
 import {
   Box,
   makeStyles,
-  Theme,
   Modal,
   TextField,
   Button,
   MenuItem,
-  InputLabel,
-  FormControl,
   Snackbar,
 } from "@material-ui/core";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { forwardRef, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MenuItemType } from "../../types/types";
-
 import DeleteIcon from "@material-ui/icons/Delete";
 import { MenuContext } from "../../context/MenusContext";
 import FileUploadField from "./FileUploadField";
-import CustomizedSnackbars from "../menu/Alert";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { Skeleton } from "@mui/material";
-
 interface IProps {
   closeModal: () => void;
   editOpen: boolean;
@@ -30,13 +21,7 @@ interface IProps {
 
 function EditMenuModal(props: IProps) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const [imgURL, setImgURL] = useState<string>("");
-  const [alertPosition, setAlertPosition] = useState({
-    vertical: "top",
-    horizontal: "center",
-  });
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
   const [newMenuItem, setNewMenuItem] = useState<any>({});
   const [imageIsUploaded, setImageIsUploaded] = useState<boolean>(false);
@@ -109,7 +94,7 @@ function EditMenuModal(props: IProps) {
   };
 
   const handleAlertClose = (
-    event?: React.SyntheticEvent | Event,
+    _event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === "clickaway") {
@@ -238,7 +223,7 @@ function EditMenuModal(props: IProps) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   modalButtonsContainer: {
     display: "flex",
     justifyContent: "space-around",

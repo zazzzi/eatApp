@@ -8,14 +8,12 @@ import {
   Button,
   Fab,
   Fade,
-  MenuItem,
   Tooltip,
   Link,
-  Slide,
   CircularProgress,
   Snackbar,
 } from "@material-ui/core";
-import { useEffect, useState, useContext, useRef, useReducer } from "react";
+import { useEffect, useState, useContext, useReducer } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuItems from "../menu/MenuItem";
@@ -25,7 +23,6 @@ import EditMenuModal from "./EditModal";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
-import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import AdminIndex from "../admin/index";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import HomeIcon from "@material-ui/icons/Home";
@@ -45,7 +42,6 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     restaurantData,
     sendUrlParam,
     updateRestaurantNameColor,
-    restaruantTitleIsBlack,
   } = useContext(MenuContext);
 
   // TODO: starting state needs to be restaurantData.color, but can't set it before it's loaded
@@ -108,7 +104,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     setMenuColor(testColor);
   }, [restaurantData]);
 
-  const handleChange = (event: any, newValue: any) => {
+  const handleChange = (_event: any, newValue: any) => {
     setValue(newValue);
   };
 

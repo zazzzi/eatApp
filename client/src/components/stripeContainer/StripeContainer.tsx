@@ -1,5 +1,3 @@
-import { Box, makeStyles, Theme} from "@material-ui/core";
-import { useEffect, useState } from "react";
 import {Elements} from "@stripe/react-stripe-js"
 import {loadStripe} from "@stripe/stripe-js"
 import PaymentForm from "./PaymentForm"
@@ -10,10 +8,7 @@ interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void
   priceTotal: number
 }
-
 function StripeContainer({paymentResponse, priceTotal}: Iprops) {
-  
-  
   return (
    <Elements stripe={stripeTestPromise}>
        <PaymentForm 
@@ -24,7 +19,7 @@ function StripeContainer({paymentResponse, priceTotal}: Iprops) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({}));
+
 
 
 export default StripeContainer; 

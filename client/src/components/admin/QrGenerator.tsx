@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, makeStyles, Theme, Typography} from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect} from "react";
 import QRCode from "react-qr-code";
 import { Link, useParams } from "react-router-dom";
 import {MenuContext} from "../../context/MenusContext";
@@ -7,19 +7,20 @@ import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import AlertDialog from "./ConfirmDialog";
 import html2canvas from "html2canvas";
 import PrintIcon from '@material-ui/icons/Print';
+import { User } from "../../types/types";
 interface Iprops {
-  table: any
-  userInfo: any
+  table: string;
+  userInfo: User;
 }
 
 function QrGenerator({table, userInfo}: Iprops) {
   const classes = useStyles(); 
   const { id } = useParams();
-  const {restaurantData, fetchDatabaseWithId, deleteTable} = useContext(MenuContext)
+  const {restaurantData, fetchDatabaseWithId} = useContext(MenuContext)
 
   useEffect(()=> {
     if(!userInfo) return
-    fetchDatabaseWithId(userInfo.rID)
+    fetchDatabaseWithId(userInfo!.rID!)
   },[userInfo])
 
   const exportAsPicture = () => {
@@ -109,7 +110,7 @@ const saveAs = (blob: string, fileName: string) =>{
       >Back</Button>
      </Link>
      <AlertDialog
-      table={!table ? id : table}
+      table={!table ? id! : table!}
      />
      </Box>
    </Box>

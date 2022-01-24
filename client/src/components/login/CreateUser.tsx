@@ -13,23 +13,17 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import { User } from "../../types/types";
 import CreateUserForm from "./CreateUserForm";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import LogOutBtn from "./LogOutBtn";
 import { Navigate } from "react-router-dom";
 import mainBackground from "../../assets/img/front_page_background.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 
-
-
-interface Iprops {}
-
-function CreateUser(props: Iprops) {
+function CreateUser() {
   const classes = useStyles();
   const usersCollectionRef = collection(db, "users");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();

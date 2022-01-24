@@ -4,13 +4,10 @@ import {
   makeStyles,
   TextField,
   Theme,
-  Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import SendIcon from "@material-ui/icons/Send";
-import { IncomingUser, User } from "../../types/types";
-import { backgroundClip } from "html2canvas/dist/types/css/property-descriptors/background-clip";
-
+import { IncomingUser} from "../../types/types";
 interface Iprops {
   loginDataCallback(user: IncomingUser): void;
   incorrectInfo: boolean;
