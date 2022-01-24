@@ -54,8 +54,8 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
         />
       </Box>
       <Box className={classes.container}>
-        {restaurantData.tables.map((table: number) => (
-          <Link style={{ textDecoration: "none" }} to={`/tables/${table}`}>
+        {restaurantData.tables.map((table: number, index: number) => (
+          <Link  key={index} style={{ textDecoration: "none" }} to={`/tables/${table}`}>
             <Box
               sx={{
                 fontSize: "8rem",
