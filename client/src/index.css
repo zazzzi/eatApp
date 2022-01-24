@@ -47,7 +47,8 @@ hr {
 }
 
 #root {
-  background-color: darkslategrey;
+  background-color: #EFEFEF;
+  height: 100vh;
 }
 
 .inputButton {
