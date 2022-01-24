@@ -30,13 +30,7 @@ interface IProps {
 
 function EditMenuModal(props: IProps) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const [imgURL, setImgURL] = useState<string>("");
-  const [alertPosition, setAlertPosition] = useState({
-    vertical: "top",
-    horizontal: "center",
-  });
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
   const [newMenuItem, setNewMenuItem] = useState<any>({});
   const [imageIsUploaded, setImageIsUploaded] = useState<boolean>(false);
@@ -109,7 +103,7 @@ function EditMenuModal(props: IProps) {
   };
 
   const handleAlertClose = (
-    event?: React.SyntheticEvent | Event,
+    _event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === "clickaway") {
@@ -238,7 +232,7 @@ function EditMenuModal(props: IProps) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   modalButtonsContainer: {
     display: "flex",
     justifyContent: "space-around",
