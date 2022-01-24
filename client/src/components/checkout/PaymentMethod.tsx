@@ -1,6 +1,4 @@
 import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
-import { useEffect, useState } from "react";
-import order from "../../order"
 import mastercard from "../../assets/img/mastercard.png"
 import swish from "../../assets/img/swish.png"
 
@@ -34,7 +32,7 @@ function PaymentMethod({paymentMethod}: IProps) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   center: { 
     textAlign: "center",
     paddingTop: "2rem"

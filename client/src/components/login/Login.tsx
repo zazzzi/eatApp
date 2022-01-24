@@ -1,3 +1,4 @@
+
 import {
   Box,
   Hidden,
@@ -6,41 +7,26 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
+
 import { useEffect, useState } from "react";
-import eatAppLogo from "../../assets/logos/eatAppLogo.png";
-import { IncomingUser, User } from "../../types/types";
+import { IncomingUser} from "../../types/types";
 import LoginInputForm from "./LoginInputForm";
-import { auth, db } from "../../firebase";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  doc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore";
-import LogOutBtn from "./LogOutBtn";
+import { auth } from "../../firebase";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from "react-router-dom";
-import HomeIcon from "@material-ui/icons/Home";
-import blob from "../../assets/img/blob.png";
 import blobTurned from "../../assets/img/blob_vriden.png";
 import blobDesktop from "../../assets/img/desktop_blob.png";
 import mainBackground from "../../assets/img/front_page_background.png";
 import sideImg from "../../assets/img/side_picture.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 
-interface Iprops {}
 
-function Login(props: Iprops) {
+function Login() {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [uid, setUid] = useState<string>();
   const [wrongPasswordOrEmail, setWrongPasswordOrEmail] =
     useState<boolean>(false);
-
-  console.log(uid, isLoggedIn);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -166,6 +152,7 @@ function Login(props: Iprops) {
   );
 }
 
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: "100vh",
@@ -175,6 +162,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       alignItems: "center",
     },
   },
+
   logo: {
     display: "flex",
     width: "20rem",

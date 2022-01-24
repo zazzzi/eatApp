@@ -7,14 +7,10 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import { onAuthStateChanged } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { UserAuthContext } from "../../context/UsersContext";
-import { auth } from "../../firebase";
 import { User, UserInfoToUpdate } from "../../types/types";
 import LogOutBtn from "../login/LogOutBtn";
-import HomeIcon from "@material-ui/icons/Home";
 import PasswordModal from "./PasswordModal";
 import mainBackground from "../../assets/img/front_page_background.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
