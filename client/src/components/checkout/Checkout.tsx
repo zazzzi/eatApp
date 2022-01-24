@@ -192,12 +192,11 @@ function Checkout({restaurantId, userInformation}:Iprops) {
         }
       />
       <Box>
-        <Box>
-            <Box>
+        <Box >
+            <Box className={classes.innerHeight}>
               {getStepContent(activeStep)}
             </Box>
             <Box className={classes.align}>
-            
             { activeStep === 3 || !cart.length ? 
               null
               :
@@ -246,23 +245,27 @@ const useStyles = makeStyles(() => ({
     height: '1.5rem'
   }, 
   height: {
-    height: "100vh",
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#FEFEFE",
+  },
+  innerHeight: {
+    height: "80vh",
   },
   priceTotal: {
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "column",
-    padding: "1rem 1rem 1rem 1rem"
+    padding: "0rem 1rem 1rem 1rem"
   },
   align: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
-    bottom: "2px",
-    position: "relative",
+    bottom: "1px",
+    position: "fixed", 
+    width: "100vw",
+    backgroundColor: "white",
   },
   buttonContainer: {
     display: "flex",
