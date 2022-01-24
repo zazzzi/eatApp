@@ -1,16 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import {
-  collection,
-  getDocs,
-  addDoc,
   updateDoc,
   doc,
-  deleteDoc,
   getDoc,
-  setDoc,
 } from "firebase/firestore";
-import { MenuItemType, User, UserInfoToUpdate } from "../types/types";
+import { User, UserInfoToUpdate } from "../types/types";
 import { onAuthStateChanged, updatePassword } from "firebase/auth";
 
 interface IState {

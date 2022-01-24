@@ -57,7 +57,7 @@ function App() {
     console.log("is logged in", loggedIn);
   }, []);
 
-  const selectedTable = (table: any) => {
+  const selectedTable = (table: string) => {
     setTable(table);
   };
 
@@ -111,7 +111,7 @@ function App() {
               />
               <Route
                 path="/admin"
-                element={<AdminIndex userInfo={userInformation} />}
+                element={<AdminIndex userInfo={userInformation!} />}
               />
               <Route
                 path="/tables"

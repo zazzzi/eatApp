@@ -58,7 +58,7 @@ function OrderConfirmation({order, restaurantId}: Iprops) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   height: {
     display: "flex",
     flexDirection: "column",

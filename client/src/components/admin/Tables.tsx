@@ -6,15 +6,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
-import { RestaurantTableData } from "../../types/types";
+import { RestaurantTableData, User } from "../../types/types";
 import AddIcon from "@material-ui/icons/Add";
 import EditTableModal from "./TableModal";
 import { Link } from "react-router-dom";
 import { MenuContext } from "../../context/MenusContext";
 interface Iprops {
   restaurantTable: RestaurantTableData;
-  selectedTable: (table: any) => void;
-  userInfo: any;
+  selectedTable: (table: string) => void;
+  userInfo: User;
 }
 
 function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
@@ -24,7 +24,7 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
 
   useEffect(() => {
     if (!userInfo) return;
-    fetchDatabaseWithId(userInfo.rID);
+    fetchDatabaseWithId(userInfo!.rID!);
   }, [userInfo]);
 
   if (!restaurantData) {
@@ -64,7 +64,7 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
                 border: 0,
               }}
               className={classes.boxContainer}
-              onClick={() => selectedTable(table)}
+              onClick={() => selectedTable(table as unknown as string)}
             >
               <p>{table}</p>
             </Box>

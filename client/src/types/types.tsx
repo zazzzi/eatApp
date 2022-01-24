@@ -54,3 +54,13 @@ export interface IncomingUser {
   email: string;
   password: string;
 }
+export interface RestaurantData {
+  categories: Array<string>;
+  color: string;
+  img: string;
+  isNameBlack: boolean;
+  menu: Array<MenuItemType>;
+  rID: string;
+  restaurantName: string; 
+  tables: Array<string>;
+}

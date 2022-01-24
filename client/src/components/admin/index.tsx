@@ -1,34 +1,20 @@
 import {
-  Avatar,
   Box,
   Button,
   makeStyles,
   Theme,
   Typography,
 } from "@material-ui/core";
-import SettingsApplicationsRoundedIcon from "@material-ui/icons/SettingsApplicationsRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import { useContext, useEffect, useState } from "react";
-import TablesEditor from "./Tables";
-import { db } from "../../firebase";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  addDoc,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-
 import { SliderPicker, TwitterPicker } from "react-color";
 import FileUploadField from "../restaurantMenu/FileUploadField";
-
 import { Link } from "react-router-dom";
 import { MenuContext } from "../../context/MenusContext";
+import { User } from "../../types/types";
 
 interface Iprops {
-  userInfo: any;
+  userInfo: User;
   setColor?: any;
 }
 
@@ -41,7 +27,6 @@ function AdminIndex(props: Iprops) {
   const [chosenColor, setChosenColor] = useState<string>("#79D2BE");
   const {
     restaurantData,
-    sendUrlParam,
     updateRestaurantColor,
     updateRestaurantImg,
   } = useContext(MenuContext);
@@ -65,7 +50,7 @@ function AdminIndex(props: Iprops) {
     }
   };
 
-  const handleChange = (hex: any) => {
+  const handleChange = (hex: { hex: string; }) => {
     if (props.setColor) {
       props.setColor(hex.hex);
       setStartingColor({
