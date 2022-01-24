@@ -15,7 +15,7 @@ import { User } from "../../types/types";
 
 interface Iprops {
   userInfo: User;
-  setColor?: any;
+  setColor?: (value: string) => void;
 }
 
 function AdminIndex(props: Iprops) {
@@ -50,14 +50,12 @@ function AdminIndex(props: Iprops) {
     }
   };
 
-  const handleChange = (hex: { hex: string; }) => {
+
+  const handleChange = (hex: any) => {
+    console.log(hex, "handlechange hex");
     if (props.setColor) {
       props.setColor(hex.hex);
-      setStartingColor({
-        background: hex.hex,
-      });
     }
-    updateRestaurantColor(startingColor);
   };
 
   const setURL = (url: string) => {
@@ -114,10 +112,7 @@ function AdminIndex(props: Iprops) {
 
           {colorSliderOpen ? (
             <Box mt={2} p={2}>
-              <TwitterPicker
-                color={startingColor.background}
-                onChange={handleChange}
-              />
+              <TwitterPicker onChange={handleChange} />
             </Box>
           ) : null}
         </Box>
