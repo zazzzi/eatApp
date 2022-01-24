@@ -130,7 +130,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     }, 3000);
   }
 
-  const filterMenuItems = (item: MenuItemType) => {
+  const filterMenuItems = (item: MenuItemType, index: number) => {
     const filtered = item.category.map((i: string) => {
       if (i === value) {
         return item;
@@ -143,6 +143,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     });
     return (
       <MenuItems
+        key={index}
         menuItems={filterUndefined}
         deletedItemCallback={forceUpdate}
       />
@@ -299,14 +300,14 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                       indicatorColor="secondary"
                       onChange={handleChange}
                     >
-                      {restaurantData.categories.map((t: any) => (
-                        <Tab label={t} value={t} />
+                      {restaurantData.categories.map((t: any, index: number) => (
+                        <Tab key={index} label={t} value={t} />
                       ))}
                     </Tabs>
                   </Box>
                   <hr />
                   <Box className={classes.menuItemContainer}>
-                    {restaurantData.menu.map((i: any) => filterMenuItems(i))}
+                    {restaurantData.menu.map((i: any, index: number) => filterMenuItems(i, index))}
                   </Box>
                 </>
               ) : (

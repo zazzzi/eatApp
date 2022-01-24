@@ -119,14 +119,14 @@ function App() {
                   <TablesEditor
                     selectedTable={selectedTable}
                     restaurantTable={currentTableAndRestaurant!}
-                    userInfo={userInformation}
+                    userInfo={userInformation!}
                   />
                 }
               />
               <Route
                 path="/tables/:id"
                 element={
-                  <QrGenerator table={table} userInfo={userInformation} />
+                  <QrGenerator table={table} userInfo={userInformation!} />
                 }
               />
               <Route
