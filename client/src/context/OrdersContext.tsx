@@ -6,8 +6,8 @@ import  {  MenuItem } from "./CartContext";
 import { UserAuthContext } from "./UsersContext";
 
 interface ContextValue{
-  orders: any;
-  order: any;
+  orders: Array<Order>;
+  order: Order | any;
   createOrder: (
     response: any, 
     cart: MenuItem[], 
@@ -100,7 +100,7 @@ function OrderProvider(props: Props) {
     <OrderContext.Provider
       value={{
         orders: orders,
-        order: order,
+        order: order!,
         createOrder: createOrder,
         confirmOrderDelivery: confirmOrderDelivery
       }}
