@@ -226,95 +226,101 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
             style={{ backgroundImage: `url(${restaurantData.img})` }}
             className={classes.menuBackground}
           ></Box>
-          <Box
-            id="nameContainer"
-            sx={{
-              width: {
-                xs: "100%",
-                sm: "100%",
-                md: "100%",
-                lg: "50%",
-                xl: "50%",
-              },
-              position: {
-                xs: "absolute",
-                sm: "absolute",
-                md: "absolute",
-                lg: "fixed",
-                xl: "fixed",
-              },
-            }}
-            style={{ backgroundColor: `${menuColor}` }}
-            className={classes.restaurantNameContainer}
-          >
-            {isOwner ? (
-              <Box className={classes.addItemButton}>
-                <Button
-                  onClick={() => {
-                    setOpenSettings(!openSettings);
-                  }}
-                >
-                  <Tooltip title="Settings">
-                    <SettingsApplicationsRoundedIcon fontSize="large" />
-                  </Tooltip>
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    setOpen(true);
-                  }}
-                >
-                  <Tooltip title="Add new">
-                    <AddIcon fontSize="large" />
-                  </Tooltip>
-                </Button>
-              </Box>
-            ) : null}
-
+          <Box>
             <Box
-              display="flex"
-              alignItems="center"
-              color={!restaurantNameColorBlack ? "#000" : "#FEFEFE"}
-              mt={isOwner ? 0 : 2}
+              id="nameContainer"
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "100%",
+                  md: "100%",
+                  lg: "50%",
+                  xl: "50%",
+                },
+                position: {
+                  xs: "absolute",
+                  sm: "absolute",
+                  md: "absolute",
+                  lg: "fixed",
+                  xl: "fixed",
+                },
+              }}
+              style={{ backgroundColor: `${menuColor}` }}
+              className={classes.restaurantNameContainer}
             >
-              <Typography className={classes.restaurantName} variant="h2">
-                {restaurantData.restaurantName}
-              </Typography>
-
-              {/* TODO: Send this state into database */}
               {isOwner ? (
-                <Button size="small" onClick={handleNameColorChange}>
-                  <FiberManualRecordIcon
-                    htmlColor={!restaurantNameColorBlack ? "#FFF" : "#000"}
-                  />
-                </Button>
-              ) : null}
-            </Box>
+                <Box className={classes.addItemButton}>
+                  <Button
+                    onClick={() => {
+                      setOpenSettings(!openSettings);
+                    }}
+                  >
+                    <Tooltip title="Settings">
+                      <SettingsApplicationsRoundedIcon fontSize="large" />
+                    </Tooltip>
+                  </Button>
 
-            <Box className={classes.menuList}>
-              {!openSettings ? (
-                <>
-                  <Box className={classes.menuTabs}>
-                    <Tabs
-                      variant="scrollable"
-                      aria-label="scrollable prevent tabs example"
-                      value={value}
-                      indicatorColor="secondary"
-                      onChange={handleChange}
-                    >
-                      {restaurantData.categories.map((t: any, index: number) => (
-                        <Tab key={index} label={t} value={t} />
-                      ))}
-                    </Tabs>
-                  </Box>
-                  <hr />
-                  <Box className={classes.menuItemContainer}>
-                    {restaurantData.menu.map((i: any, index: number) => filterMenuItems(i, index))}
-                  </Box>
-                </>
-              ) : (
-                <AdminIndex setColor={handleSetColor} userInfo={userInfo} />
-              )}
+                  <Button
+                    onClick={() => {
+                      setOpen(true);
+                    }}
+                  >
+                    <Tooltip title="Add new">
+                      <AddIcon fontSize="large" />
+                    </Tooltip>
+                  </Button>
+                </Box>
+              ) : null}
+
+              <Box
+                display="flex"
+                alignItems="center"
+                color={!restaurantNameColorBlack ? "#000" : "#FEFEFE"}
+                mt={isOwner ? 0 : 2}
+              >
+                <Typography className={classes.restaurantName} variant="h2">
+                  {restaurantData.restaurantName}
+                </Typography>
+
+                {/* TODO: Send this state into database */}
+                {isOwner ? (
+                  <Button size="small" onClick={handleNameColorChange}>
+                    <FiberManualRecordIcon
+                      htmlColor={!restaurantNameColorBlack ? "#FFF" : "#000"}
+                    />
+                  </Button>
+                ) : null}
+              </Box>
+
+              <Box className={classes.menuList}>
+                {!openSettings ? (
+                  <>
+                    <Box className={classes.menuTabs}>
+                      <Tabs
+                        variant="scrollable"
+                        aria-label="scrollable prevent tabs example"
+                        value={value}
+                        indicatorColor="secondary"
+                        onChange={handleChange}
+                      >
+                        {restaurantData.categories.map(
+                          (t: any, index: number) => (
+                            <Tab key={index} label={t} value={t} />
+                          )
+                        )}
+                      </Tabs>
+                    </Box>
+                    <hr />
+                    <Box className={classes.menuItemContainer}>
+                      {restaurantData.menu.map((i: any, index: number) =>
+                        filterMenuItems(i, index)
+                      )}
+                    </Box>
+                  </>
+                ) : (
+                  <AdminIndex setColor={handleSetColor} userInfo={userInfo} />
+                )}
+              </Box>
             </Box>
           </Box>
           {open ? (
@@ -369,21 +375,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#FEFEFE",
+    overflow: "scroll",
   },
   menuBackground: {
-    zIndex: 1,
+    // zIndex: 1,
     // position: "absolute",
+    // height: "30%",
+    // minWidth: "50%",
+    // backgroundSize: "cover",
+    // backgroundPosition: "center",
+    // backgroundRepeat: "no-repeat",
     height: "30%",
-    minWidth: "100%",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
   },
   restaurantNameContainer: {
     display: "flex",
     flexDirection: "column",
-    top: "20%",
-    zIndex: 10,
+    // top: "20%",
+    // zIndex: 10,
     height: "100%",
     // width: "50%",
     borderRadius: "38px 38px 0px 0px",
@@ -394,8 +402,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: ".5rem",
   },
   menuList: {
-    position: "sticky",
-    height: "100%",
+    height: "100vh",
     width: "100%",
     backgroundColor: "#FEFEFE",
     borderRadius: "6px 60px 6px 6px",
