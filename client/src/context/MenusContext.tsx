@@ -1,23 +1,17 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import {
-  collection,
-  getDocs,
   getDoc,
-  addDoc,
   updateDoc,
   doc,
   setDoc,
-  deleteDoc,
-  deleteField,
 } from "firebase/firestore";
-import { MenuItemType } from "../types/types";
 import { UserAuthContext } from "./UsersContext";
-import { keys } from "@material-ui/core/styles/createBreakpoints";
+import { RestaurantTableData, RestaurantData } from "../types/types";
 
 interface IState {
-  restaurantId: any;
-  restaurantData: any;
+  restaurantId: RestaurantTableData | any;
+  restaurantData: RestaurantData | any;
   restaruantTitleIsBlack: boolean;
   tableExists: boolean;
 }

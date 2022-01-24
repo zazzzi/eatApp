@@ -1,6 +1,6 @@
-import { Box, Button, makeStyles, Theme, Typography } from "@material-ui/core";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Box, Button, makeStyles, Typography } from "@material-ui/core";
+import { Link, useNavigate } from "react-router-dom";
+import {  useState } from "react";
 import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import qrBtn from "../../assets/img/qrBtn.png";
 import { RestaurantTableData } from "../../types/types";
@@ -11,7 +11,7 @@ interface Iprops {
 
 function Hero({ restaurantId }: Iprops) {
   const classes = useStyles();
-  const [incomingScan, setIncomingScan] = useState({ result: "None" });
+  const [_, setIncomingScan] = useState({ result: "None" });
   const [cameraActive, setCameraActive] = useState(false);
   let navigate = useNavigate();
 
@@ -84,7 +84,7 @@ function Hero({ restaurantId }: Iprops) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   logo: {
     display: "flex",
     width: "100%",

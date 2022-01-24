@@ -3,41 +3,23 @@ import {
   Link,
   makeStyles,
   Theme,
-  Typography,
   TextField,
   Button,
 } from "@material-ui/core";
-import { ChangeEventHandler, useEffect, useState } from "react";
-import eatAppLogo from "../../assets/logos/eatAppLogo.png";
-import { IncomingUser, User } from "../../types/types";
-import LoginInputForm from "./LoginInputForm";
-import { auth, db } from "../../firebase";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  doc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore";
-import LogOutBtn from "./LogOutBtn";
+import {  useEffect, useState } from "react";
+import { auth} from "../../firebase";
 import {
   getAuth,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { Navigate } from "react-router-dom";
-import HomeIcon from "@material-ui/icons/Home";
 import SendIcon from "@material-ui/icons/Send";
 import mainBackground from "../../assets/img/front_page_background.png";
 import blobTurned from "../../assets/img/blob_vriden.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 
-interface Iprops {}
-
-function ResetPassword(props: Iprops) {
+function ResetPassword() {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [uid, setUid] = useState<string>();
@@ -68,6 +50,7 @@ function ResetPassword(props: Iprops) {
           console.clear();
         })
         .catch((error) => {
+          console.log(error)
           setResetSent(true);
           console.clear();
         });

@@ -36,8 +36,8 @@ function OrderConfirmation({order, restaurantId}: Iprops) {
           </Box>
           <Divider className={classes.divider}/>
           <Box className={classes.padding}>
-            {order.cart.map((item: MenuItem) => (
-              <Box>
+            {order.cart.map((item: MenuItem, index: number) => (
+              <Box key={index}>
                 <Typography>{item.quantity} {item.title} {item.price * item.quantity} kr</Typography>
               </Box>
             ))}
@@ -58,7 +58,7 @@ function OrderConfirmation({order, restaurantId}: Iprops) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   height: {
     display: "flex",
     flexDirection: "column",

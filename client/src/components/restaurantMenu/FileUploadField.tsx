@@ -1,13 +1,10 @@
 import {
   Box,
   Button,
-  makeStyles,
-  TextField,
-  Theme,
   Typography,
 } from "@material-ui/core";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { storage } from "../../firebase";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
@@ -18,11 +15,9 @@ interface Iprops {
 
 function FileUploadField(props: Iprops) {
   const [image, setImage] = useState<any>(null);
-  const [imageURL, setImageURL] = useState<any>(null);
-  const classes = useStyles();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const handleClick = (event: any) => {
+  const handleClick = (_event: any) => {
     if (hiddenFileInput && hiddenFileInput.current) {
       hiddenFileInput.current.click();
     }
@@ -85,7 +80,5 @@ function FileUploadField(props: Iprops) {
     </Box>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({}));
 
 export default FileUploadField;

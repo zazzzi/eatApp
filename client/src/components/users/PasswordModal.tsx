@@ -3,23 +3,17 @@ import {
   makeStyles,
   Theme,
   Modal,
-  TextField,
   Button,
-  MenuItem,
-  InputLabel,
-  FormControl,
   Typography,
-  Input,
   OutlinedInput,
   InputAdornment,
   IconButton,
   FormHelperText,
 } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import DeleteIcon from "@material-ui/icons/Delete";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { UserAuthContext } from "../../context/UsersContext";
 
 interface IProps {
@@ -29,9 +23,9 @@ interface IProps {
 
 function PasswordModal(props: IProps) {
   const classes = useStyles();
-  const handleOpen = () => setOpen(true);
+  /* const handleOpen = () => setOpen(true); */
   const handleClose = () => setOpen(false);
-  const [open, setOpen] = useState(false);
+  const [, setOpen] = useState(false);
   const [password1, setPassword1] = useState<string>();
   const [password2, setPassword2] = useState<string>();
   const { updateUserPassword } = useContext(UserAuthContext);

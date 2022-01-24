@@ -1,8 +1,6 @@
-import { Box, makeStyles, Theme, Button, Typography, Divider} from "@material-ui/core";
-import { SsidChartTwoTone } from "@mui/icons-material";
-import { useContext, useEffect, useState } from "react";
+import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
+import { useContext} from "react";
 import { Link } from "react-router-dom";
-import food from "../../food"
 import MenuItems from "../menu/MenuItem"
 import { CartContext } from "../../context/CartContext";
 import { RestaurantTableData } from "../../types/types";
@@ -42,7 +40,7 @@ function Cart({restaurantData}: Iprops) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   priceTotal: {
     display: "flex",
     justifyContent: "space-between",

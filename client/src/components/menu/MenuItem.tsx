@@ -1,14 +1,12 @@
 import {
   Box,
   Container,
-  Divider,
   makeStyles,
   Theme,
   Typography,
-  Button,
   Tooltip,
 } from "@material-ui/core";
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MenuItemType } from "../../types/types";
 import Incrementer from "../incrementer/Incrementer";
 import { MenuItem } from "../../context/CartContext";
@@ -26,7 +24,7 @@ interface Iprops {
 
 function MenuItems(props: Iprops) {
   const classes = useStyles();
-  const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
+  const { userInformation } = useContext(UserAuthContext);
   const { restaurantId, deleteMenuItem } = useContext(MenuContext);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
@@ -46,9 +44,8 @@ function MenuItems(props: Iprops) {
     }
   }
 
-  function handleDelete(index: any, id: any) {
+  function handleDelete(index: number) {
     const currentMenu = props.menuItems[index];
-
     setDeletedItemArray(currentMenu);
     deleteMenuItem(deletedItemArray, currentMenu.id);
     props.deletedItemCallback!();
@@ -56,8 +53,8 @@ function MenuItems(props: Iprops) {
 
   return (
     <>
-      {props.menuItems.map((item: MenuItemType | MenuItem, index: any) => (
-        <Box className={classes.menuitemContainer}>
+      {props.menuItems.map((item: MenuItemType | MenuItem, index: number) => (
+        <Box key={index} className={classes.menuitemContainer}>
           <Box className={classes.menuItem}>
             <Container className={classes.imageColumn}>
               {item.img ? (
@@ -87,7 +84,7 @@ function MenuItems(props: Iprops) {
                     <Tooltip title="Delete">
                       <DeleteIcon
                         onClick={() => [
-                          handleDelete(index, props.menuItems.id),
+                          handleDelete(index),
                         ]}
                       />
                     </Tooltip>
@@ -123,7 +120,7 @@ function MenuItems(props: Iprops) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   baseContainer: {
     width: "100vw",
   },

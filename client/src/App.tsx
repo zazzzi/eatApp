@@ -57,7 +57,7 @@ function App() {
     console.log("is logged in", loggedIn);
   }, []);
 
-  const selectedTable = (table: any) => {
+  const selectedTable = (table: string) => {
     setTable(table);
   };
 
@@ -111,7 +111,7 @@ function App() {
               />
               <Route
                 path="/admin"
-                element={<AdminIndex userInfo={userInformation} />}
+                element={<AdminIndex userInfo={userInformation!} />}
               />
               <Route
                 path="/tables"
@@ -119,14 +119,14 @@ function App() {
                   <TablesEditor
                     selectedTable={selectedTable}
                     restaurantTable={currentTableAndRestaurant!}
-                    userInfo={userInformation}
+                    userInfo={userInformation!}
                   />
                 }
               />
               <Route
                 path="/tables/:id"
                 element={
-                  <QrGenerator table={table} userInfo={userInformation} />
+                  <QrGenerator table={table} userInfo={userInformation!} />
                 }
               />
               <Route
