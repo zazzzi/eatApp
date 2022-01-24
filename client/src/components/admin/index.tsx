@@ -27,7 +27,6 @@ function AdminIndex(props: Iprops) {
   const [chosenColor, setChosenColor] = useState<string>("#79D2BE");
   const {
     restaurantData,
-    sendUrlParam,
     updateRestaurantColor,
     updateRestaurantImg,
   } = useContext(MenuContext);

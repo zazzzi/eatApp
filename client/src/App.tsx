@@ -119,7 +119,7 @@ function App() {
                   <TablesEditor
                     selectedTable={selectedTable}
                     restaurantTable={currentTableAndRestaurant!}
-                    userInfo={userInformation}
+                    userInfo={userInformation!}
                   />
                 }
               />
