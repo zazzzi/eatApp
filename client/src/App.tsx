@@ -111,7 +111,7 @@ function App() {
               />
               <Route
                 path="/admin"
-                element={<AdminIndex userInfo={userInformation} />}
+                element={<AdminIndex userInfo={userInformation!} />}
               />
               <Route
                 path="/tables"
