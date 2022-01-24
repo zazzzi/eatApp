@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {db} from '../firebase'
-import { collection, doc, setDoc, addDoc, getDocs, updateDoc, onSnapshot} from "firebase/firestore";
+import { collection, doc, addDoc, getDocs, updateDoc, onSnapshot} from "firebase/firestore";
 import { Order, RestaurantTableData, User } from "../types/types";
 import  {  MenuItem } from "./CartContext";
 import { UserAuthContext } from "./UsersContext";
@@ -29,7 +29,7 @@ interface Props {
 }
 
 function OrderProvider(props: Props) {
-  const [order, setorder] = useState<Order | null>(null);
+  const [order] = useState<Order | null>(null);
   const { userInformation, userID } = useContext(UserAuthContext)
   const [orders, setOrders] = useState<any | null>(null)
 
