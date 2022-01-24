@@ -8,20 +8,9 @@ import {
   OutlinedInput,
   TextField,
   Theme,
-  Typography,
 } from "@material-ui/core";
-import React, { FocusEventHandler, useEffect, useState } from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import React, { useState } from "react";
 import { User } from "../../types/types";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-import { db } from "../../firebase";
 import AddIcon from "@material-ui/icons/Add";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
