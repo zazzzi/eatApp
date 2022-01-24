@@ -1,4 +1,3 @@
-
 import {
   Box,
   Hidden,
@@ -9,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import { useEffect, useState } from "react";
-import { IncomingUser} from "../../types/types";
+import { IncomingUser } from "../../types/types";
 import LoginInputForm from "./LoginInputForm";
 import { auth } from "../../firebase";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
@@ -19,7 +18,6 @@ import blobDesktop from "../../assets/img/desktop_blob.png";
 import mainBackground from "../../assets/img/front_page_background.png";
 import sideImg from "../../assets/img/side_picture.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
-
 
 function Login() {
   const classes = useStyles();
@@ -80,6 +78,13 @@ function Login() {
             lg: "50rem",
             xl: "50rem",
           },
+          width: {
+            xs: "100%",
+            sm: "100%",
+            md: "100%",
+            lg: "100%",
+            xl: "100rem",
+          },
         }}
         className={classes.backgroundColor}
       >
@@ -92,6 +97,13 @@ function Login() {
               md: "50rem",
               lg: "50rem",
               xl: "100%",
+            },
+            minWidth: {
+              xs: "100%",
+              sm: "100%",
+              md: "100%",
+              lg: "100%",
+              xl: "31rem",
             },
           }}
         >
@@ -152,7 +164,6 @@ function Login() {
   );
 }
 
-
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: "100vh",
@@ -165,8 +176,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   logo: {
     display: "flex",
-    width: "20rem",
-    padding: "0 0 0 0",
+    width: "11rem",
+    padding: "2rem 0 0 0",
   },
   backgroundColor: {
     display: "flex",
@@ -177,6 +188,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "100vh",
+    boxShadow: "-20px 0px 17px rgba(0, 0, 0, 0.03)",
   },
   logoContainer: {
     display: "flex",
@@ -240,6 +252,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     height: "100%",
     borderRadius: "150px 0 0 150px",
+    boxShadow: "-20px 0px 20px 0px rgb(0 0 0 / 3%);",
   },
 }));
 
