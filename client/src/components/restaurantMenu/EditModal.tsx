@@ -125,6 +125,10 @@ function EditMenuModal(props: IProps) {
     } else setImageIsUploaded(false);
   });
 
+  if(!restaurantData){
+    return <></>
+  }
+
   return (
     <Modal
       open={props.editOpen}
