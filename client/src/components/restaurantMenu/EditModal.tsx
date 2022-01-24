@@ -17,6 +17,7 @@ interface IProps {
   editOpen: boolean;
   menuItem: MenuItemType;
   isNewItem: boolean;
+  handleAlert: (value:boolean)=>void
 }
 
 function EditMenuModal(props: IProps) {
@@ -80,6 +81,7 @@ function EditMenuModal(props: IProps) {
       ? createNewMenuItem(newMenuItem)
       : updateItemData(props.menuItem.title, updatedMenuInfo);
     props.closeModal();
+    props.handleAlert(true)
   };
 
   const setURL = (url: string) => {
@@ -208,6 +210,7 @@ function EditMenuModal(props: IProps) {
                   startIcon={<DeleteIcon />}
                   variant="outlined"
                   onClick={() => {
+                    props.handleAlert(false)
                     props.closeModal();
                   }}
                 >

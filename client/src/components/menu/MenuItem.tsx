@@ -51,6 +51,10 @@ function MenuItems(props: Iprops) {
     props.deletedItemCallback!();
   }
 
+  const handleAlert = (value: boolean) => {
+
+  }
+
   return (
     <>
       {props.menuItems.map((item: MenuItemType | MenuItem, index: number) => (
@@ -107,6 +111,7 @@ function MenuItems(props: Iprops) {
           </Box>
           {isOwner ? (
             <EditMenuModal
+              handleAlert={handleAlert}
               menuItem={item}
               closeModal={() => setOpen(false)}
               editOpen={open}

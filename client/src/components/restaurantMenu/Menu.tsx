@@ -60,8 +60,10 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     boolean | null
   >(null);
   const [openAlert, setOpenAlert] = useState(false);
-
+  const [isItemNew, setIsItemNew] = useState(false);
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  console.log(isItemNew)
 
   useEffect(() => {
     if (!id) return;
@@ -126,6 +128,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   };
 
   function fireAlert() {
+    console.log('test')
     setOpenAlert(true);
     setTimeout(() => {
       setOpenAlert(false);
@@ -179,6 +182,10 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
       .map((item) => item.quantity)
       .reduce((prev, next) => prev + next);
   };
+
+  const handleAlert = (value: boolean) => {
+    setIsItemNew(value)
+  }
 
   if (restaurantData && !restaurantData.tables.includes(table)) {
     return (
@@ -319,11 +326,14 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
           </Box>
           {open ? (
             <EditMenuModal
+              handleAlert={handleAlert}
               isNewItem={true}
               menuItem={restaurantData.menu}
               closeModal={() => {
-                setOpen(false);
-                fireAlert();
+                setOpen(false)
+                if(isItemNew){
+                  fireAlert()
+                }
               }}
               editOpen={open}
             />
