@@ -1,4 +1,13 @@
-import { Box, Link, makeStyles, Theme} from "@material-ui/core";
+
+import {
+  Box,
+  Hidden,
+  Link,
+  makeStyles,
+  Theme,
+  Typography,
+} from "@material-ui/core";
+
 import { useEffect, useState } from "react";
 import { IncomingUser} from "../../types/types";
 import LoginInputForm from "./LoginInputForm";
@@ -6,7 +15,9 @@ import { auth } from "../../firebase";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from "react-router-dom";
 import blobTurned from "../../assets/img/blob_vriden.png";
+import blobDesktop from "../../assets/img/desktop_blob.png";
 import mainBackground from "../../assets/img/front_page_background.png";
+import sideImg from "../../assets/img/side_picture.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 
 
@@ -42,78 +53,116 @@ function Login() {
   }
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        maxWidth: {
-          xs: "100%",
-          sm: "100%",
-          md: "24rem",
-          lg: "24rem",
-          xl: "24rem",
-        },
-        margin: {
-          md: "2rem auto",
-          lg: "2rem auto",
-          xl: "2rem auto",
-        },
-        maxHeight: {
-          xs: "100%",
-          sm: "100%",
-          md: "50rem",
-          lg: "50rem",
-          xl: "50rem",
-        },
-      }}
-      className={classes.backgroundColor}
-    >
-      {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
-      <Box className={classes.paperBackgroundImgStyling}>
-        <Box className={classes.welcomeTextContainer}>
-          <Link href="/">
-            <img
-              className={classes.logo}
-              src={logoStanced}
-              alt="eatAppLogo.png"
-            />
-          </Link>
-          <p className={classes.welcomeText}>Logga in på ditt konto här.</p>
-        </Box>
-        <Box>
-          <LoginInputForm
-            incorrectInfo={wrongPasswordOrEmail}
-            loginDataCallback={loginDataCallback}
-          />
-        </Box>
-      </Box>
+    <Box className={classes.root}>
+      <Box
+        sx={{
+          borderRadius: "50px",
+          position: "relative",
+          display: "flex",
+          maxWidth: {
+            xs: "100%",
+            sm: "100%",
+            md: "100rem",
+            lg: "100rem",
+            xl: "100rem",
+          },
+          margin: {
+            xs: "0rem auto",
+            sm: "0rem auto",
+            md: "0rem auto",
+            lg: "0rem auto",
+            xl: "0rem auto",
+          },
+          maxHeight: {
+            xs: "100%",
+            sm: "100%",
+            md: "50rem",
+            lg: "50rem",
+            xl: "50rem",
+          },
+        }}
+        className={classes.backgroundColor}
+      >
+        {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
+        <Box
+          sx={{
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: "50rem",
+              lg: "50rem",
+              xl: "100%",
+            },
+          }}
+        >
+          <Box className={classes.paperBackgroundImgStyling} sx={{}}>
+            <Box className={classes.welcomeTextContainer}>
+              <Link href="/">
+                <img
+                  className={classes.logo}
+                  src={logoStanced}
+                  alt="eatAppLogo.png"
+                />
+              </Link>
+              <p className={classes.welcomeText}>Logga in på ditt konto här.</p>
+            </Box>
+            <Box>
+              <LoginInputForm
+                incorrectInfo={wrongPasswordOrEmail}
+                loginDataCallback={loginDataCallback}
+              />
+            </Box>
+          </Box>
 
-      <Box className={classes.noAccountOuterContainer}>
-        <Box className={classes.noAccountInnerContainer}>
-          <p
-            style={{
-              fontFamily: "Roboto",
-              fontSize: "15px",
-              fontWeight: 400,
-              margin: 0,
-              padding: ".2rem",
-              color: "#F9F9F9",
-            }}
-          >
-            <Link
-              style={{ textDecoration: "none", color: "#F9F9F9" }}
-              href="/create-user"
-              underline="always"
-            >
-              Inget konto? Skapa ett här!
-            </Link>
-          </p>
+          <Box className={classes.noAccountOuterContainer}>
+            <Box className={classes.noAccountInnerContainer}>
+              <p
+                style={{
+                  fontFamily: "Roboto",
+                  fontSize: "15px",
+                  fontWeight: 400,
+                  margin: 0,
+                  padding: ".2rem",
+                  color: "#F9F9F9",
+                }}
+              >
+                <Link
+                  style={{ textDecoration: "none", color: "#F9F9F9" }}
+                  href="/create-user"
+                  underline="always"
+                >
+                  Inget konto? Skapa ett här!
+                </Link>
+              </p>
+            </Box>
+          </Box>
         </Box>
+        <Hidden lgDown>
+          <Box className={classes.sideImgContainer}>
+            <img
+              style={{ objectFit: "cover" }}
+              className={classes.sideImgContainer}
+              src={sideImg}
+              alt=""
+            />
+          </Box>
+        </Hidden>
       </Box>
     </Box>
   );
 }
 
-const useStyles = makeStyles(() => ({
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    height: "100vh",
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+      alignItems: "center",
+    },
+  },
+
   logo: {
     display: "flex",
     width: "20rem",
@@ -121,8 +170,8 @@ const useStyles = makeStyles(() => ({
   },
   backgroundColor: {
     display: "flex",
-    flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
     backgroundImage: `url(${mainBackground})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
@@ -158,9 +207,13 @@ const useStyles = makeStyles(() => ({
   noAccountOuterContainer: {
     width: "100%",
     display: "flex",
+    // alignItems: "flex-end",
     justifyContent: "center",
     position: "absolute",
-    left: "50%",
+    left: "25%",
+    [theme.breakpoints.down("lg")]: {
+      left: "50%",
+    },
     bottom: "-18px",
     transform: "translate(-50%, -50%)",
     margin: "0 auto",
@@ -175,10 +228,18 @@ const useStyles = makeStyles(() => ({
     borderRadius: "18px 18px 0 0",
   },
   paperBackgroundImgStyling: {
-    backgroundImage: `url(${blobTurned})`,
+    backgroundImage: `url(${blobDesktop})`,
     backgroundPosition: "center",
-    backgroundSize: "cover",
+    [theme.breakpoints.down("xs")]: {
+      backgroundSize: "cover",
+    },
+    backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
+  },
+  sideImgContainer: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "150px 0 0 150px",
   },
 }));
 
