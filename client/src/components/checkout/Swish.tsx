@@ -17,7 +17,7 @@ interface Iprops {
 
 function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) {
   const classes = useStyles();
-  const [number, setNumber] = useState<any>(userInformation.phoneNumber);
+  const [number, setNumber] = useState<string>(String(userInformation.phoneNumber));
   const [loading, setLoading] = useState<boolean>(false);
  
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
