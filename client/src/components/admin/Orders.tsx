@@ -47,7 +47,7 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
     confirmOrderDelivery(order)
   }
 
-  const handleChange = (event: any, newValue: string) => {
+  const handleChange = (_event: any, newValue: string) => {
     setValue(newValue);
   };
 

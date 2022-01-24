@@ -126,7 +126,7 @@ function App() {
               <Route
                 path="/tables/:id"
                 element={
-                  <QrGenerator table={table} userInfo={userInformation} />
+                  <QrGenerator table={table} userInfo={userInformation!} />
                 }
               />
               <Route
