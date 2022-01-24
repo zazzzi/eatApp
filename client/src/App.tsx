@@ -14,10 +14,9 @@ import AdminIndex from "./components/admin";
 import ErrorBoundary from "./components/errorboundary/ErrorBoundary";
 import TablesEditor from "./components/admin/Tables";
 import QrGenerator from "./components/admin/QrGenerator";
-import Orders from "./components/admin/Orders"
+import Orders from "./components/admin/Orders";
 import { Box } from "@material-ui/core";
 import ResetPassword from "./components/login/ResetPassword";
-
 
 function App() {
   const { loggedIn, userID, userInformation } = useContext(UserAuthContext);
@@ -69,8 +68,8 @@ function App() {
           xs: "100%",
           sm: "100%",
           md: "100%",
-          lg: "50%",
-          xl: "50%",
+          lg: "80%",
+          xl: "80%",
         },
         margin: {
           // xs: "100%",
@@ -104,10 +103,12 @@ function App() {
               <Route path={`/user/${userID}`} element={<UserPage />} />
               <Route
                 path="/checkout/"
-                element={<Checkout 
-                  restaurantId={currentTableAndRestaurant!} 
-                  userInformation={userInformation!}
-                />}
+                element={
+                  <Checkout
+                    restaurantId={currentTableAndRestaurant!}
+                    userInformation={userInformation!}
+                  />
+                }
               />
               <Route
                 path="/admin"
@@ -130,14 +131,16 @@ function App() {
                 }
               />
               <Route
-              path="/orders"
-              element={<Orders 
-                orders={orders}
-                userId={userID}
-                userInfo={userInformation}
-                restaurantId={currentTableAndRestaurant!}
-              />}
-            />
+                path="/orders"
+                element={
+                  <Orders
+                    orders={orders}
+                    userId={userID}
+                    userInfo={userInformation}
+                    restaurantId={currentTableAndRestaurant!}
+                  />
+                }
+              />
             </Routes>
           </Router>
         </ErrorBoundary>

@@ -207,7 +207,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
         onClose={handleAlertClose}
       />
       <Box
-        sx={{ position: "absolute", top: "10px", zIndex: 100, width: "100%" }}
+        sx={{ position: "absolute", top: "10px", zIndex: 100 }}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -234,8 +234,8 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                   xs: "100%",
                   sm: "100%",
                   md: "100%",
-                  lg: "50%",
-                  xl: "50%",
+                  lg: "80%",
+                  xl: "80%",
                 },
                 position: {
                   xs: "absolute",
@@ -399,7 +399,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   restaurantName: {
     fontSize: "26px",
     fontWeight: 500,
-    padding: ".5rem",
+    padding: "1.5rem",
   },
   menuList: {
     height: "100%",
