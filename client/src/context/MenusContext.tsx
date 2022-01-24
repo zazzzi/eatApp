@@ -171,16 +171,16 @@ function MenuProvider(props: Props) {
     });
   };
 
-  async function updateRestaurantColor(hex: any) {
+  async function updateRestaurantColor(hex: string) {
     const docRef = doc(db, "restaurants", `${id}`);
-    console.log(hex.background);
 
-    const color = hex.background;
+    const color = hex;
     setRestaurantColor(color);
     await updateDoc(docRef, {
       color,
     });
-    console.log("color set to", color);
+
+    console.log(`%ccolor set to ${color}`, `color: ${color}`);
   }
 
   async function updateRestaurantNameColor(value: boolean) {

@@ -46,9 +46,9 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     sendUrlParam,
     updateRestaurantNameColor,
     restaruantTitleIsBlack,
+    updateRestaurantColor,
   } = useContext(MenuContext);
 
-  // TODO: starting state needs to be restaurantData.color, but can't set it before it's loaded
   const [menuColor, setMenuColor] = useState<string>();
 
   const [value, setValue] = useState<string>("Dryck");
@@ -110,6 +110,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
+  };
+
+  const handleSetColor = (value: string) => {
+    setMenuColor(value);
+    updateRestaurantColor(value);
   };
 
   const handleAlertClose = (
@@ -204,7 +209,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
         onClose={handleAlertClose}
       />
       <Box
-        sx={{ position: "absolute", top: "0", zIndex: 100, width: "100%" }}
+        sx={{ position: "absolute", top: "10px", zIndex: 100, width: "100%" }}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -212,7 +217,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
         <Link href="/">
           <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
         </Link>
-        <Link>
+        <Link href="/login">
           <AccountCircleIcon htmlColor="#FEFEFE" fontSize="large" />
         </Link>
       </Box>
@@ -310,7 +315,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                   </Box>
                 </>
               ) : (
-                <AdminIndex setColor={setMenuColor} userInfo={userInfo} />
+                <AdminIndex setColor={handleSetColor} userInfo={userInfo} />
               )}
             </Box>
           </Box>
