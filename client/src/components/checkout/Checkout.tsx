@@ -89,19 +89,19 @@ function Checkout({restaurantId, userInformation}:Iprops) {
     switch(stepIndex){
       case 0:
         return(
-          <Box>
+          <Box className={classes.width}>
             <Cart restaurantData={restaurantId}/>
           </Box>
         );
       case 1:
         return(
-          <Box>
+          <Box className={classes.width}>
             <PaymentMethod paymentMethod={handlePaymentMethod}/>
           </Box>
         );
       case 2: 
         return(
-        <Box>
+        <Box className={classes.width}>
           {
             paymentMethod === "swish" ? 
             <Swish 
@@ -119,7 +119,7 @@ function Checkout({restaurantId, userInformation}:Iprops) {
       )
       case 3: 
         return (
-          <Box>
+          <Box className={classes.width}>
             <OrderConfirmation
               restaurantId={restaurantId}
               order={order!}
@@ -133,8 +133,29 @@ function Checkout({restaurantId, userInformation}:Iprops) {
 
   return (
     <Box 
-    height="100%"
-    className={classes.height}>
+      sx={{
+        position: "relative",
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: "24rem",
+          lg: "24rem",
+          xl: "24rem",
+        },
+        margin: {
+          md: "2rem auto",
+          lg: "2rem auto",
+          xl: "2rem auto",
+        },
+        maxHeight: {
+          xs: "100%",
+          sm: "100%",
+          md: "50rem",
+          lg: "50rem",
+          xl: "50rem",
+        }}}
+      height="100%"
+      className={classes.height}>
       <MobileStepper
         variant="dots"
         steps={4}
@@ -221,7 +242,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    maxWidth: 400, 
+    maxWidth: "100%", 
     height: '1.5rem'
   }, 
   height: {
@@ -251,6 +272,10 @@ const useStyles = makeStyles(() => ({
     padding: '1rem 0rem 1rem 0rem',
     display: "flex",
     justifyContent: "space-between",
+  },
+  width: { 
+    maxWidth: '25rem',
+    margin: "auto"
   }
 }));
 
