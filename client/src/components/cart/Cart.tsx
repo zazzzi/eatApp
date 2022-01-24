@@ -66,7 +66,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center"
-  }
+  },
 }));
 
 
