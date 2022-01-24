@@ -56,8 +56,8 @@ function MenuItems(props: Iprops) {
 
   return (
     <>
-      {props.menuItems.map((item: MenuItemType | MenuItem, index: any) => (
-        <Box className={classes.menuitemContainer}>
+      {props.menuItems.map((item: MenuItemType | MenuItem, index: number) => (
+        <Box key={index} className={classes.menuitemContainer}>
           <Box className={classes.menuItem}>
             <Container className={classes.imageColumn}>
               {item.img ? (

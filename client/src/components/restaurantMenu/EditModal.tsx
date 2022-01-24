@@ -162,9 +162,9 @@ function EditMenuModal(props: IProps) {
                 id: "category",
               }}
             >
-              {restaurantData.categories.map((t: any) => {
+              {restaurantData.categories.map((t: any, index: number) => {
                 if (t !== "Alla") {
-                  return <MenuItem value={t}>{t}</MenuItem>;
+                  return <MenuItem key={index} value={t}>{t}</MenuItem>;
                 }
               })}
             </TextField>
