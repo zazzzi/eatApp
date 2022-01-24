@@ -54,8 +54,8 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
   const listCart = (cart: MenuItemType[]) => {
     return (
       <Box >
-           {cart.map((item:MenuItemType) => (
-             <Typography className={classes.fontSize}>
+           {cart.map((item:MenuItemType, index: number) => (
+             <Typography key={index} className={classes.fontSize}>
               {item.quantity}st  {item.title} - {item.price * item.quantity} kr
              </Typography>
            ))}
@@ -91,9 +91,9 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
       </Box>) : null
       }
       
-       {filteredOrders!.map((order: Order) => 
+       {filteredOrders!.map((order: Order, index: number) => 
          order.extId === userId || userInfo?.role === "owner" ? (
-         <Box className={classes.containerStyle}>
+         <Box key={index} className={classes.containerStyle}>
           <Box className={classes.textBox}>
            <Typography> {order.restaurantData.restaurantName}: Bord {order.restaurantData.table} </Typography>
            <Typography> {order.priceTotal} kr</Typography>
