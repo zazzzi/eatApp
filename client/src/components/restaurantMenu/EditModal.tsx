@@ -124,7 +124,7 @@ function EditMenuModal(props: IProps) {
       <Box className={classes.modalFormContainer}>
         <Snackbar
           open={openAlert}
-          autoHideDuration={20000}
+          autoHideDuration={3000}
           message={props.isNewItem ? "Produkt skapad!" : "Produkt uppdaterad!"}
           onClose={handleAlertClose}
         />
