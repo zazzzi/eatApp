@@ -56,3 +56,8 @@ hr {
   text-align: center;
   margin: auto;
 }
+
+.qrScanner > section > div {
+  border: 8px solid rgb(155 157 165 / 75%) !important;
+  box-shadow: none !important;
+}
