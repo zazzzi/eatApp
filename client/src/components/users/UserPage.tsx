@@ -6,6 +6,7 @@ import {
   Link,
   Theme,
   Typography,
+  CircularProgress,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { UserAuthContext } from "../../context/UsersContext";
@@ -73,6 +74,14 @@ function UserPage(props: Iprops) {
       updateUserInformation(userID, user);
       console.log(updatedInfo);
     }
+  }
+
+  if (!userInfoState) {
+    return (
+      <Box className={classes.loader}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -260,6 +269,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: "2rem",
     padding: "0 .5rem",
     textTransform: "none",
+  },
+  loader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 

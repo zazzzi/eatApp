@@ -5,7 +5,6 @@ import {
   Link,
   makeStyles,
   Theme,
-  Typography,
 } from "@material-ui/core";
 
 import { useEffect, useState } from "react";
@@ -14,7 +13,6 @@ import LoginInputForm from "./LoginInputForm";
 import { auth } from "../../firebase";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from "react-router-dom";
-import blobTurned from "../../assets/img/blob_vriden.png";
 import blobDesktop from "../../assets/img/desktop_blob.png";
 import mainBackground from "../../assets/img/front_page_background.png";
 import sideImg from "../../assets/img/side_picture.png";
@@ -28,6 +26,7 @@ function Login() {
   const [wrongPasswordOrEmail, setWrongPasswordOrEmail] =
     useState<boolean>(false);
 
+  console.log(isLoggedIn)
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
