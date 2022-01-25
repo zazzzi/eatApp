@@ -5,9 +5,10 @@ import {
   Theme,
   TextField,
   Button,
+  Hidden,
 } from "@material-ui/core";
-import {  useEffect, useState } from "react";
-import { auth} from "../../firebase";
+import { useEffect, useState } from "react";
+import { auth } from "../../firebase";
 import {
   getAuth,
   onAuthStateChanged,
@@ -16,8 +17,9 @@ import {
 import { Navigate } from "react-router-dom";
 import SendIcon from "@material-ui/icons/Send";
 import mainBackground from "../../assets/img/front_page_background.png";
-import blobTurned from "../../assets/img/blob_vriden.png";
+import blobDesktop from "../../assets/img/desktop_blob.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
+import sideImg from "../../assets/img/side_picture.png";
 
 function ResetPassword() {
   const classes = useStyles();
@@ -50,7 +52,7 @@ function ResetPassword() {
           console.clear();
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
           setResetSent(true);
           console.clear();
         });
@@ -62,159 +64,211 @@ function ResetPassword() {
   }
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        maxWidth: {
-          xs: "100%",
-          sm: "100%",
-          md: "24rem",
-          lg: "24rem",
-          xl: "24rem",
-        },
-        margin: {
-          md: "2rem auto",
-          lg: "2rem auto",
-          xl: "2rem auto",
-        },
-        maxHeight: {
-          xs: "100%",
-          sm: "100%",
-          md: "50rem",
-          lg: "50rem",
-          xl: "50rem",
-        },
-      }}
-      className={classes.backgroundColor}
-    >
-      {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
-      <Box className={classes.paperBackgroundImgStyling}>
-        <Box className={`${classes.welcomeTextContainer}`}>
-          {resetSent ? null : (
-            <Box>
-              <Box className={`${classes.logoContainer}`}>
-                <Link href="/">
-                  <img
-                    className={classes.logo}
-                    src={logoStanced}
-                    alt="eatAppLogo.png"
-                  />
-                </Link>
-              </Box>
-              <Box className={classes.textAlignCenter}>
-                <p className={`${classes.fontSizeL} ${classes.welcomeText}`}>
-                  Återställ lösenord
-                </p>
+    <Box className={classes.root}>
+      <Box
+        sx={{
+          position: "relative",
+          maxWidth: {
+            xs: "100%",
+            sm: "100%",
+            md: "100rem",
+            lg: "100rem",
+            xl: "100rem",
+          },
+          margin: {
+            xs: "0rem auto",
+            sm: "0rem auto",
+            md: "0rem auto",
+            lg: "0rem auto",
+            xl: "0rem auto",
+          },
+          maxHeight: {
+            xs: "100%",
+            sm: "100%",
+            md: "50rem",
+            lg: "50rem",
+            xl: "50rem",
+          },
+          width: {
+            xs: "100%",
+            sm: "100%",
+            md: "100%",
+            lg: "100%",
+            xl: "100rem",
+          },
+        }}
+        className={classes.backgroundColor}
+      >
+        <Box
+          sx={{
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: "50rem",
+              lg: "50rem",
+              xl: "100%",
+            },
+            minWidth: {
+              xs: "100%",
+              sm: "100%",
+              md: "100%",
+              lg: "100%",
+              xl: "31rem",
+            },
+          }}
+        >
+          {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
+          <Box className={classes.paperBackgroundImgStyling}>
+            <Box className={`${classes.welcomeTextContainer}`}>
+              {resetSent ? null : (
+                <Box>
+                  <Box className={`${classes.logoContainer}`}>
+                    <Link href="/">
+                      <img
+                        className={classes.logo}
+                        src={logoStanced}
+                        alt="eatAppLogo.png"
+                      />
+                    </Link>
+                  </Box>
+                  <Box className={classes.textAlignCenter}>
+                    <p
+                      className={`${classes.fontSizeL} ${classes.welcomeText}`}
+                    >
+                      Återställ lösenord
+                    </p>
+                    <p
+                      className={`${classes.textAlignCenter} ${classes.welcomeText}`}
+                    >
+                      Skriv in din email så skickar vi <br />
+                      ett mail med instructioner!
+                    </p>
+                  </Box>
+                </Box>
+              )}
+            </Box>
+            {resetSent ? (
+              <Box className={classes.resetMessageSent}>
+                <Box className={`${classes.logoContainerSent}`}>
+                  <Link href="/">
+                    <img
+                      className={classes.logo}
+                      src={logoStanced}
+                      alt="eatAppLogo.png"
+                    />
+                  </Link>
+                </Box>
                 <p
+                  style={{ width: "18rem" }}
                   className={`${classes.textAlignCenter} ${classes.welcomeText}`}
                 >
-                  Skriv in din email så skickar vi <br />
-                  ett mail med instructioner!
+                  Om epost-adressen existerar så har vi skickat ett email med
+                  instruktioner om hur du återställer ditt lösenord.
                 </p>
-              </Box>
-            </Box>
-          )}
-        </Box>
-        {resetSent ? (
-          <Box className={classes.resetMessageSent}>
-            <Box className={`${classes.logoContainerSent}`}>
-              <Link href="/">
-                <img
-                  className={classes.logo}
-                  src={logoStanced}
-                  alt="eatAppLogo.png"
-                />
-              </Link>
-            </Box>
-            <p
-              style={{ width: "18rem" }}
-              className={`${classes.textAlignCenter} ${classes.welcomeText}`}
-            >
-              Om epost-adressen existerar så har vi skickat ett email med
-              instruktioner om hur du återställer ditt lösenord.
-            </p>
-            <Link
-              href="/login"
-              underline="none"
-              className={classes.backToLoginBtn}
-            >
-              <Button className={classes.buttonStyling} variant="contained">
-                Tillbaka till login
-              </Button>
-            </Link>
-          </Box>
-        ) : (
-          <Box>
-            <form className={classes.formStyling} onSubmit={sendResetEmail}>
-              <TextField
-                className={classes.inputField}
-                id="email"
-                label="E-mail"
-                variant="outlined"
-                size="small"
-                type="email"
-                autoComplete="current-email"
-                onChange={handleChange}
-              ></TextField>
-              <Box className={classes.loginBtnContainer}>
-                <Button
-                  className={classes.buttonStyling}
-                  endIcon={<SendIcon />}
-                  size="large"
-                  type="submit"
-                  variant="contained"
+                <Link
+                  href="/login"
+                  underline="none"
+                  className={classes.backToLoginBtn}
                 >
-                  Skicka{" "}
-                </Button>
+                  <Button className={classes.buttonStyling} variant="contained">
+                    Tillbaka till login
+                  </Button>
+                </Link>
               </Box>
-            </form>
+            ) : (
+              <Box>
+                <form className={classes.formStyling} onSubmit={sendResetEmail}>
+                  <TextField
+                    className={classes.inputField}
+                    id="email"
+                    label="E-mail"
+                    variant="outlined"
+                    size="small"
+                    type="email"
+                    autoComplete="current-email"
+                    onChange={handleChange}
+                  ></TextField>
+                  <Box className={classes.loginBtnContainer}>
+                    <Button
+                      className={classes.buttonStyling}
+                      endIcon={<SendIcon />}
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                    >
+                      Skicka{" "}
+                    </Button>
+                  </Box>
+                </form>
+              </Box>
+            )}
           </Box>
-        )}
-      </Box>
 
-      <Box className={classes.noAccountOuterContainer}>
-        <Box className={classes.noAccountInnerContainer}>
-          <p
-            style={{
-              fontFamily: "Roboto",
-              fontSize: "15px",
-              fontWeight: 400,
-              margin: 0,
-              padding: ".2rem",
-              color: "#F9F9F9",
-            }}
-          >
-            <Link
-              style={{ textDecoration: "none", color: "#F9F9F9" }}
-              href="/create-user"
-              underline="always"
-            >
-              Inget konto? Skapa ett här!
-            </Link>
-          </p>
+          <Box className={classes.noAccountOuterContainer}>
+            <Box className={classes.noAccountInnerContainer}>
+              <p
+                style={{
+                  fontFamily: "Roboto",
+                  fontSize: "15px",
+                  fontWeight: 400,
+                  margin: 0,
+                  padding: ".2rem",
+                  color: "#F9F9F9",
+                }}
+              >
+                <Link
+                  style={{ textDecoration: "none", color: "#F9F9F9" }}
+                  href="/create-user"
+                  underline="always"
+                >
+                  Inget konto? Skapa ett här!
+                </Link>
+              </p>
+            </Box>
+          </Box>
         </Box>
+        <Hidden lgDown>
+          <Box className={classes.sideImgContainer}>
+            <img
+              style={{ objectFit: "cover" }}
+              className={classes.sideImgContainer}
+              src={sideImg}
+              alt=""
+            />
+          </Box>
+        </Hidden>
       </Box>
     </Box>
   );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    height: "100vh",
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+      alignItems: "center",
+    },
+  },
   logo: {
     display: "flex",
-    width: "20rem",
+    width: "11rem",
+    padding: "2rem 0 0 0",
   },
   textAlignCenter: {
     textAlign: "center",
   },
   backgroundColor: {
     display: "flex",
-    flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
     backgroundImage: `url(${mainBackground})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "100vh",
+    boxShadow: "-20px 0px 17px rgba(0, 0, 0, 0.03)",
   },
   logoContainer: {
     display: "flex",
@@ -245,17 +299,24 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: ".5rem 0 .4rem",
   },
   paperBackgroundImgStyling: {
-    backgroundImage: `url(${blobTurned})`,
+    backgroundImage: `url(${blobDesktop})`,
     backgroundPosition: "center",
-    backgroundSize: "cover",
+    [theme.breakpoints.down("xs")]: {
+      backgroundSize: "cover",
+    },
+    backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
   },
   noAccountOuterContainer: {
     width: "100%",
     display: "flex",
+    // alignItems: "flex-end",
     justifyContent: "center",
     position: "absolute",
-    left: "50%",
+    left: "25%",
+    [theme.breakpoints.down("lg")]: {
+      left: "50%",
+    },
     bottom: "-18px",
     transform: "translate(-50%, -50%)",
     margin: "0 auto",
@@ -307,6 +368,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: "2rem",
     padding: "0 .5rem",
     textTransform: "none",
+  },
+  sideImgContainer: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "150px 0 0 150px",
+    boxShadow: "-20px 0px 20px 0px rgb(0 0 0 / 3%);",
   },
 }));
 
