@@ -62,7 +62,8 @@ function CreateUser() {
       }
     });
   });
-
+  
+ 
   return (
     <Box className={classes.rootContainer}>
       {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
@@ -122,7 +123,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundRepeat: "no-repeat",
     height: "100vh",
   },
-
 }));
 
 export default CreateUser;
