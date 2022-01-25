@@ -204,7 +204,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   inputField: {
     width: "15rem",
-    margin: "0.5rem",
+    margin: ".5rem 0",
     backgroundColor: "#F9F9F9",
     borderRadius: "8px",
   },

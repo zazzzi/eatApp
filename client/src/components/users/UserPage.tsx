@@ -15,6 +15,9 @@ import LogOutBtn from "../login/LogOutBtn";
 import PasswordModal from "./PasswordModal";
 import mainBackground from "../../assets/img/front_page_background.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
+import { Navigate } from "react-router-dom";
 
 interface Iprops {}
 
@@ -22,6 +25,7 @@ function UserPage(props: Iprops) {
   const { userInformation, updateUserInformation, userID } =
     useContext(UserAuthContext);
   const classes = useStyles();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [userInfoState, setUserInfoState] = useState<User | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [updatedInfo, setUpdatedInfo] = useState<UserInfoToUpdate>(
@@ -31,6 +35,13 @@ function UserPage(props: Iprops) {
   useEffect(() => {
     setUserInfoState(userInformation);
   });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
 
   function updateInfoState(id: string, value: string) {
     setUpdatedInfo({
@@ -93,6 +104,7 @@ function UserPage(props: Iprops) {
         alignItems: "center",
       }}
     >
+      {!isLoggedIn ? <Navigate to={`/login`} /> : null}
       <Box
         style={{
           width: "100%",
