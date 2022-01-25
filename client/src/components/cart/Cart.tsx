@@ -13,6 +13,8 @@ function Cart({restaurantData}: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
 
+  const handleAlertMenuItem = (_value: boolean) => {}
+
   return (
    <Box>
       <Typography 
@@ -34,7 +36,10 @@ function Cart({restaurantData}: Iprops) {
           </Link>
           </Box>
           :
-          <MenuItems menuItems = {cart}/>
+          <MenuItems 
+            handleAlertMenuItem={handleAlertMenuItem}
+            menuItems = {cart}
+            />
         }
    </Box>
   );

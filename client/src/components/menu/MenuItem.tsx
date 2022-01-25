@@ -20,6 +20,7 @@ import { Skeleton } from "@mui/material";
 interface Iprops {
   deletedItemCallback?(): void;
   menuItems: any;
+  handleAlertMenuItem: (value: boolean, string: string) => void;
 }
 
 function MenuItems(props: Iprops) {
@@ -52,7 +53,7 @@ function MenuItems(props: Iprops) {
   }
 
   const handleAlert = (value: boolean) => {
-
+    props.handleAlertMenuItem(value, "update")
   }
 
   return (
