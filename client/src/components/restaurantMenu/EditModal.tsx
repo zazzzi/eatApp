@@ -101,8 +101,8 @@ function EditMenuModal(props: IProps) {
     } else setImageIsUploaded(false);
   });
 
-  if(!restaurantData){
-    return <></>
+  if (!restaurantData) {
+    return <></>;
   }
 
   return (
@@ -138,7 +138,11 @@ function EditMenuModal(props: IProps) {
             >
               {restaurantData.categories.map((t: any, index: number) => {
                 if (t !== "Alla") {
-                  return <MenuItem key={index} value={t}>{t}</MenuItem>;
+                  return (
+                    <MenuItem key={index} value={t}>
+                      {t}
+                    </MenuItem>
+                  );
                 }
               })}
             </TextField>
@@ -146,6 +150,7 @@ function EditMenuModal(props: IProps) {
             <TextField
               id="title"
               required
+              inputProps={{ maxLength: 30 }}
               onChange={handleChange}
               variant="outlined"
               margin="normal"
@@ -156,6 +161,7 @@ function EditMenuModal(props: IProps) {
             <TextField
               id="description"
               required
+              inputProps={{ maxLength: 30 }}
               onChange={handleChange}
               variant="outlined"
               margin="normal"
@@ -165,7 +171,9 @@ function EditMenuModal(props: IProps) {
             />
             <TextField
               id="price"
+              type="number"
               required
+              inputProps={{ maxLength: 10 }}
               onChange={handleChange}
               variant="outlined"
               margin="normal"

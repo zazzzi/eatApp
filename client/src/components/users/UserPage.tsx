@@ -6,6 +6,7 @@ import {
   Link,
   Theme,
   Typography,
+  CircularProgress,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { UserAuthContext } from "../../context/UsersContext";
@@ -75,117 +76,144 @@ function UserPage(props: Iprops) {
     }
   }
 
+  if (!userInfoState) {
+    return (
+      <Box className={classes.loader}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Box
-      sx={{
-        position: "relative",
-        maxWidth: {
-          xs: "100%",
-          sm: "100%",
-          md: "24rem",
-          lg: "24rem",
-          xl: "24rem",
-        },
-        margin: {
-          md: "2rem auto",
-          lg: "2rem auto",
-          xl: "2rem auto",
-        },
-        maxHeight: {
-          xs: "100%",
-          sm: "100%",
-          md: "50rem",
-          lg: "50rem",
-          xl: "50rem",
-        },
+      style={{
+        height: "100vh",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
       }}
-      className={classes.backgroundColor}
     >
-      <Link href="/">
-        <img className={classes.logo} src={logoStanced} alt="eatAppLogo.png" />
-      </Link>
-      <Box className={classes.welcomeMessageContainer}>
-        {userInfoState ? (
-          <Typography variant="h4">
-            Välkommen {userInfoState.firstName}
-          </Typography>
-        ) : null}
-      </Box>
-      <Box className={classes.informationMessageContainer}>
-        <Typography>Ändra din kontoinformation här:</Typography>
-      </Box>
-      <Box className={classes.formContainer}>
-        {userInfoState ? (
-          <form
-            onSubmit={handleSubmit}
-            className={classes.formStyling}
-            action=""
-          >
-            <TextField
-              className={classes.textFieldStyling}
-              id="email"
-              label="Epostadress"
-              type="email"
-              variant="outlined"
-              defaultValue={userInfoState.email}
-              onChange={handleChange}
+      <Box
+        style={{
+          width: "100%",
+          boxShadow: "-20px 0px 17px rgba(0, 0, 0, 0.03)",
+        }}
+      >
+        <Box
+          sx={{
+            position: "relative",
+            margin: {
+              md: "auto",
+              lg: "auto",
+              xl: "auto",
+            },
+            maxHeight: {
+              xs: "100%",
+              sm: "100%",
+              md: "65rem",
+              lg: "65rem",
+              xl: "65rem",
+            },
+          }}
+          className={classes.backgroundColor}
+        >
+          <Link href="/">
+            <img
+              className={classes.logo}
+              src={logoStanced}
+              alt="eatAppLogo.png"
             />
-            <TextField
-              className={classes.textFieldStyling}
-              label="Förnamn"
-              id="firstName"
-              variant="outlined"
-              defaultValue={userInfoState.firstName}
-              onChange={handleChange}
-            />
-            <TextField
-              className={classes.textFieldStyling}
-              defaultValue={userInfoState.lastName}
-              label="Efternamn"
-              id="lastName"
-              variant="outlined"
-              onChange={handleChange}
-            />
-            <TextField
-              className={classes.textFieldStyling}
-              label="Telefonnummer"
-              id="phoneNumber"
-              variant="outlined"
-              defaultValue={userInfoState.phoneNumber}
-              onChange={handleChange}
-            />
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.formSubmitBtn}
-              type="submit"
-            >
-              Spara ändringar
-            </Button>
-          </form>
-        ) : null}
-      </Box>
-      <Box className={classes.buttonContainer}>
-        <Button className={classes.buttonStyling} variant="contained" onClick={openModal}>Byt lösenord</Button>
-        {userInfoState && userInfoState.role === "customer" ? (
-          <Link style={{ textDecoration: "none" }} href="/orders">
-            <Button className={classes.buttonStyling} variant="contained">
-              Tidigare beställnigar
-            </Button>
           </Link>
-        ) : null}
-        {isOpen ? (
-          <PasswordModal
-            closeModal={() => setIsOpen(false)}
-            editOpen={isOpen}
-          />
-        ) : null}
-        {userInfoState && userInfoState.role === "owner" ? (
-          <Button href={`/menu/${userInfoState.rID}?table=0`}>
-            Redigera din restaurang
-          </Button>
-        ) : null}
-        <LogOutBtn />
+          <Box className={classes.welcomeMessageContainer}>
+            {userInfoState ? (
+              <Typography variant="h4">
+                Välkommen {userInfoState.firstName}
+              </Typography>
+            ) : null}
+          </Box>
+          <Box className={classes.informationMessageContainer}>
+            <Typography>Ändra din kontoinformation här:</Typography>
+          </Box>
+          <Box className={classes.formContainer}>
+            {userInfoState ? (
+              <form
+                onSubmit={handleSubmit}
+                className={classes.formStyling}
+                action=""
+              >
+                <TextField
+                  className={classes.textFieldStyling}
+                  id="email"
+                  label="Epostadress"
+                  type="email"
+                  variant="outlined"
+                  defaultValue={userInfoState.email}
+                  onChange={handleChange}
+                />
+                <TextField
+                  className={classes.textFieldStyling}
+                  label="Förnamn"
+                  id="firstName"
+                  variant="outlined"
+                  defaultValue={userInfoState.firstName}
+                  onChange={handleChange}
+                />
+                <TextField
+                  className={classes.textFieldStyling}
+                  defaultValue={userInfoState.lastName}
+                  label="Efternamn"
+                  id="lastName"
+                  variant="outlined"
+                  onChange={handleChange}
+                />
+                <TextField
+                  className={classes.textFieldStyling}
+                  label="Telefonnummer"
+                  id="phoneNumber"
+                  variant="outlined"
+                  defaultValue={userInfoState.phoneNumber}
+                  onChange={handleChange}
+                />
+                <Button
+                  color="primary"
+                  variant="contained"
+                  className={classes.formSubmitBtn}
+                  type="submit"
+                >
+                  Spara ändringar
+                </Button>
+              </form>
+            ) : null}
+          </Box>
+          <Box className={classes.buttonContainer}>
+            <Button
+              className={classes.buttonStyling}
+              variant="contained"
+              onClick={openModal}
+            >
+              Byt lösenord
+            </Button>
+            {userInfoState && userInfoState.role === "customer" ? (
+              <Link style={{ textDecoration: "none" }} href="/orders">
+                <Button className={classes.buttonStyling} variant="contained">
+                  Tidigare beställnigar
+                </Button>
+              </Link>
+            ) : null}
+            {isOpen ? (
+              <PasswordModal
+                closeModal={() => setIsOpen(false)}
+                editOpen={isOpen}
+              />
+            ) : null}
+            {userInfoState && userInfoState.role === "owner" ? (
+              <Button href={`/menu/${userInfoState.rID}?table=0`}>
+                Redigera din restaurang
+              </Button>
+            ) : null}
+            <LogOutBtn />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
@@ -246,12 +274,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems:"center",
+    alignItems: "center",
     backgroundImage: `url(${mainBackground})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "100vh",
+    width: "100%",
   },
   buttonStyling: {
     margin: ".5rem 0 ",
@@ -260,6 +289,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: "2rem",
     padding: "0 .5rem",
     textTransform: "none",
+  },
+  loader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 

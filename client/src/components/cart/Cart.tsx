@@ -1,15 +1,16 @@
-import { Box, makeStyles, Theme, Typography} from "@material-ui/core";
-import { useContext} from "react";
+import { Box, makeStyles, Theme, Typography } from "@material-ui/core";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import MenuItems from "../menu/MenuItem"
+import MenuItems from "../menu/MenuItem";
 import { CartContext } from "../../context/CartContext";
 import { RestaurantTableData } from "../../types/types";
+import { textAlign } from "@mui/system";
 
 interface Iprops {
-  restaurantData: RestaurantTableData
+  restaurantData: RestaurantTableData;
 }
 
-function Cart({restaurantData}: Iprops) {
+function Cart({ restaurantData }: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
 
@@ -49,30 +50,30 @@ const useStyles = makeStyles(() => ({
   priceTotal: {
     display: "flex",
     justifyContent: "space-between",
-    padding: "1rem 1rem 1rem 1rem"
+    padding: "1rem 1rem 1rem 1rem",
   },
   align: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   button: {
-    width: "30%"
+    width: "30%",
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "space-evenly",
   },
   cartText: {
-    padding: "1rem 0rem 0rem 1rem"
+    padding: "1rem 0rem 0rem 1rem",
+    textAlign: "center",
   },
   boxContainer: {
     padding: "5rem 0rem 5rem 0rem",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
-    alignItems: "center"
+    alignItems: "center",
   },
 }));
 
-
-export default Cart; 
+export default Cart;

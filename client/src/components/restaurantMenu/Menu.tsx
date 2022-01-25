@@ -226,7 +226,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
         className={classes.snackbar}
       />
       <Box
-        sx={{ position: "absolute", top: "10px", zIndex: 100, width: "100%" }}
+        sx={{ position: "absolute", top: "10px", zIndex: 100 }}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -245,95 +245,101 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
             style={{ backgroundImage: `url(${restaurantData.img})` }}
             className={classes.menuBackground}
           ></Box>
-          <Box
-            id="nameContainer"
-            sx={{
-              width: {
-                xs: "100%",
-                sm: "100%",
-                md: "100%",
-                lg: "50%",
-                xl: "50%",
-              },
-              position: {
-                xs: "absolute",
-                sm: "absolute",
-                md: "absolute",
-                lg: "fixed",
-                xl: "fixed",
-              },
-            }}
-            style={{ backgroundColor: `${menuColor}` }}
-            className={classes.restaurantNameContainer}
-          >
-            {isOwner ? (
-              <Box className={classes.addItemButton}>
-                <Button
-                  onClick={() => {
-                    setOpenSettings(!openSettings);
-                  }}
-                >
-                  <Tooltip title="Settings">
-                    <SettingsApplicationsRoundedIcon fontSize="large" />
-                  </Tooltip>
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    setOpen(true);
-                  }}
-                >
-                  <Tooltip title="Add new">
-                    <AddIcon fontSize="large" />
-                  </Tooltip>
-                </Button>
-              </Box>
-            ) : null}
-
+          <Box>
             <Box
-              display="flex"
-              alignItems="center"
-              color={!restaurantNameColorBlack ? "#000" : "#FEFEFE"}
-              mt={isOwner ? 0 : 2}
+              id="nameContainer"
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "100%",
+                  md: "100%",
+                  lg: "80%",
+                  xl: "80%",
+                },
+                position: {
+                  xs: "absolute",
+                  sm: "absolute",
+                  md: "absolute",
+                  lg: "fixed",
+                  xl: "fixed",
+                },
+              }}
+              style={{ backgroundColor: `${menuColor}` }}
+              className={classes.restaurantNameContainer}
             >
-              <Typography className={classes.restaurantName} variant="h2">
-                {restaurantData.restaurantName}
-              </Typography>
-
-              {/* TODO: Send this state into database */}
               {isOwner ? (
-                <Button size="small" onClick={handleNameColorChange}>
-                  <FiberManualRecordIcon
-                    htmlColor={!restaurantNameColorBlack ? "#FFF" : "#000"}
-                  />
-                </Button>
-              ) : null}
-            </Box>
+                <Box className={classes.addItemButton}>
+                  <Button
+                    onClick={() => {
+                      setOpenSettings(!openSettings);
+                    }}
+                  >
+                    <Tooltip title="Settings">
+                      <SettingsApplicationsRoundedIcon fontSize="large" />
+                    </Tooltip>
+                  </Button>
 
-            <Box className={classes.menuList}>
-              {!openSettings ? (
-                <>
-                  <Box className={classes.menuTabs}>
-                    <Tabs
-                      variant="scrollable"
-                      aria-label="scrollable prevent tabs example"
-                      value={value}
-                      indicatorColor="secondary"
-                      onChange={handleChange}
-                    >
-                      {restaurantData.categories.map((t: any, index: number) => (
-                        <Tab key={index} label={t} value={t} />
-                      ))}
-                    </Tabs>
-                  </Box>
-                  <hr />
-                  <Box className={classes.menuItemContainer}>
-                    {restaurantData.menu.map((i: any, index: number) => filterMenuItems(i, index))}
-                  </Box>
-                </>
-              ) : (
-                <AdminIndex setColor={handleSetColor} userInfo={userInfo} />
-              )}
+                  <Button
+                    onClick={() => {
+                      setOpen(true);
+                    }}
+                  >
+                    <Tooltip title="Add new">
+                      <AddIcon fontSize="large" />
+                    </Tooltip>
+                  </Button>
+                </Box>
+              ) : null}
+
+              <Box
+                display="flex"
+                alignItems="center"
+                color={!restaurantNameColorBlack ? "#000" : "#FEFEFE"}
+                mt={isOwner ? 0 : 2}
+              >
+                <Typography className={classes.restaurantName} variant="h2">
+                  {restaurantData.restaurantName}
+                </Typography>
+
+                {/* TODO: Send this state into database */}
+                {isOwner ? (
+                  <Button size="small" onClick={handleNameColorChange}>
+                    <FiberManualRecordIcon
+                      htmlColor={!restaurantNameColorBlack ? "#FFF" : "#000"}
+                    />
+                  </Button>
+                ) : null}
+              </Box>
+
+              <Box className={classes.menuList}>
+                {!openSettings ? (
+                  <>
+                    <Box className={classes.menuTabs}>
+                      <Tabs
+                        variant="scrollable"
+                        aria-label="scrollable prevent tabs example"
+                        value={value}
+                        indicatorColor="secondary"
+                        onChange={handleChange}
+                      >
+                        {restaurantData.categories.map(
+                          (t: any, index: number) => (
+                            <Tab key={index} label={t} value={t} />
+                          )
+                        )}
+                      </Tabs>
+                    </Box>
+                    <hr />
+                    <Box className={classes.menuItemContainer}>
+                      {restaurantData.menu.map((i: any, index: number) =>
+                        filterMenuItems(i, index)
+                      )}
+                    </Box>
+                  </>
+                ) : (
+                  <AdminIndex setColor={handleSetColor} userInfo={userInfo} />
+                )}
+              </Box>
             </Box>
           </Box>
           {open ? (
@@ -388,36 +394,37 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#FEFEFE",
+    overflow: "scroll",
   },
   menuBackground: {
     zIndex: 1,
     // position: "absolute",
-    height: "30%",
-    minWidth: "100%",
+    // minWidth: "50%",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    height: "30%",
   },
   restaurantNameContainer: {
     display: "flex",
     flexDirection: "column",
     top: "20%",
+    height: "80vh",
     zIndex: 10,
-    height: "100%",
-    // width: "50%",
+    overflow: "hidden",
+    marginBottom: "16rem",
     borderRadius: "38px 38px 0px 0px",
   },
   restaurantName: {
     fontSize: "26px",
     fontWeight: 500,
-    padding: ".5rem",
+    padding: "1.5rem",
   },
   menuList: {
-    position: "sticky",
     height: "100%",
     width: "100%",
     backgroundColor: "#FEFEFE",
-    borderRadius: "6px 60px 6px 6px",
+    borderRadius: "6px 60px 0px 0px",
     overflow: "scroll",
   },
   menuTabs: {
