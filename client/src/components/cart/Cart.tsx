@@ -14,33 +14,35 @@ function Cart({ restaurantData }: Iprops) {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
 
+  const handleAlertMenuItem = (_value: boolean) => {}
+
   return (
-    <Box>
-      <Typography
+   <Box>
+      <Typography 
         className={classes.cartText}
-        variant="h5"
-        gutterBottom
-        component="div"
+        variant="h5" 
+        gutterBottom component="div"
       >
-        Cart
-      </Typography>
-      {!cart.length ? (
-        <Box className={classes.boxContainer}>
+          Cart
+        </Typography>
+        {!cart.length ? 
+          <Box className={classes.boxContainer}>
           <Typography variant="h4" gutterBottom component="div">
             Din vagn är tom.
-          </Typography>
-          <Link
-            to={`/menu/${restaurantData.restaurantId}?table=${restaurantData.table}`}
-          >
+          </Typography> 
+          <Link to={`/menu/${restaurantData.restaurantId}?table=${restaurantData.table}`}>
             <Typography variant="h6" gutterBottom component="div">
               Tillbaka till menyn
-            </Typography>
+            </Typography> 
           </Link>
-        </Box>
-      ) : (
-        <MenuItems menuItems={cart} />
-      )}
-    </Box>
+          </Box>
+          :
+          <MenuItems 
+            handleAlertMenuItem={handleAlertMenuItem}
+            menuItems = {cart}
+            />
+        }
+   </Box>
   );
 }
 

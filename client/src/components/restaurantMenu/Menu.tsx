@@ -31,6 +31,7 @@ import { styled } from "@mui/material/styles";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
+
 interface Iprops {
   restaurantId: RestaurantTableData;
   userInfo: any | null;
@@ -42,12 +43,10 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     restaurantData,
     sendUrlParam,
     updateRestaurantNameColor,
-    restaruantTitleIsBlack,
     updateRestaurantColor,
   } = useContext(MenuContext);
 
   const [menuColor, setMenuColor] = useState<string>();
-
   const [value, setValue] = useState<string>("Dryck");
   const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -60,7 +59,8 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     boolean | null
   >(null);
   const [openAlert, setOpenAlert] = useState(false);
-
+  const [isItemNew, setIsItemNew] = useState(false);
+  const [menuUpdateType, setMenuUpdateType] = useState<string>("");
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
@@ -105,6 +105,12 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     setMenuColor(testColor);
   }, [restaurantData]);
 
+  useEffect(()=> {
+    if(isItemNew){
+      fireAlert()
+    }
+  },[isItemNew])
+
   const handleChange = (_event: any, newValue: any) => {
     setValue(newValue);
   };
@@ -113,24 +119,6 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     setMenuColor(value);
     updateRestaurantColor(value);
   };
-
-  const handleAlertClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenAlert(false);
-  };
-
-  function fireAlert() {
-    setOpenAlert(true);
-    setTimeout(() => {
-      setOpenAlert(false);
-    }, 3000);
-  }
 
   const filterMenuItems = (item: MenuItemType, index: number) => {
     const filtered = item.category.map((i: string) => {
@@ -145,6 +133,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     });
     return (
       <MenuItems
+        handleAlertMenuItem={handleAlertMenuItem}
         key={index}
         menuItems={filterUndefined}
         deletedItemCallback={forceUpdate}
@@ -180,6 +169,35 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
       .reduce((prev, next) => prev + next);
   };
 
+  const handleAlertClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
+    setIsItemNew(false)
+  };
+
+  function fireAlert() {
+    setOpenAlert(true);
+    setTimeout(() => {
+      setOpenAlert(false);
+      setIsItemNew(false)
+    }, 3000);
+  }
+
+  const handleAlert = (value: boolean, string: string) => {
+    setMenuUpdateType(string)
+    setIsItemNew(value)
+  }
+
+  const handleAlertMenuItem = (value: boolean, string: string) => {
+    setMenuUpdateType(string)
+    setIsItemNew(value)
+  }
+
   if (restaurantData && !restaurantData.tables.includes(table)) {
     return (
       <Box className={classes.noDataloader}>
@@ -203,8 +221,9 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     <Box className={classes.menuPageContainer}>
       <Snackbar
         open={openAlert}
-        message={"Produkt uppdaterad!"}
+        message={menuUpdateType === "create" ? "Produkt skapad!" : "Produkt updaterad!"}
         onClose={handleAlertClose}
+        className={classes.snackbar}
       />
       <Box
         sx={{ position: "absolute", top: "10px", zIndex: 100 }}
@@ -325,11 +344,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
           </Box>
           {open ? (
             <EditMenuModal
+              handleAlert={handleAlert}
               isNewItem={true}
               menuItem={restaurantData.menu}
               closeModal={() => {
-                setOpen(false);
-                fireAlert();
+                setOpen(false)
               }}
               editOpen={open}
             />
@@ -455,6 +474,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     flexDirection: "column",
   },
+  snackbar: {
+    paddingTop: '2rem',
+    height: "1rem"
+  }
 }));
 
 export default RestaurantMenu;

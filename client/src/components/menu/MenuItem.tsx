@@ -20,6 +20,7 @@ import { Skeleton } from "@mui/material";
 interface Iprops {
   deletedItemCallback?(): void;
   menuItems: any;
+  handleAlertMenuItem: (value: boolean, string: string) => void;
 }
 
 function MenuItems(props: Iprops) {
@@ -49,6 +50,10 @@ function MenuItems(props: Iprops) {
     setDeletedItemArray(currentMenu);
     deleteMenuItem(deletedItemArray, currentMenu.id);
     props.deletedItemCallback!();
+  }
+
+  const handleAlert = (value: boolean) => {
+    props.handleAlertMenuItem(value, "update")
   }
 
   return (
@@ -107,6 +112,7 @@ function MenuItems(props: Iprops) {
           </Box>
           {isOwner ? (
             <EditMenuModal
+              handleAlert={handleAlert}
               menuItem={item}
               closeModal={() => setOpen(false)}
               editOpen={open}

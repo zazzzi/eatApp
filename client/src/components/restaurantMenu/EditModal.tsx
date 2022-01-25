@@ -5,7 +5,6 @@ import {
   TextField,
   Button,
   MenuItem,
-  Snackbar,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { MenuItemType } from "../../types/types";
@@ -17,11 +16,11 @@ interface IProps {
   editOpen: boolean;
   menuItem: MenuItemType;
   isNewItem: boolean;
+  handleAlert: (value:boolean, string: string)=>void
 }
 
 function EditMenuModal(props: IProps) {
   const classes = useStyles();
-  const [openAlert, setOpenAlert] = useState(false);
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
   const [newMenuItem, setNewMenuItem] = useState<any>({});
   const [imageIsUploaded, setImageIsUploaded] = useState<boolean>(false);
@@ -74,12 +73,15 @@ function EditMenuModal(props: IProps) {
   }
 
   const handleSubmit = (event: React.SyntheticEvent) => {
-    setOpenAlert(true);
     event.preventDefault();
-    props.isNewItem
+    props.handleAlert(true, "create")
+    setTimeout(()=>{
+      props.isNewItem
       ? createNewMenuItem(newMenuItem)
       : updateItemData(props.menuItem.title, updatedMenuInfo);
     props.closeModal();
+    props.handleAlert(false, "create")
+    }, 1000)
   };
 
   const setURL = (url: string) => {
@@ -91,17 +93,6 @@ function EditMenuModal(props: IProps) {
       ...updatedMenuInfo,
       img: url,
     });
-  };
-
-  const handleAlertClose = (
-    _event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenAlert(false);
   };
 
   useEffect(() => {
@@ -122,12 +113,6 @@ function EditMenuModal(props: IProps) {
       aria-describedby="modal-modal-description"
     >
       <Box className={classes.modalFormContainer}>
-        <Snackbar
-          open={openAlert}
-          autoHideDuration={3000}
-          message={props.isNewItem ? "Produkt skapad!" : "Produkt uppdaterad!"}
-          onClose={handleAlertClose}
-        />
         <Box sx={style}>
           <form
             autoComplete={"off"}
@@ -216,6 +201,7 @@ function EditMenuModal(props: IProps) {
                   startIcon={<DeleteIcon />}
                   variant="outlined"
                   onClick={() => {
+                    props.handleAlert(false, "create")
                     props.closeModal();
                   }}
                 >
