@@ -52,16 +52,14 @@ function Login() {
       });
   }
 
-  if (!isLoggedIn || isLoggedIn === undefined) {
+  /* if (!isLoggedIn || isLoggedIn === undefined) {
     return (
       <Box className={classes.loader}>
         <CircularProgress />
       </Box>
     );
-  }
+  } */
 
-
-  console.log('test')
   return (
     <Box className={classes.root}>
       <Box
