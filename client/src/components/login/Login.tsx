@@ -105,11 +105,13 @@ function Login() {
           <Box className={classes.paperBackgroundImgStyling} sx={{}}>
             <Box className={classes.welcomeTextContainer}>
               <Link href="/">
-                <img
-                  className={classes.logo}
-                  src={logoStanced}
-                  alt="EatApp logo"
-                />
+                <h1 style={{ margin: 0 }}>
+                  <img
+                    className={classes.logo}
+                    src={logoStanced}
+                    alt="EatApp"
+                  />
+                </h1>
               </Link>
               <p className={classes.welcomeText}>Logga in på ditt konto här.</p>
             </Box>
