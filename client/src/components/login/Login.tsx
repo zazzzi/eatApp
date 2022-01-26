@@ -25,15 +25,16 @@ function Login() {
   const [wrongPasswordOrEmail, setWrongPasswordOrEmail] =
     useState<boolean>(false);
 
-  console.log(isLoggedIn);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUid(user.uid);
         setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
       }
     });
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     document.title = "Logga in!";
@@ -50,13 +51,13 @@ function Login() {
       });
   }
 
-  // if (!isLoggedIn || isLoggedIn === undefined) {
-  //   return (
-  //     <Box className={classes.loader}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
+  if (isLoggedIn === undefined) {
+    return (
+      <Box className={classes.loader}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box className={classes.root}>
