@@ -24,8 +24,11 @@ function FileUploadField(props: Iprops) {
   };
 
   const onFileChange = (e: any) => {
-    if (e.target.files[0] && e.target.files[0].size <= 5242880) {
+    // 5242880
+    if (e.target.files[0] && e.target.files[0].size <= 3145728) {
       setImage(e.target.files[0]);
+    } else {
+      alert("Filen är för stor!")
     }
   };
 
