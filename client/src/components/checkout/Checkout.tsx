@@ -8,6 +8,7 @@ import {
   MobileStepper,
   useTheme,
   Divider,
+  CircularProgress,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -78,6 +79,14 @@ function Checkout({ restaurantId, userInformation }: Iprops) {
       }
     }, 3000);
   };
+
+  if(!restaurantId){
+    return (
+      <Box className={classes.loader}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   if (Object.keys(restaurantId).length === 0) {
     return (
@@ -298,6 +307,13 @@ const useStyles = makeStyles(() => ({
     marginBottom: "5rem",
   },
   noDataloader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  loader: {
     height: "100vh",
     display: "flex",
     justifyContent: "center",
