@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   makeStyles,
-  Typography,
+
   Link,
   Hidden,
   Theme,
@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import eatAppLogo from "../../assets/logos/eatAppLogo.png";
 import qrBtn from "../../assets/img/qrBtn.png";
 import { RestaurantTableData } from "../../types/types";
 import QrReader from "react-qr-reader";
@@ -18,6 +17,7 @@ import mainBackground from "../../assets/img/front_page_background.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 import blobHero from "../../assets/img/blob_hero.png";
 import sideImg from "../../assets/img/side_picture.png";
+
 interface Iprops {
   restaurantId: RestaurantTableData;
 }
