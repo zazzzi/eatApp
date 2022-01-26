@@ -1,8 +1,4 @@
-import {
-  Box,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRef, useState } from "react";
 import { storage } from "../../firebase";
@@ -37,9 +33,7 @@ function FileUploadField(props: Iprops) {
       storage,
       `restaurantUploads/${props.rId}/${image!.name}`
     );
-    await uploadBytes(imgRef, image).then((snapshot) => {
-      console.log("File uploaded", snapshot);
-    });
+    await uploadBytes(imgRef, image);
 
     getURL();
   };

@@ -49,12 +49,9 @@ function ResetPassword() {
       sendPasswordResetEmail(auth, resetEmail)
         .then(() => {
           setResetSent(true);
-          console.clear();
         })
         .catch((error) => {
-          console.log(error);
           setResetSent(true);
-          console.clear();
         });
     }
   }
@@ -127,7 +124,7 @@ function ResetPassword() {
                       <img
                         className={classes.logo}
                         src={logoStanced}
-                        alt="eatAppLogo.png"
+                        alt="eatApp Logo"
                       />
                     </Link>
                   </Box>
@@ -154,7 +151,7 @@ function ResetPassword() {
                     <img
                       className={classes.logo}
                       src={logoStanced}
-                      alt="eatAppLogo.png"
+                      alt="eatApp Logo"
                     />
                   </Link>
                 </Box>
@@ -233,7 +230,7 @@ function ResetPassword() {
               style={{ objectFit: "cover" }}
               className={classes.sideImgContainer}
               src={sideImg}
-              alt=""
+              alt="A picture of food"
             />
           </Box>
         </Hidden>

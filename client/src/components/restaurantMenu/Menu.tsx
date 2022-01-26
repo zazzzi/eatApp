@@ -92,7 +92,6 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
   useEffect(() => {
     if (restaurantNameColorBlack === null && restaurantData) {
       setRestaurantNameColorBlack(!restaurantData.isNameBlack);
-      console.log(restaurantNameColorBlack);
     }
   }, [restaurantData]);
 

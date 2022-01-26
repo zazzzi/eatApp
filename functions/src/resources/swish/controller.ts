@@ -201,8 +201,6 @@ exports.refundsId = async (req: Request, res: Response) => {
     `${config.host}/api/v1/refunds/${req.params.refundId}`
   );
 
-  console.log(req);
-
   request(
     options,
     (

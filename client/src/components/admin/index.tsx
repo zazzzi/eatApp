@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  makeStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, makeStyles, Theme, Typography } from "@material-ui/core";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import { useContext, useEffect, useState } from "react";
 import { SliderPicker, TwitterPicker } from "react-color";
@@ -25,11 +19,8 @@ function AdminIndex(props: Iprops) {
   const [restaurantBackground, setRestaurantBackground] = useState<any>({});
   const [imageIsUploaded, setImageIsUploaded] = useState<boolean>(false);
   const [chosenColor, setChosenColor] = useState<string>("#79D2BE");
-  const {
-    restaurantData,
-    updateRestaurantColor,
-    updateRestaurantImg,
-  } = useContext(MenuContext);
+  const { restaurantData, updateRestaurantColor, updateRestaurantImg } =
+    useContext(MenuContext);
   const [startingColor, setStartingColor] = useState({
     background: props.setColor,
   });
@@ -50,9 +41,7 @@ function AdminIndex(props: Iprops) {
     }
   };
 
-
   const handleChange = (hex: any) => {
-    console.log(hex, "handlechange hex");
     if (props.setColor) {
       props.setColor(hex.hex);
     }
@@ -70,14 +59,12 @@ function AdminIndex(props: Iprops) {
     setTimeout(function () {
       window.location.reload();
     }, 1000);
-    console.log(restaurantBackground.img);
   };
 
   useEffect(() => {
     if (restaurantBackground.img) {
       setImageIsUploaded(true);
     } else setImageIsUploaded(false);
-    console.log(imageIsUploaded);
   }, [restaurantBackground]);
 
   return (
@@ -148,6 +135,7 @@ function AdminIndex(props: Iprops) {
                     ? restaurantBackground.img
                     : restaurantData.img
                 }
+                alt="Bakgrundsbild"
               />
             </Box>
             <Box
