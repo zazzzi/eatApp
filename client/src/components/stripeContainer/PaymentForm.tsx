@@ -110,7 +110,7 @@ function PaymentForm({paymentResponse, priceTotal}: Iprops) {
         <Box className={classes.textfieldContainer}>
           <TextField
                 className={classes.textfield}
-                label="Kort Nummer"
+                label="Kortnummer"
                 name="ccnumber"
                 variant="outlined"
                 required
