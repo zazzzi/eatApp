@@ -225,24 +225,26 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
         onClose={handleAlertClose}
         className={classes.snackbar}
       />
-      <Box
-        sx={{ position: "absolute", top: "10px", zIndex: 100, width: "100%" }}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Link href="/">
-          <HomeIcon
-            htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
-            fontSize="large"
-          />
-        </Link>
-        <Link href="/login">
-          <AccountCircleIcon
-            htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
-            fontSize="large"
-          />
-        </Link>
+      <Box style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{ position: "absolute", top: "10px", zIndex: 100, width: "90%" }}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Link href="/">
+            <HomeIcon
+              htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
+              fontSize="large"
+            />
+          </Link>
+          <Link href="/login">
+            <AccountCircleIcon
+              htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
+              fontSize="large"
+            />
+          </Link>
+        </Box>
       </Box>
 
       {restaurantData ? (
@@ -432,6 +434,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: "#fffffff0",
     borderRadius: "6px 60px 0px 0px",
     overflow: "scroll",
+    paddingBottom: "6.5rem",
   },
   menuTabs: {
     display: "flex",
