@@ -31,7 +31,6 @@ import { styled } from "@mui/material/styles";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-
 interface Iprops {
   restaurantId: RestaurantTableData;
   userInfo: any | null;
@@ -105,11 +104,11 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     setMenuColor(testColor);
   }, [restaurantData]);
 
-  useEffect(()=> {
-    if(isItemNew){
-      fireAlert()
+  useEffect(() => {
+    if (isItemNew) {
+      fireAlert();
     }
-  },[isItemNew])
+  }, [isItemNew]);
 
   const handleChange = (_event: any, newValue: any) => {
     setValue(newValue);
@@ -177,26 +176,26 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
       return;
     }
     setOpenAlert(false);
-    setIsItemNew(false)
+    setIsItemNew(false);
   };
 
   function fireAlert() {
     setOpenAlert(true);
     setTimeout(() => {
       setOpenAlert(false);
-      setIsItemNew(false)
+      setIsItemNew(false);
     }, 3000);
   }
 
   const handleAlert = (value: boolean, string: string) => {
-    setMenuUpdateType(string)
-    setIsItemNew(value)
-  }
+    setMenuUpdateType(string);
+    setIsItemNew(value);
+  };
 
   const handleAlertMenuItem = (value: boolean, string: string) => {
-    setMenuUpdateType(string)
-    setIsItemNew(value)
-  }
+    setMenuUpdateType(string);
+    setIsItemNew(value);
+  };
 
   if (restaurantData && !restaurantData.tables.includes(table)) {
     return (
@@ -221,21 +220,29 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
     <Box className={classes.menuPageContainer}>
       <Snackbar
         open={openAlert}
-        message={menuUpdateType === "create" ? "Produkt skapad!" : "Produkt updaterad!"}
+        message={
+          menuUpdateType === "create" ? "Produkt skapad!" : "Produkt updaterad!"
+        }
         onClose={handleAlertClose}
         className={classes.snackbar}
       />
       <Box
-        sx={{ position: "absolute", top: "10px", zIndex: 100 }}
+        sx={{ position: "absolute", top: "10px", zIndex: 100, width: "100%" }}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
       >
         <Link href="/">
-          <HomeIcon htmlColor="#FEFEFE" fontSize="large" />
+          <HomeIcon
+            htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
+            fontSize="large"
+          />
         </Link>
         <Link href="/login">
-          <AccountCircleIcon htmlColor="#FEFEFE" fontSize="large" />
+          <AccountCircleIcon
+            htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
+            fontSize="large"
+          />
         </Link>
       </Box>
 
@@ -348,7 +355,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
               isNewItem={true}
               menuItem={restaurantData.menu}
               closeModal={() => {
-                setOpen(false)
+                setOpen(false);
               }}
               editOpen={open}
             />
@@ -423,7 +430,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   menuList: {
     height: "100%",
     width: "100%",
-    backgroundColor: "#FEFEFE",
+    backgroundColor: "#fffffff0",
     borderRadius: "6px 60px 0px 0px",
     overflow: "scroll",
   },
@@ -475,9 +482,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
   },
   snackbar: {
-    paddingTop: '2rem',
-    height: "1rem"
-  }
+    paddingTop: "2rem",
+    height: "1rem",
+  },
 }));
 
 export default RestaurantMenu;

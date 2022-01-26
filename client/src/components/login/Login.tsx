@@ -1,4 +1,3 @@
-
 import {
   Box,
   CircularProgress,
@@ -9,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import { useEffect, useState } from "react";
-import { IncomingUser} from "../../types/types";
+import { IncomingUser } from "../../types/types";
 import LoginInputForm from "./LoginInputForm";
 import { auth } from "../../firebase";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
@@ -19,7 +18,6 @@ import mainBackground from "../../assets/img/front_page_background.png";
 import sideImg from "../../assets/img/side_picture.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 
-
 function Login() {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
@@ -27,7 +25,7 @@ function Login() {
   const [wrongPasswordOrEmail, setWrongPasswordOrEmail] =
     useState<boolean>(false);
 
-  console.log(isLoggedIn)
+  console.log(isLoggedIn);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -52,13 +50,13 @@ function Login() {
       });
   }
 
-  /* if (!isLoggedIn || isLoggedIn === undefined) {
-    return (
-      <Box className={classes.loader}>
-        <CircularProgress />
-      </Box>
-    );
-  } */
+  // if (!isLoggedIn || isLoggedIn === undefined) {
+  //   return (
+  //     <Box className={classes.loader}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box className={classes.root}>
@@ -160,7 +158,6 @@ function Login() {
   );
 }
 
-
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: "100vh",
@@ -173,7 +170,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   logo: {
     display: "flex",
-    width: "20rem",
+    width: "11rem",
     padding: "0 0 0 0",
   },
   backgroundColor: {
@@ -185,6 +182,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "100vh",
+    width: "100%",
+    boxShadow: "-20px 0px 17px rgba(0, 0, 0, 0.03)",
   },
   logoContainer: {
     display: "flex",
@@ -248,6 +247,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     height: "100%",
     borderRadius: "150px 0 0 150px",
+    boxShadow: "-20px 0px 20px 0px rgb(0 0 0 / 3%);",
   },
   loader: {
     height: "100vh",

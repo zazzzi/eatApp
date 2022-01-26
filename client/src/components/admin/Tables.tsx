@@ -55,7 +55,11 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
       </Box>
       <Box className={classes.container}>
         {restaurantData.tables.map((table: number, index: number) => (
-          <Link  key={index} style={{ textDecoration: "none" }} to={`/tables/${table}`}>
+          <Link
+            key={index}
+            style={{ textDecoration: "none" }}
+            to={`/tables/${table}`}
+          >
             <Box
               sx={{
                 fontSize: "8rem",
@@ -74,7 +78,7 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
       <Link
         to={`/menu/${restaurantTable.restaurantId}?table=${restaurantTable.table}`}
       >
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifyContent="center" pb={3}>
           <Typography>Tillbaka till menyn</Typography>
         </Box>
       </Link>
