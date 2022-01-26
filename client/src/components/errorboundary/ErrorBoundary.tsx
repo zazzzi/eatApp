@@ -37,10 +37,10 @@ class ErrorBoundary extends React.Component<IProps, IState> {
               <Box mb={3}>
                 <WarningIcon fontSize="large" />
               </Box>
-              <Typography variant="h5">Sorry! Something went wrong.</Typography>
+              <Typography variant="h5">Något verkar ha gått fel.</Typography>
               <Link color="secondary" href="/">
                 <Typography variant="h5">
-                  Please return to the frontpage.
+                  Återgå till startsidan.
                 </Typography>
               </Link>
             </Box>
