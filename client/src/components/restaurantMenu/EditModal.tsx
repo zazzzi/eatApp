@@ -198,7 +198,7 @@ function EditMenuModal(props: IProps) {
                       ? updatedMenuInfo.img
                       : props.menuItem.img
                   }
-                  alt="Uploaded background image"
+                  alt={!imageIsUploaded ? "Uploaded background image" : undefined}
                 />
               </Box>
             ) : null}
