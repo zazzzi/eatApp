@@ -75,8 +75,6 @@ function CreateUserForm(props: Iprops) {
   function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     if (password1 && password1 === password2) {
-      console.log(userToCreate);
-
       props.userDataCallback(userToCreate);
     } else {
       setMatching(false);
@@ -88,7 +86,6 @@ function CreateUserForm(props: Iprops) {
   ) {
     setConfirmPassword(event.target.value);
     if (confirmPassword === userToCreate.password) {
-      console.log("True");
     }
   }
 

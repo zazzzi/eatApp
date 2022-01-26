@@ -8,13 +8,11 @@ function LogOutBtn(props: Iprops) {
   const classes = useStyles();
 
   async function logOut() {
-    await auth.signOut().then(() => {
-      console.log("User logged out");
-    });
+    await auth.signOut();
   }
 
   return (
-    <Box style={{margin: "1.5rem 0 0 0"}}>
+    <Box style={{ margin: "1.5rem 0 0 0" }}>
       <Button
         size="small"
         color="secondary"

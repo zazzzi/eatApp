@@ -1,10 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase";
-import {
-  updateDoc,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { User, UserInfoToUpdate } from "../types/types";
 import { onAuthStateChanged, updatePassword } from "firebase/auth";
 
@@ -15,13 +11,11 @@ interface IState {
 }
 
 interface ContextValue extends IState {
-  checkForRestaurantAuth: (userID: string) => void;
   updateUserPassword: (password: string) => void;
   updateUserInformation: (userID: string, data: UserInfoToUpdate) => void;
 }
 
 export const UserAuthContext = createContext<ContextValue>({
-  checkForRestaurantAuth: () => {},
   updateUserInformation: () => {},
   updateUserPassword: () => {},
   loggedIn: false,
@@ -44,11 +38,9 @@ function UserAuthProvider(props: Props) {
         setLoggedIn(true);
         setUserID(user.uid);
         getUserInformation(user.uid);
-        console.log("Logged in to: ", user.email);
       } else {
         setUserID(null);
         setLoggedIn(false);
-        console.log("Not logged in.");
       }
     });
   }, []);
@@ -59,21 +51,14 @@ function UserAuthProvider(props: Props) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log(docSnap.data());
       setUserInformation(docSnap.data().userInformation);
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
     }
   }
 
   async function updateUserPassword(password: string) {
     const user = auth.currentUser;
     if (user) {
-      await updatePassword(user, password).then(() => {
-        console.log("password updated");
-        
-      })
+      await updatePassword(user, password);
     }
   }
 
@@ -89,28 +74,15 @@ function UserAuthProvider(props: Props) {
     });
   }
 
-  function checkForRestaurantAuth(userID: string) {
-    // onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     if (user.uid === userID) {
-    //       console.log("RESTAURANTEEEE");
-    //     }
-    //   } else {
-    //     return null;
-    //   }
-    // });
-  }
-
   return (
     <UserAuthContext.Provider
       value={{
         loggedIn: loggedIn,
         userID: userID,
         userInformation: userInformation,
-        checkForRestaurantAuth: checkForRestaurantAuth,
         updateUserInformation: updateUserInformation,
-        updateUserPassword: updateUserPassword
-        }}
+        updateUserPassword: updateUserPassword,
+      }}
     >
       {props.children}
     </UserAuthContext.Provider>

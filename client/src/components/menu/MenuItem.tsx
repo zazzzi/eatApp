@@ -53,8 +53,8 @@ function MenuItems(props: Iprops) {
   }
 
   const handleAlert = (value: boolean) => {
-    props.handleAlertMenuItem(value, "update")
-  }
+    props.handleAlertMenuItem(value, "update");
+  };
 
   return (
     <>
@@ -63,7 +63,11 @@ function MenuItems(props: Iprops) {
           <Box className={classes.menuItem}>
             <Container className={classes.imageColumn}>
               {item.img ? (
-                <img className={classes.image} src={item.img} />
+                <img
+                  className={classes.image}
+                  src={item.img}
+                  alt={`Picture of ${item.title}`}
+                />
               ) : (
                 <Skeleton variant="circular" width={80} height={80} />
               )}
@@ -87,11 +91,7 @@ function MenuItems(props: Iprops) {
                 <>
                   <Box mr={2} style={{ cursor: "pointer" }}>
                     <Tooltip title="Delete">
-                      <DeleteIcon
-                        onClick={() => [
-                          handleDelete(index),
-                        ]}
-                      />
+                      <DeleteIcon onClick={() => [handleDelete(index)]} />
                     </Tooltip>
                   </Box>
                   <Box style={{ cursor: "pointer" }}>

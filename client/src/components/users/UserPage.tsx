@@ -61,7 +61,6 @@ function UserPage(props: Iprops) {
   function handleChange(
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) {
-    console.log(event.target.value);
     updateInfoState(event.target.id, event.target.value);
   }
 
@@ -83,7 +82,6 @@ function UserPage(props: Iprops) {
     };
     if (updatedInfo && userID) {
       updateUserInformation(userID, user);
-      console.log(updatedInfo);
     }
   }
 
@@ -130,11 +128,7 @@ function UserPage(props: Iprops) {
           className={classes.backgroundColor}
         >
           <Link href="/">
-            <img
-              className={classes.logo}
-              src={logoStanced}
-              alt="eatAppLogo.png"
-            />
+            <img className={classes.logo} src={logoStanced} alt="eatApp Logo" />
           </Link>
           <Box className={classes.welcomeMessageContainer}>
             {userInfoState ? (

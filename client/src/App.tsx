@@ -52,10 +52,6 @@ function App() {
     },
   });
 
-  useEffect(() => {
-    console.log("is logged in", loggedIn);
-  }, []);
-
   const selectedTable = (table: string) => {
     setTable(table);
   };
