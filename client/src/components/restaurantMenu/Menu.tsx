@@ -431,7 +431,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   menuList: {
     height: "100%",
     width: "100%",
-    backgroundColor: "#fffffff0",
+    backgroundColor: "#fffffff7",
     borderRadius: "6px 60px 0px 0px",
     overflow: "scroll",
     paddingBottom: "6.5rem",
