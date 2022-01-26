@@ -119,19 +119,20 @@ function PaymentForm({ paymentResponse, priceTotal }: Iprops) {
         <Divider className={classes.divider} />
         <Box className={classes.textfieldContainer}>
           <TextField
-            className={classes.textfield}
-            label="Kort Nummer"
-            name="ccnumber"
-            variant="outlined"
-            required
-            InputLabelProps={{ shrink: true }}
-            onChange={validateCard}
-            InputProps={{
-              inputComponent: StripeInput,
-              inputProps: {
-                component: CardNumberElement,
-              },
-            }}
+                className={classes.textfield}
+                label="Kortnummer"
+                name="ccnumber"
+                variant="outlined"
+                required
+                InputLabelProps={{ shrink: true }}
+                onChange={validateCard}
+                InputProps={{ 
+                  inputComponent: StripeInput,
+                  inputProps: {
+                    component: CardNumberElement
+              }, 
+                }}
+
           />
           <Box className={classes.monthCvc}>
             <TextField

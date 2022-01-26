@@ -125,7 +125,7 @@ function Checkout({ restaurantId, userInformation }: Iprops) {
           </Box>
         );
       default:
-        return "How did you end up here???";
+        return "Hur lyckades du komma hit? Ledsen för besväret men ladda om sidan.";
     }
   };
 
