@@ -92,11 +92,13 @@ function CreateUser() {
           <Box className={classes.rootContainer}>
             {isLoggedIn ? <Navigate to={`/user/${uid}`} /> : null}
             <Box className={classes.logoContainer}>
-              <img
-                className={classes.logo}
-                src={logoStanced}
-                alt="eatApp logo"
-              />
+              <h1 style={{ margin: 0 }}>
+                <img
+                  className={classes.logo}
+                  src={logoStanced}
+                  alt="eatApp"
+                />
+              </h1>
             </Box>
             <Box className={classes.welcomeTextContainer}>
               <Typography variant="h4">Skapa nytt konto</Typography>

@@ -128,7 +128,13 @@ function UserPage(props: Iprops) {
           className={classes.backgroundColor}
         >
           <Link href="/">
-            <img className={classes.logo} src={logoStanced} alt="eatApp Logo" />
+            <h1 style={{ margin: 0 }}>
+              <img
+                className={classes.logo}
+                src={logoStanced}
+                alt="eatApp"
+              />
+            </h1>
           </Link>
           <Box className={classes.welcomeMessageContainer}>
             {userInfoState ? (

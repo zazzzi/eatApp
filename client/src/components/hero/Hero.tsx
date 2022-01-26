@@ -68,13 +68,15 @@ function Hero({ restaurantId }: Iprops) {
             //   },
             // }}
           >
-            <a href="/">
-              <img
-                className={classes.logo}
-                src={logoStanced}
-                alt="eatAppLogo"
-              />
-            </a>
+            <h1 style={{margin: 0}}>
+              <a href="/">
+                <img
+                  className={classes.logo}
+                  src={logoStanced}
+                  alt="eatApp"
+                />
+              </a>
+            </h1>
             <Box className={classes.qrBtnContainer}>
               {cameraActive ? (
                 <Box>
