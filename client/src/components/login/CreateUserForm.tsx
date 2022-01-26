@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   FormHelperText,
   IconButton,
   InputAdornment,
@@ -8,6 +9,8 @@ import {
   OutlinedInput,
   TextField,
   Theme,
+  Typography,
+  Link
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { User } from "../../types/types";
@@ -27,6 +30,8 @@ function CreateUserForm(props: Iprops) {
   const [password1, setPassword1] = useState<string>();
   const [password2, setPassword2] = useState<string>();
   const [passwordTooShort, setPasswordTooShort] = useState(false);
+  const label = { inputProps: { 'aria-label': 'Checkbox' } };
+  const [check, setCheck] = useState<boolean>(false)
 
   const [userToCreate, setUserToCreate] = useState<User>({
     firstName: "",
@@ -56,6 +61,8 @@ function CreateUserForm(props: Iprops) {
       [id]: value,
     });
   }
+
+  
 
   function handleChange(
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
@@ -87,6 +94,10 @@ function CreateUserForm(props: Iprops) {
     setConfirmPassword(event.target.value);
     if (confirmPassword === userToCreate.password) {
     }
+  }
+
+  const handleCheckBoxChange = (event: any) => {
+    setCheck(event.target.checked)
   }
 
   return (
@@ -170,6 +181,21 @@ function CreateUserForm(props: Iprops) {
             </InputAdornment>
           }
         />
+        <Box style={{
+          display: "flex",
+          alignItems: "center"
+        }}>
+          <Checkbox 
+            {...label} 
+            color="default" 
+            onChange={handleCheckBoxChange}
+          />
+          <Typography
+            style={{
+              fontSize: "0.7rem"
+            }}
+          >Jag accepterar <Link href="https://www.freeprivacypolicy.com/live/775830bf-3092-4d01-900e-7a355410fc7a">villkoren</Link> för GDPR</Typography>
+        </Box>
         <FormHelperText id="password2">
           {!matching ? "Lösenorden matchar inte." : ""}
           {passwordTooShort
@@ -179,6 +205,7 @@ function CreateUserForm(props: Iprops) {
 
         <Box className={classes.submitBtnStyling}>
           <Button
+            disabled={!check}
             className={classes.buttonStyling}
             variant="contained"
             endIcon={<AddIcon />}
