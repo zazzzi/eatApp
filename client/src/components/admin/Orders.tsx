@@ -36,13 +36,7 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
     }
   },[value, userInfo, orders])
 
-  if(!orders){
-    return (
-    <Box className={classes.loader}>
-      <CircularProgress/>
-    </Box>
-  )}
-
+ 
   const handleConfirm = (order: Order) => {
     confirmOrderDelivery(order)
   }
@@ -63,11 +57,12 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
     )
   }
 
-  if(!filteredOrders){
+  if(!orders || !filteredOrders){
     return (
-      <></>
-    )
-  }
+    <Box className={classes.loader}>
+      <CircularProgress/>
+    </Box>
+  )}
 
   return (
    <Box className={classes.container}>
@@ -164,14 +159,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   orderStatus: {
     display: "flex",
   }, 
-  header: {
-    
-  }, 
   title: {
     padding: "0rem 0rem 0.5rem 0rem",
     display: "flex",
     alignItems: "center",
-  }
+  },
 }));
 
 
