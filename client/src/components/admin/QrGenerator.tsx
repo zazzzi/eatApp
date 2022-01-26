@@ -85,7 +85,7 @@ const saveAs = (blob: string, fileName: string) =>{
     )
   }
 
-  const url = `https://eatapp-5f84b.web.app/menu/${userInfo.rID}?table=${!table ? id : table}`
+  const url = `https://eatapp.se/menu/${userInfo.rID}?table=${!table ? id : table}`
 
   return (
    <Box className={classes.padding}>
