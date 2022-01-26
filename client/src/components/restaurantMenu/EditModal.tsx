@@ -5,6 +5,7 @@ import {
   TextField,
   Button,
   MenuItem,
+  CircularProgress,
 } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { MenuItemType } from "../../types/types";
@@ -102,7 +103,11 @@ function EditMenuModal(props: IProps) {
   });
 
   if (!restaurantData) {
-    return <></>;
+    return (
+      <Box className={classes.loader}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -245,6 +250,13 @@ const useStyles = makeStyles(() => ({
   },
   backgroundImage: {
     maxHeight: "10rem",
+  },
+  loader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
 }));
 
