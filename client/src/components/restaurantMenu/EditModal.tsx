@@ -208,6 +208,7 @@ function EditMenuModal(props: IProps) {
                   onClick={() => {
                     props.handleAlert(false, "create")
                     props.closeModal();
+                    setUpdatedMenuInfo(null)
                   }}
                 >
                   Cancel
