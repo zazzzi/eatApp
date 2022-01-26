@@ -6,6 +6,7 @@ import {
   Link,
   Hidden,
   Theme,
+  CircularProgress,
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -45,7 +46,11 @@ function Hero({ restaurantId }: Iprops) {
   };
 
   if (!restaurantId) {
-    return <>hi</>;
+    return (
+      <Box className={classes.loader}>
+        <CircularProgress />
+      </Box>
+   );
   }
 
   return (
@@ -260,6 +265,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "100vh",
+  },
+  loader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 

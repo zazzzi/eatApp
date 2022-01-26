@@ -79,12 +79,18 @@ function Checkout({ restaurantId, userInformation }: Iprops) {
     }, 3000);
   };
 
-  if (!restaurantId) {
-    return <></>;
-  }
-
   if (Object.keys(restaurantId).length === 0) {
-    return <>Please scan a QR code to make an order.</>;
+    return (
+        <Box className={classes.noDataloader}>
+          <Typography variant="h2">404</Typography>
+          <Typography variant="h6">Var god och skanna en QR kod</Typography>
+          <Typography variant="h6">kontakta personallen eller</Typography>
+          <Link to="/">
+            <Typography>Skanna en QR kod</Typography>
+          </Link>
+        </Box>
+    )
+    ;
   }
 
   const getStepContent = (stepIndex: number) => {
@@ -290,6 +296,13 @@ const useStyles = makeStyles(() => ({
     maxWidth: "50rem",
     margin: "auto",
     marginBottom: "5rem",
+  },
+  noDataloader: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
 }));
 
