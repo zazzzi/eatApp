@@ -225,34 +225,50 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
         onClose={handleAlertClose}
         className={classes.snackbar}
       />
-      <Box style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <Box
-          sx={{ position: "absolute", top: "10px", zIndex: 100, width: "90%" }}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Link href="/">
-            <HomeIcon
-              htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
-              fontSize="large"
-            />
-          </Link>
-          <Link href="/login">
-            <AccountCircleIcon
-              htmlColor={!restaurantNameColorBlack ? "#000000" : "#FEFEFE"}
-              fontSize="large"
-            />
-          </Link>
-        </Box>
-      </Box>
 
       {restaurantData ? (
         <>
           <Box
             style={{ backgroundImage: `url(${restaurantData.img})` }}
             className={classes.menuBackground}
-          ></Box>
+          >
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  top: "10px",
+                  zIndex: 100,
+                  width: "90%",
+                  marginTop: ".7rem",
+                }}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Link href="/">
+                  <HomeIcon
+                    htmlColor={
+                      !restaurantNameColorBlack ? "#000000" : "#FEFEFE"
+                    }
+                    fontSize="large"
+                  />
+                </Link>
+                <Link href="/login" target={"_blank"}>
+                  <AccountCircleIcon
+                    htmlColor={
+                      !restaurantNameColorBlack ? "#000000" : "#FEFEFE"
+                    }
+                    fontSize="large"
+                  />
+                </Link>
+              </Box>
+            </Box>
+          </Box>
           <Box>
             <Box
               id="nameContainer"
