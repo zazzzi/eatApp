@@ -171,6 +171,7 @@ const useStyles = makeStyles(() => ({
     fontFamily: "roboto",
     color: "#928F8F",
     margin: "0",
+    textAlign: "center"
   },
   quantityContainer: {
     display: "flex",
