@@ -1,7 +1,7 @@
-# eatApp
+# EatApp
 
 ##The web app
-Eatapp is a restuarant in house food delivery platform that is designed with scalability in mind. 
+EatApp is a restuarant in house food delivery platform that is designed with scalability in mind. 
 The web application targets two user demographics. Restaurant onwers, and restaurant customers. 
 
 ###Owners
@@ -23,5 +23,5 @@ To run the project
 -npm start in root 
 
 ###Stack
-Eatapp is built with Materiaul-UI, React, Typescript, Node, Express and Firebase.
+EatApp is built with Materiaul-UI, React, Typescript, Node, Express and Firebase.
 
