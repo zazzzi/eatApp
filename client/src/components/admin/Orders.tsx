@@ -72,7 +72,7 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
   return (
    <Box className={classes.container}>
      <Box className={classes.title}>
-        <Link style={{ textDecoration: "none" }} to={`/menu/${restaurantId.restaurantId}?table=${restaurantId.table}`}>
+        <Link style={{ textDecoration: "none" }} to={`/login`}>
           <ArrowBackIosIcon/>
         </Link>
         <Typography variant="h5"> {userInfo?.role === "owner" ? "Bestälningar" : "Tidigare bestälningar"} </Typography>
@@ -85,8 +85,8 @@ function Orders({orders, userId, userInfo, restaurantId}: Iprops) {
           aria-label="wrapped label tabs example"
           variant="fullWidth"
         >
-          <Tab value="one" label="Olevererat" />
-          <Tab value="two" label="Levererat" />
+          <Tab value="one" label=" Ej levererat" />
+          <Tab value="two" label=" Levererat" />
         </Tabs>
       </Box>) : null
       }
