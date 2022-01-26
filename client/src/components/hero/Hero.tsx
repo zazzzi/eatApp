@@ -72,7 +72,7 @@ function Hero({ restaurantId }: Iprops) {
               <img
                 className={classes.logo}
                 src={logoStanced}
-                alt="eatAppLogo.png"
+                alt="eatAppLogo"
               />
             </a>
             <Box className={classes.qrBtnContainer}>
@@ -92,7 +92,7 @@ function Hero({ restaurantId }: Iprops) {
               ) : (
                 <Button onClick={activateCamera} className={classes.ctaBtn}>
                   <Box className={classes.ctaTextContainer}>
-                    <img src={qrBtn} alt="qrCode.png" />
+                    <img src={qrBtn} alt="QR-code" />
                   </Box>
                 </Button>
               )}

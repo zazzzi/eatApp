@@ -108,7 +108,7 @@ function Login() {
                 <img
                   className={classes.logo}
                   src={logoStanced}
-                  alt="eatAppLogo.png"
+                  alt="EatApp logo"
                 />
               </Link>
               <p className={classes.welcomeText}>Logga in på ditt konto här.</p>
@@ -150,7 +150,7 @@ function Login() {
               style={{ objectFit: "cover" }}
               className={classes.sideImgContainer}
               src={sideImg}
-              alt=""
+              alt="Picture of food"
             />
           </Box>
         </Hidden>

@@ -16,7 +16,7 @@ interface IProps {
   editOpen: boolean;
   menuItem: MenuItemType;
   isNewItem: boolean;
-  handleAlert: (value:boolean, string: string)=>void
+  handleAlert: (value: boolean, string: string) => void;
 }
 
 function EditMenuModal(props: IProps) {
@@ -24,12 +24,9 @@ function EditMenuModal(props: IProps) {
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
   const [newMenuItem, setNewMenuItem] = useState<any>({});
   const [imageIsUploaded, setImageIsUploaded] = useState<boolean>(false);
- 
-  const { 
-    restaurantData, 
-    updateItemData, 
-    createNewMenuItem 
-  } = useContext(MenuContext);
+
+  const { restaurantData, updateItemData, createNewMenuItem } =
+    useContext(MenuContext);
 
   const style = {
     position: "absolute",
@@ -77,14 +74,14 @@ function EditMenuModal(props: IProps) {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    props.handleAlert(true, "create")
-    setTimeout(()=>{
+    props.handleAlert(true, "create");
+    setTimeout(() => {
       props.isNewItem
-      ? createNewMenuItem(newMenuItem)
-      : updateItemData(props.menuItem.title, updatedMenuInfo);
-    props.closeModal();
-    props.handleAlert(false, "create")
-    }, 1000)
+        ? createNewMenuItem(newMenuItem)
+        : updateItemData(props.menuItem.title, updatedMenuInfo);
+      props.closeModal();
+      props.handleAlert(false, "create");
+    }, 1000);
   };
 
   const setURL = (url: string) => {
@@ -190,12 +187,13 @@ function EditMenuModal(props: IProps) {
                 <img
                   className={classes.backgroundImage}
                   src={
-                    imageIsUploaded && props.isNewItem  ?
-                    newMenuItem.img : 
-                    updatedMenuInfo ? 
-                    updatedMenuInfo.img : 
-                    props.menuItem.img 
+                    imageIsUploaded && props.isNewItem
+                      ? newMenuItem.img
+                      : updatedMenuInfo
+                      ? updatedMenuInfo.img
+                      : props.menuItem.img
                   }
+                  alt="Uploaded background image"
                 />
               </Box>
             ) : null}
@@ -206,9 +204,9 @@ function EditMenuModal(props: IProps) {
                   startIcon={<DeleteIcon />}
                   variant="outlined"
                   onClick={() => {
-                    props.handleAlert(false, "create")
+                    props.handleAlert(false, "create");
                     props.closeModal();
-                    setUpdatedMenuInfo(null)
+                    setUpdatedMenuInfo(null);
                   }}
                 >
                   Cancel

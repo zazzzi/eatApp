@@ -1,13 +1,8 @@
-import {
-  Box,
-  makeStyles,
-  TextField,
-  Theme,
-} from "@material-ui/core";
+import { Box, makeStyles, TextField, Theme } from "@material-ui/core";
 import { useState } from "react";
 import swish from "../../assets/img/swish.png";
 import { User } from "../../types/types";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 interface Iprops {
   paymentResponse: (status: string | undefined, response?: any) => void;
@@ -15,9 +10,15 @@ interface Iprops {
   userInformation: User;
 }
 
-function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) {
+function SwishPayment({
+  paymentResponse,
+  priceTotal,
+  userInformation,
+}: Iprops) {
   const classes = useStyles();
-  const [number, setNumber] = useState<string>(userInformation ? String(userInformation.phoneNumber) : "");
+  const [number, setNumber] = useState<string>(
+    userInformation ? String(userInformation.phoneNumber) : ""
+  );
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,12 +33,12 @@ function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) 
       message: `Order to table`,
       paymentType: "swish",
       body: {
-        nothing: 'here'
-      }
+        nothing: "here",
+      },
     };
 
     paymentResponse("Successful swish payment", payment);
-    setLoading(true)
+    setLoading(true);
 
     /* fetch(
       "https://us-central1-eatapp-5f84b.cloudfunctions.net/app/api/paymentrequests",
@@ -72,7 +73,7 @@ function SwishPayment({ paymentResponse, priceTotal, userInformation }: Iprops) 
     <Box height="100%" className={classes.height}>
       <Box className={classes.padding}>
         <Box className={classes.swishLogo}>
-          <img className={classes.img} src={swish} />
+          <img className={classes.img} src={swish} alt="Swish logo" />
         </Box>
         <form onSubmit={handleSubmit}>
           <Box className={classes.container}>

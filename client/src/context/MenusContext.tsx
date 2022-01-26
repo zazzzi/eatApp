@@ -1,11 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
-import {
-  getDoc,
-  updateDoc,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { getDoc, updateDoc, doc, setDoc } from "firebase/firestore";
 import { UserAuthContext } from "./UsersContext";
 import { RestaurantTableData, RestaurantData } from "../types/types";
 
@@ -70,8 +65,6 @@ function MenuProvider(props: Props) {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setRestaurantdata(docSnap.data());
-      } else {
-        console.log("No such restaurant!");
       }
     };
     getRestaurantData();
@@ -123,8 +116,6 @@ function MenuProvider(props: Props) {
     });
     await updateDoc(docRef, {
       menu,
-    }).then(() => {
-      console.log(value);
     });
   }
 
@@ -142,9 +133,6 @@ function MenuProvider(props: Props) {
     await updateDoc(docRef, {
       menu,
     });
-
-    // setRestaurantdata();
-    console.log(restaurantData);
   }
 
   const addTable = async (table: string) => {
@@ -173,8 +161,6 @@ function MenuProvider(props: Props) {
     await updateDoc(docRef, {
       color,
     });
-
-    console.log(`%ccolor set to ${color}`, `color: ${color}`);
   }
 
   async function updateRestaurantNameColor(value: boolean) {
@@ -185,7 +171,6 @@ function MenuProvider(props: Props) {
       isNameBlack,
     });
     setRestaruantTitleIsBlack(value);
-    console.log("name is black", isNameBlack);
   }
 
   async function updateRestaurantImg(value: any) {
@@ -196,7 +181,6 @@ function MenuProvider(props: Props) {
       img,
     });
     setRestaruantTitleIsBlack(value);
-    console.log("Image updated", img);
   }
 
   return (

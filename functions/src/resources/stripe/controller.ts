@@ -1,30 +1,27 @@
-export {}
-import {Request, Response} from "express";
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);;
+export {};
+import { Request, Response } from "express";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 
-exports.stripePayment = async(req: Request, res: Response) => {
-  console.log('hello')
-  let {amount, id} = req.body
-  try{
+exports.stripePayment = async (req: Request, res: Response) => {
+  let { amount, id } = req.body;
+  try {
     const payment = await stripe.paymentIntents.create({
       amount,
       currency: "SEK",
       description: "Food",
       payment_method: id,
-      confirm: true
-    })
-    console.log("Payment", payment)
+      confirm: true,
+    });
     res.json({
       message: "Payment successful",
       success: true,
       body: payment,
-      paymentType: "card"
-    })
-  }catch (error) {
-    console.log("Error", error)
+      paymentType: "card",
+    });
+  } catch (error) {
     res.json({
       message: "Payment failed",
-      success: false
-    })
+      success: false,
+    });
   }
-}
+};

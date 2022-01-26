@@ -1,8 +1,4 @@
-import {
-  Box,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRef, useState } from "react";
 import { storage } from "../../firebase";
@@ -24,8 +20,11 @@ function FileUploadField(props: Iprops) {
   };
 
   const onFileChange = (e: any) => {
-    if (e.target.files[0] && e.target.files[0].size <= 5242880) {
+    // 5242880
+    if (e.target.files[0] && e.target.files[0].size <= 3145728) {
       setImage(e.target.files[0]);
+    } else {
+      alert("Filen är för stor!")
     }
   };
 
@@ -34,9 +33,7 @@ function FileUploadField(props: Iprops) {
       storage,
       `restaurantUploads/${props.rId}/${image!.name}`
     );
-    await uploadBytes(imgRef, image).then((snapshot) => {
-      console.log("File uploaded", snapshot);
-    });
+    await uploadBytes(imgRef, image);
 
     getURL();
   };

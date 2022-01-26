@@ -50,11 +50,8 @@ function CreateUser() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user.email, " Logged in");
         setUid(user.uid);
         setIsLoggedIn(true);
-      } else {
-        console.log("Logged out");
       }
     });
   });
@@ -98,7 +95,7 @@ function CreateUser() {
               <img
                 className={classes.logo}
                 src={logoStanced}
-                alt="eatAppLogo.png"
+                alt="eatApp logo"
               />
             </Box>
             <Box className={classes.welcomeTextContainer}>
@@ -161,7 +158,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    width: "100%"
+    width: "100%",
   },
 }));
 
