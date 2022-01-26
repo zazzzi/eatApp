@@ -24,9 +24,12 @@ function EditMenuModal(props: IProps) {
   const [updatedMenuInfo, setUpdatedMenuInfo] = useState<any>();
   const [newMenuItem, setNewMenuItem] = useState<any>({});
   const [imageIsUploaded, setImageIsUploaded] = useState<boolean>(false);
-
-  const { restaurantData, updateItemData, createNewMenuItem } =
-    useContext(MenuContext);
+ 
+  const { 
+    restaurantData, 
+    updateItemData, 
+    createNewMenuItem 
+  } = useContext(MenuContext);
 
   const style = {
     position: "absolute",
@@ -187,9 +190,11 @@ function EditMenuModal(props: IProps) {
                 <img
                   className={classes.backgroundImage}
                   src={
-                    imageIsUploaded && props.isNewItem
-                      ? newMenuItem.img
-                      : props.menuItem.img
+                    imageIsUploaded && props.isNewItem  ?
+                    newMenuItem.img : 
+                    updatedMenuInfo ? 
+                    updatedMenuInfo.img : 
+                    props.menuItem.img 
                   }
                 />
               </Box>
@@ -203,6 +208,7 @@ function EditMenuModal(props: IProps) {
                   onClick={() => {
                     props.handleAlert(false, "create")
                     props.closeModal();
+                    setUpdatedMenuInfo(null)
                   }}
                 >
                   Cancel
