@@ -89,15 +89,15 @@ function Hero({ restaurantId }: Iprops) {
         >
           <Box
             className={classes.blobContainer}
-            // sx={{
-            //   width: {
-            //     xs: "100%",
-            //     sm: "100%",
-            //     md: "100%",
-            //     lg: "100%",
-            //     xl: "50%",
-            //   },
-            // }}
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "100%",
+                md: "50rem",
+                lg: "50rem",
+                xl: "100%",
+              },
+            }}
           >
             <h1 style={{ margin: 0 }}>
               <a href="/">
@@ -159,7 +159,7 @@ function Hero({ restaurantId }: Iprops) {
                 objectFit: "cover",
               }}
               className={classes.sideImgContainer}
-              src={imgArray[imgNumb]}
+              src={sideImg}
               alt=""
             />
           </Box>
@@ -211,18 +211,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     textDecoration: "none",
   },
   heroContainer: {
-    height: "100vh",
-    position: "relative",
-    [theme.breakpoints.up("xl")]: {
-      height: "80vh",
-    },
-    width: "100%",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundImage: `url(${mainBackground})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
-    alignItems: "center",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
+    width: "100%",
     boxShadow: "-20px 0px 17px rgba(0, 0, 0, 0.03)",
   },
   noAccountOuterContainer: {
@@ -260,23 +257,27 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: "50%",
     },
     backgroundImage: `url(${blobHero})`,
-    backgroundPosition: "center",
-    backgroundSize: "contain",
-    [theme.breakpoints.down("xs")]: {
-      backgroundSize: "contain",
-    },
-    backgroundRepeat: "no-repeat",
+
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+
+    backgroundPosition: "center",
+    [theme.breakpoints.down("xs")]: {
+      backgroundSize: "contain",
+    },
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
   },
   qrScanner: {
     border: "0px solid",
   },
   sideImgContainer: {
+    width: "100%",
     height: "100%",
-    filter: "drop-shadow(-25px 0px 38px rgba(12, 12, 12, 0.1));",
+    borderRadius: "150px 0 0 150px",
+    boxShadow: "-20px 0px 20px 0px rgb(0 0 0 / 3%);",
   },
   backgroundColor: {
     display: "flex",
