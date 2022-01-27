@@ -37,7 +37,7 @@ ReactDOM.render(
                     marginBottom: "2rem",
                     left: 0,
                     right: 0,
-                    padding: "20px",
+                    padding: "1rem",
                   }}
                 buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
                 expires={150}
