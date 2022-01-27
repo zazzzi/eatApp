@@ -97,9 +97,7 @@ function QrGenerator({ table, userInfo }: Iprops) {
     );
   }
 
-
   const url = `https://eatapp.se/menu/${userInfo.rID}?table=${!table ? id : table}`
-
 
   return (
     <Box className={classes.padding}>
@@ -169,6 +167,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     padding: "0.8rem",
     width: "60%",
+    maxWidth: " 25rem"
   },
   qrContainer: {
     outline: "solid",
