@@ -89,28 +89,33 @@ function QrGenerator({ table, userInfo }: Iprops) {
   if (!restaurantData.tables.includes(id)) {
     return (
       <Box className={classes.loader}>
-        <Typography>Table does not exist</Typography>
+        <Typography>Bordet existerar inte</Typography>
         <Link to={`/tables`}>
-          <Typography>Back</Typography>
+          <Typography>Tillbaka</Typography>
         </Link>
       </Box>
     );
   }
 
-  const url = `https://eatapp.se/menu/${userInfo.rID}?table=${!table ? id : table}`
+  const url = `https://eatapp.se/menu/${userInfo.rID}?table=${
+    !table ? id : table
+  }`;
 
   return (
     <Box className={classes.padding}>
       <Box id="exportContainer" className={classes.qrContainer}>
         <Typography className={classes.h} variant="h5">
-          {restaurantData.restaurantName}: bord {!table ? id : table}
+          {restaurantData.restaurantName}: Bord {!table ? id : table}
         </Typography>
         <QRCode value={url} />
         <img className={classes.logo} src={eatAppLogo} alt="EatApp logo" />
+        <Box>
+          <Typography variant="h6">www.eatapp.se</Typography>
+        </Box>
       </Box>
       <Button
         className={classes.button}
-        variant="text"
+        variant="contained"
         color="primary"
         onClick={exportAsPicture}
         startIcon={<PrintIcon />}
@@ -118,9 +123,13 @@ function QrGenerator({ table, userInfo }: Iprops) {
         Skriv ut
       </Button>
       <Box className={classes.buttonGroup}>
-        <Link to={`/tables`}>
-          <Button className={classes.button} variant="outlined" color="primary">
-            Back
+        <Link style={{ textDecoration: "none" }} to={`/tables`}>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+          >
+            Tillbaka
           </Button>
         </Link>
         <AlertDialog table={!table ? id! : table!} />
@@ -157,6 +166,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     width: "8rem",
     margin: "1rem",
+    color: "white",
   },
   buttonGroup: {
     display: "flex",
@@ -167,7 +177,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     padding: "0.8rem",
     width: "60%",
-    maxWidth: " 25rem"
+    maxWidth: " 25rem",
   },
   qrContainer: {
     outline: "solid",

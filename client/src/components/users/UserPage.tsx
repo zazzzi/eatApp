@@ -129,11 +129,7 @@ function UserPage(props: Iprops) {
         >
           <Link href="/">
             <h1 style={{ margin: 0 }}>
-              <img
-                className={classes.logo}
-                src={logoStanced}
-                alt="eatApp"
-              />
+              <img className={classes.logo} src={logoStanced} alt="eatApp" />
             </h1>
           </Link>
           <Box className={classes.welcomeMessageContainer}>
@@ -158,6 +154,7 @@ function UserPage(props: Iprops) {
                   id="email"
                   label="Epostadress"
                   type="email"
+                  disabled
                   variant="outlined"
                   defaultValue={userInfoState.email}
                   onChange={handleChange}

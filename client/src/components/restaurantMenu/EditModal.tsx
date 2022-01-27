@@ -198,7 +198,9 @@ function EditMenuModal(props: IProps) {
                       ? updatedMenuInfo.img
                       : props.menuItem.img
                   }
-                  alt={!imageIsUploaded ? "Uploaded background image" : undefined}
+                  alt={
+                    !imageIsUploaded ? "Uploaded background image" : undefined
+                  }
                 />
               </Box>
             ) : null}
@@ -214,12 +216,12 @@ function EditMenuModal(props: IProps) {
                     setUpdatedMenuInfo(null);
                   }}
                 >
-                  Cancel
+                  Avbryt
                 </Button>
               </Box>
               <Box p={2}>
                 <Button type="submit" variant="contained" color="primary">
-                  Save
+                  Spara
                 </Button>
               </Box>
             </Box>

@@ -140,7 +140,7 @@ function ResetPassword() {
                       className={`${classes.textAlignCenter} ${classes.welcomeText}`}
                     >
                       Skriv in din email så skickar vi <br />
-                      ett mail med instructioner!
+                      ett mail med instruktioner!
                     </p>
                   </Box>
                 </Box>
