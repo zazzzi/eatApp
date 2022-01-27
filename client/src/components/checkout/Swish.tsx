@@ -32,7 +32,6 @@ function SwishPayment({
 
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value.length)
     if(event.target.value.length === 10){
       setError({
         helperText: "",
