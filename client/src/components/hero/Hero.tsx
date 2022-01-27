@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import qrBtn from "../../assets/img/qrBtn.png";
 import { RestaurantTableData } from "../../types/types";
 import QrReader from "react-qr-reader";
@@ -17,6 +17,16 @@ import mainBackground from "../../assets/img/front_page_background.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 import blobHero from "../../assets/img/blob_hero.png";
 import sideImg from "../../assets/img/side_picture.png";
+import sideImg0 from "../../assets/img/side-images/side-0.png"
+import sideImg1 from "../../assets/img/side-images/side-1.png"
+import sideImg2 from "../../assets/img/side-images/side-2.png"
+import sideImg3 from "../../assets/img/side-images/side-3.png"
+import sideImg4 from "../../assets/img/side-images/side-4.png"
+import sideImg5 from "../../assets/img/side-images/side-5.png"
+import sideImg6 from "../../assets/img/side-images/side-6.png"
+import sideImg7 from "../../assets/img/side-images/side-7.png"
+import sideImg8 from "../../assets/img/side-images/side-8.png"
+import sideImg9 from "../../assets/img/side-images/side-9.png"
 
 interface Iprops {
   restaurantId: RestaurantTableData;
@@ -26,7 +36,20 @@ function Hero({ restaurantId }: Iprops) {
   const classes = useStyles();
   const [_, setIncomingScan] = useState({ result: "None" });
   const [cameraActive, setCameraActive] = useState(false);
+  const [imgNumb, setImgNumb] = useState(0);
   let navigate = useNavigate();
+  const imgArray = [
+    sideImg0,
+    sideImg1,
+    sideImg2,
+    sideImg3,
+    sideImg4,
+    sideImg5,
+    sideImg6,
+    sideImg7,
+    sideImg8,
+    sideImg9,
+  ]
 
   const handleScan = (data: any) => {
     if (data) {
@@ -36,6 +59,10 @@ function Hero({ restaurantId }: Iprops) {
       window.location.replace(data);
     }
   };
+
+  useEffect(()=>{
+    setImgNumb(Math.floor(Math.random() * 10));
+  },[])
 
   const handleError = (err: Error) => {
     console.error(err);
@@ -135,7 +162,7 @@ function Hero({ restaurantId }: Iprops) {
             <img
               style={{ objectFit: "cover" }}
               className={classes.sideImgContainer}
-              src={sideImg}
+              src={imgArray[imgNumb]}
               alt=""
             />
           </Box>
