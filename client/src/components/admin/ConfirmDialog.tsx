@@ -1,22 +1,30 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, makeStyles } from '@material-ui/core';
-import * as React from 'react';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { MenuContext } from '../../context/MenusContext';
-import { useContext } from 'react';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  makeStyles,
+} from "@material-ui/core";
+import * as React from "react";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { MenuContext } from "../../context/MenusContext";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 interface Iprops {
-  table: string
+  table: string;
 }
 
-export default function AlertDialog({table}:Iprops) {
+export default function AlertDialog({ table }: Iprops) {
   const [open, setOpen] = React.useState(false);
-  const {deleteTable} = useContext(MenuContext)
-  const classes = useStyles(); 
+  const { deleteTable } = useContext(MenuContext);
+  const classes = useStyles();
 
   const handleDelete = (tableNr: string) => {
-    deleteTable(tableNr)
-  }
+    deleteTable(tableNr);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,12 +36,12 @@ export default function AlertDialog({table}:Iprops) {
 
   return (
     <div>
-      <Button 
+      <Button
         className={classes.button}
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={handleClickOpen}
-        startIcon={<DeleteIcon/>}
+        startIcon={<DeleteIcon />}
       >
         Radera
       </Button>
@@ -43,21 +51,17 @@ export default function AlertDialog({table}:Iprops) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Är du säkert?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Är du säker?"}</DialogTitle>
         <DialogActions>
           <Button onClick={() => handleClose()}>Nej</Button>
-          <Button 
+          <Button
             onClick={() => {
-              handleDelete(table)
-              handleClose()
-            }} 
+              handleDelete(table);
+              handleClose();
+            }}
             autoFocus
-            >
-            <Link to={'/tables'}> 
-              Ja
-            </Link >
+          >
+            <Link to={"/tables"}>Ja</Link>
           </Button>
         </DialogActions>
       </Dialog>
@@ -71,6 +75,6 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-evenly",
     alignItems: "center",
     width: "8rem",
-    margin: '1rem'
-  }, 
+    margin: "1rem",
+  },
 }));
