@@ -13,7 +13,7 @@ import MenuProvider from "./context/MenusContext";
 import CartProvider from "./context/CartContext";
 import OrderProvider from "./context/OrdersContext";
 import CookieConsent from "react-cookie-consent";
-import { Link } from "@material-ui/core";
+import { Box, Link, Typography } from "@material-ui/core";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,23 +21,40 @@ ReactDOM.render(
       <OrderProvider>
         <CartProvider>
           <MenuProvider>
-          <CookieConsent
-            location="bottom"
-            buttonText="Okej"
-            cookieName="EatAppCookie"
-            style={{ background: "#2B373B", fontFamily: "Roboto" }}
-            buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
-            expires={150}
-          >
-            Vi använder oss av cookies för att göra din användaruplevelse bättre{" "}<br/>
-            <span style={{ fontSize: "10px" }}>Läs mer om hur vi hanterar dina användaruppgifter <Link href="https://www.freeprivacypolicy.com/live/775830bf-3092-4d01-900e-7a355410fc7a">Här</Link></span>
-          </CookieConsent>
-            <App />
-          </MenuProvider>
-        </CartProvider>
-      </OrderProvider>
-    </UserAuthProvider>
-  </React.StrictMode>,
+            <Box 
+              style={{ 
+                margin: "auto"
+              }}
+            >
+              <CookieConsent
+                location="bottom"
+                buttonText="Jag förstår"
+                cookieName="EatAppCookie"
+                style={{ 
+                    background: "#2B373B", 
+                    fontFamily: "Roboto",
+                    width: "85%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    margin: "10px",
+                    padding: "20px",
+                  }}
+                buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+                expires={150}
+              >
+                <Typography>Vi använder oss av cookies för att göra din användarupplevelse bättre{" "}</Typography>
+                <Typography style={{ fontSize: "10px" }}>Läs mer om hur vi hanterar dina användaruppgifter 
+                  <Link href="https://www.freeprivacypolicy.com/live/775830bf-3092-4d01-900e-7a355410fc7a"> Här</Link>
+                </Typography>
+              </CookieConsent>
+              </Box>
+              <App />
+            </MenuProvider>
+          </CartProvider>
+        </OrderProvider>
+      </UserAuthProvider>
+    </React.StrictMode>,
   document.getElementById("root")
 );
 
