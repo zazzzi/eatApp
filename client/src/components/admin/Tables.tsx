@@ -36,7 +36,27 @@ function TablesEditor({ restaurantTable, userInfo, selectedTable }: Iprops) {
   }
 
   return (
-    <Box style={{ backgroundColor: "#FEFEFE" }}>
+    <Box 
+      style={{ 
+       backgroundColor: "#FEFEFE", 
+       }}
+       sx={{
+        position: "relative",
+        maxWidth: {
+          xs: "100%",
+          sm: "100%",
+          md: "50rem",
+          lg: "50rem",
+          xl: "50rem",
+        },
+        margin: {
+          md: "0rem auto",
+          lg: "0rem auto",
+          xl: "0rem auto",
+        },
+        height: "100vh",
+      }} 
+      >
       <Box className={classes.header}>
         <Typography variant="h2">
           <b>Bord</b>
