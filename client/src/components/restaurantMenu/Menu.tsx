@@ -258,7 +258,7 @@ const RestaurantMenu = ({ restaurantId, userInfo }: Iprops) => {
                     fontSize="large"
                   />
                 </Link>
-                <Link href="/login" target={"_blank"}>
+                <Link href="/login">
                   <AccountCircleIcon
                     htmlColor={
                       !restaurantNameColorBlack ? "#000000" : "#FEFEFE"
