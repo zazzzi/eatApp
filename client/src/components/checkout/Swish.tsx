@@ -10,6 +10,11 @@ interface Iprops {
   userInformation: User;
 }
 
+interface Error {
+  helperText: string;
+  error: boolean;
+}
+
 function SwishPayment({
   paymentResponse,
   priceTotal,
@@ -20,9 +25,27 @@ function SwishPayment({
     userInformation ? String(userInformation.phoneNumber) : ""
   );
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error>({
+    helperText: " ",
+    error: false
+  })
+
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNumber(event.target.value);
+    console.log(event.target.value.length)
+    if(event.target.value.length === 10){
+      setError({
+        helperText: "",
+        error: false
+      })
+      setNumber(event.target.value);
+    } else {
+      setError({
+        helperText: "Ogiltig telefon nummer",
+        error: true
+      })
+    }
+    
   };
 
   const handleSubmit = async (evt: any) => {
@@ -88,6 +111,8 @@ function SwishPayment({
               className={classes.textField}
               onChange={handleInput}
               value={userInformation ? number : null}
+              error={error.error}
+              helperText={error.helperText}
             />
             <LoadingButton
               className={classes.button}
@@ -95,7 +120,7 @@ function SwishPayment({
               variant="contained"
               color="primary"
               loading={loading}
-              disabled={number === ""}
+              disabled={number === "" || error.error}
             >
               Betala
             </LoadingButton>
