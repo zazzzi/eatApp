@@ -217,8 +217,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundImage: `url(${mainBackground})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
+    position: "relative",
     backgroundRepeat: "no-repeat",
     height: "100vh",
+    [theme.breakpoints.up("xl")]: {
+      height: "80vh",
+    },
     width: "100%",
     boxShadow: "-20px 0px 17px rgba(0, 0, 0, 0.03)",
   },
