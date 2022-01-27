@@ -26,10 +26,10 @@ function EditTableModal(props: Iprops) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-  const [tableValue, setTableValue] = useState<string>('')
-  const {addTable} = useContext(MenuContext)
-  const [tableValueTaken, setTableValueTaken] =useState<boolean>(false)
-  
+  const [tableValue, setTableValue] = useState<string>("");
+  const { addTable } = useContext(MenuContext);
+  const [tableValueTaken, setTableValueTaken] = useState<boolean>(false);
+
   const style = {
     position: "absolute",
     display: "flex",
@@ -47,18 +47,21 @@ function EditTableModal(props: Iprops) {
     p: 4,
   };
 
-  const handleInput = (event: { target: { value: SetStateAction<string>; }; }) => {
-    props.restaurantData.tables.includes(event.target.value as string) ? 
-    setTableValueTaken(true) : setTableValueTaken(false)
-    setTableValue(event.target.value)
-  }
-
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
-    event.preventDefault()
-    addTable(tableValue)
+  const handleInput = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    props.restaurantData.tables.includes(event.target.value as string)
+      ? setTableValueTaken(true)
+      : setTableValueTaken(false);
+    setTableValue(event.target.value);
   };
 
-  return (  
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    addTable(tableValue);
+  };
+
+  return (
     <Modal
       open={props.editOpen}
       onClose={handleClose}
@@ -66,47 +69,49 @@ function EditTableModal(props: Iprops) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-      <Box className={classes.modalFormContainer}>
-        <form className={classes.formStyle} onSubmit={handleSubmit}>
-          <Typography variant="h4"><b>Bordsnummer</b></Typography>
-          <TextField
-                error={tableValueTaken}
-                type="number"
-                variant="outlined"
-                margin="normal"
-                placeholder={"Nummer"}
-                label="Nummer"
-                onChange={handleInput}
-                helperText={ tableValueTaken ? "Bordet finns redan" : null}
-          /> 
-          <Box mt={1} className={classes.modalButtonsContainer}>
-            <Box p={1}>
-              <Button
-                className={classes.button}
-                color="secondary"
-                startIcon={<DeleteIcon />}
-                variant="outlined"
-                onClick={() => {
-                  props.closeModal();
-                }}
-              >
-                Cancel
-              </Button>
-            </Box>
-            <Box p={1}>
-              <Button 
-                className={classes.button}
-                disabled={tableValueTaken} 
-                variant="contained" 
-                color="primary"
-                type="submit"
-                onClick={() => {
-                  setTimeout(() => props.closeModal(), 1)
-                }}
-              >
-                Save
-              </Button>
-            </Box>
+        <Box className={classes.modalFormContainer}>
+          <form className={classes.formStyle} onSubmit={handleSubmit}>
+            <Typography variant="h4">
+              <b>Bordsnummer</b>
+            </Typography>
+            <TextField
+              error={tableValueTaken}
+              type="number"
+              variant="outlined"
+              margin="normal"
+              placeholder={"Nummer"}
+              label="Nummer"
+              onChange={handleInput}
+              helperText={tableValueTaken ? "Bordet finns redan" : null}
+            />
+            <Box mt={1} className={classes.modalButtonsContainer}>
+              <Box p={1}>
+                <Button
+                  className={classes.button}
+                  color="secondary"
+                  startIcon={<DeleteIcon />}
+                  variant="outlined"
+                  onClick={() => {
+                    props.closeModal();
+                  }}
+                >
+                  Avbryt
+                </Button>
+              </Box>
+              <Box p={1}>
+                <Button
+                  className={classes.button}
+                  disabled={tableValueTaken}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  onClick={() => {
+                    setTimeout(() => props.closeModal(), 1);
+                  }}
+                >
+                  Spara
+                </Button>
+              </Box>
             </Box>
           </form>
         </Box>
@@ -114,8 +119,6 @@ function EditTableModal(props: Iprops) {
     </Modal>
   );
 }
-
-
 
 const useStyles = makeStyles((theme: Theme) => ({
   modalButtonsContainer: {
@@ -133,14 +136,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   formStyle: {
     display: "flex",
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     flexDirection: "column",
-  }, 
+  },
   button: {
-    width: '8rem'
-  }
+    width: "8rem",
+  },
 }));
 
-
-export default EditTableModal; 
+export default EditTableModal;
