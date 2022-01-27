@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   makeStyles,
-
   Link,
   Hidden,
   Theme,
@@ -17,16 +16,16 @@ import mainBackground from "../../assets/img/front_page_background.png";
 import logoStanced from "../../assets/logos/EatApp_stansad.png";
 import blobHero from "../../assets/img/blob_hero.png";
 import sideImg from "../../assets/img/side_picture.png";
-import sideImg0 from "../../assets/img/side-images/side-0.png"
-import sideImg1 from "../../assets/img/side-images/side-1.png"
-import sideImg2 from "../../assets/img/side-images/side-2.png"
-import sideImg3 from "../../assets/img/side-images/side-3.png"
-import sideImg4 from "../../assets/img/side-images/side-4.png"
-import sideImg5 from "../../assets/img/side-images/side-5.png"
-import sideImg6 from "../../assets/img/side-images/side-6.png"
-import sideImg7 from "../../assets/img/side-images/side-7.png"
-import sideImg8 from "../../assets/img/side-images/side-8.png"
-import sideImg9 from "../../assets/img/side-images/side-9.png"
+import sideImg0 from "../../assets/img/side-images/side-0.png";
+import sideImg1 from "../../assets/img/side-images/side-1.png";
+import sideImg2 from "../../assets/img/side-images/side-2.png";
+import sideImg3 from "../../assets/img/side-images/side-3.png";
+import sideImg4 from "../../assets/img/side-images/side-4.png";
+import sideImg5 from "../../assets/img/side-images/side-5.png";
+import sideImg6 from "../../assets/img/side-images/side-6.png";
+import sideImg7 from "../../assets/img/side-images/side-7.png";
+import sideImg8 from "../../assets/img/side-images/side-8.png";
+import sideImg9 from "../../assets/img/side-images/side-9.png";
 
 interface Iprops {
   restaurantId: RestaurantTableData;
@@ -49,7 +48,7 @@ function Hero({ restaurantId }: Iprops) {
     sideImg7,
     sideImg8,
     sideImg9,
-  ]
+  ];
 
   const handleScan = (data: any) => {
     if (data) {
@@ -60,9 +59,9 @@ function Hero({ restaurantId }: Iprops) {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setImgNumb(Math.floor(Math.random() * 10));
-  },[])
+  }, []);
 
   const handleError = (err: Error) => {
     console.error(err);
@@ -77,7 +76,7 @@ function Hero({ restaurantId }: Iprops) {
       <Box className={classes.loader}>
         <CircularProgress />
       </Box>
-   );
+    );
   }
 
   return (
@@ -100,13 +99,9 @@ function Hero({ restaurantId }: Iprops) {
             //   },
             // }}
           >
-            <h1 style={{margin: 0}}>
+            <h1 style={{ margin: 0 }}>
               <a href="/">
-                <img
-                  className={classes.logo}
-                  src={logoStanced}
-                  alt="eatApp"
-                />
+                <img className={classes.logo} src={logoStanced} alt="eatApp" />
               </a>
             </h1>
             <Box className={classes.qrBtnContainer}>
@@ -160,7 +155,9 @@ function Hero({ restaurantId }: Iprops) {
         <Hidden lgDown>
           <Box className={classes.sideImgContainer}>
             <img
-              style={{ objectFit: "cover" }}
+              style={{
+                objectFit: "cover",
+              }}
               className={classes.sideImgContainer}
               src={imgArray[imgNumb]}
               alt=""
@@ -278,10 +275,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     border: "0px solid",
   },
   sideImgContainer: {
-    width: "100%",
     height: "100%",
-    borderRadius: "150px 0 0 150px",
-    boxShadow: "-20px 0px 20px 0px rgb(0 0 0 / 3%);",
+    filter: "drop-shadow(-25px 0px 38px rgba(12, 12, 12, 0.1));",
   },
   backgroundColor: {
     display: "flex",
