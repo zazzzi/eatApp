@@ -21,11 +21,6 @@ ReactDOM.render(
       <OrderProvider>
         <CartProvider>
           <MenuProvider>
-            <Box 
-              style={{ 
-                margin: "auto"
-              }}
-            >
               <CookieConsent
                 location="bottom"
                 buttonText="Jag förstår"
@@ -37,7 +32,11 @@ ReactDOM.render(
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    margin: "10px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginBottom: "2rem",
+                    left: 0,
+                    right: 0,
                     padding: "20px",
                   }}
                 buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
@@ -48,7 +47,6 @@ ReactDOM.render(
                   <Link href="https://www.freeprivacypolicy.com/live/775830bf-3092-4d01-900e-7a355410fc7a"> Här</Link>
                 </Typography>
               </CookieConsent>
-              </Box>
               <App />
             </MenuProvider>
           </CartProvider>
